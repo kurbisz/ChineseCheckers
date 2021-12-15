@@ -1,3 +1,7 @@
+import exceptions.CannotStartGameException;
+import exceptions.InvalidMoveException;
+import exceptions.InvalidPlayerException;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -43,16 +47,30 @@ public class Player implements Runnable{
     private void processCommands() {
         while (input.hasNextLine()) {
             String command = input.nextLine();
-            if (command.startsWith("START")) {
-                game.start();
-            } else if (command.startsWith("QUIT")) {
-                return;
-            } else if (command.startsWith("MOVE")) {
-                //TODO
-            } else if (command.startsWith("NAME")) {
-                this.name=command.substring(4);
-            } else if (command.startsWith("PASS")) {
-                //TODO
+            try{
+                if (command.startsWith("START")) {
+                    game.start();
+                } else if (command.startsWith("QUIT")) {
+                    return;
+                } else if (command.startsWith("MOVE")) {
+                    String[] data = command.split(" ");
+                    int from = Integer.parseInt(data[1]);
+                    int to = Integer.parseInt(data[2]);
+                    game.move(this, from, to);
+                } else if (command.startsWith("NAME")) {
+                    this.name=command.substring(4);
+                } else if (command.startsWith("PASS")) {
+                    //TODO
+                }
+            } catch (CannotStartGameException e)
+            {
+                notify("Game cannot be started");
+            } catch (InvalidMoveException|NumberFormatException e)
+            {
+                notify("Invalid move");
+            } catch (InvalidPlayerException e)
+            {
+                notify("It's not your turn");
             }
         }
     }
