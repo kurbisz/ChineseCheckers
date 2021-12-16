@@ -1,4 +1,4 @@
 package exceptions;
 
-public class CannotStartGameException extends Exception{
+public class CannotStartGameException extends Exception {
 }

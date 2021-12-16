@@ -9,8 +9,9 @@ public class Server {
             ExecutorService pool = Executors.newFixedThreadPool(6);
             while (true) {
                 Game game = new Game();
-                for(int i=0;i<6;i++)
-                    pool.execute(game.createPlayer(listener.accept(),i));
+                for(int i = 0; i < 6; i++) {
+                    pool.execute(game.createPlayer(listener.accept(), i));
+                }
             }
         }
     }

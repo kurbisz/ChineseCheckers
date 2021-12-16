@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Player implements Runnable{
+public class Player implements Runnable {
     private int number;
     private String name;
     private Socket socket;
@@ -16,38 +16,33 @@ public class Player implements Runnable{
     private PrintWriter output;
     private Game game;
     private Notifer notifer = Notifer.getInstance();
-    public void notify(String msg)
-    {
+    public void notify(String msg) {
         output.println(msg);
     }
-    public Player(Socket accept, int i, Game game)
-    {
+    public Player(Socket accept, int i, Game game) {
         this.number = i;
         this.socket = accept;
         this.game = game;
     }
-    public void setNext(Player next)
-    {
+    public void setNext(Player next) {
         this.next = next;
     }
-    public Player getNext()
-    {
+    public Player getNext() {
         return this.next;
     }
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
     private void setup() throws IOException {
         // Poczatek gry
         input = new Scanner(socket.getInputStream());
         output = new PrintWriter(socket.getOutputStream(), true);
-        output.println("WELCOME " + number);
+        output.println("MESSAGE WELCOME " + number);
     }
     private void processCommands() {
         while (input.hasNextLine()) {
             String command = input.nextLine();
-            try{
+            try {
                 if (command.startsWith("START")) {
                     game.start();
                 } else if (command.startsWith("QUIT")) {
@@ -58,19 +53,16 @@ public class Player implements Runnable{
                     int to = Integer.parseInt(data[2]);
                     game.move(this, from, to);
                 } else if (command.startsWith("NAME")) {
-                    this.name=command.substring(4);
+                    this.name = command.substring(4);
                 } else if (command.startsWith("PASS")) {
                     //TODO
                 }
-            } catch (CannotStartGameException e)
-            {
-                notify("Game cannot be started");
-            } catch (InvalidMoveException|NumberFormatException e)
-            {
-                notify("Invalid move");
-            } catch (InvalidPlayerException e)
-            {
-                notify("It's not your turn");
+            } catch (CannotStartGameException e) {
+                notify("MESSAGE Game cannot be started");
+            } catch (InvalidMoveException | NumberFormatException e) {
+                notify("MESSAGE Invalid move");
+            } catch (InvalidPlayerException e) {
+                notify("MESSAGE It's not your turn");
             }
         }
     }
@@ -84,7 +76,7 @@ public class Player implements Runnable{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            notifer.notifyAll("PLAYER "+number+" LEFT", game);
+            notifer.notifyAll("MESSAGE PLAYER " + number + " LEFT", game);
             try {
                 socket.close();
             } catch (IOException e) {

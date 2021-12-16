@@ -14,7 +14,14 @@ public class ConnectionManager {
     private Socket socket;
     private Scanner scanner;
     private PrintWriter writer;
-
+    private Messenger msg;
+    private Receiver rec;
+    public ConnectionManager() {
+        this.msg = Messenger.getInstance();
+        this.rec = Receiver.getInstance();
+        Messenger.setCMD(this);
+        Receiver.setCMD(this);
+    }
 
     public void createNewConnection(String address, int port) throws UnknownHostException, IOException {
         this.serverAddress = address;
@@ -25,11 +32,14 @@ public class ConnectionManager {
     private void connect() throws UnknownHostException, IOException {
         socket = new Socket(serverAddress, serverPort);
         scanner = new Scanner(socket.getInputStream());
-        // TODO change to false when finished project
-        // TODO true means printing socket's messages to console
         writer = new PrintWriter(socket.getOutputStream(), true);
     }
-
+    public void send(String msg) {
+        writer.println(msg);
+    }
+    public Scanner getScanner() {
+        return this.scanner;
+    }
 
 
 }
