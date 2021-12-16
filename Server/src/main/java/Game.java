@@ -10,6 +10,12 @@ public class Game {
     private List<Player> players = new ArrayList<>();
     private Player currentPlayer = null;
     private Notifer notifer = Notifer.getInstance();
+    private int size = 4;
+
+    public Game(int size) {
+        this.size = size;
+    }
+
     public Player createPlayer(Socket accept, int i) {
         Player p = new Player(accept, i, this);
         players.add(p);
@@ -28,6 +34,10 @@ public class Game {
         }
         Player n0 = players.get(0);
         players.get(i).setNext(n0);
+        //TODO POSITION
+        for (Player p : players) {
+            p.notifyStart();
+        }
     }
     public synchronized void move(Player p, int from, int to) throws InvalidMoveException, InvalidPlayerException {
         //TODO
@@ -40,5 +50,8 @@ public class Game {
     }
     public List<Player> getAllPlayers() {
         return players;
+    }
+    public int getSize(){
+        return this.size;
     }
 }

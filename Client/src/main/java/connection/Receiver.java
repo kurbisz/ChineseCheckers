@@ -42,6 +42,12 @@ public class Receiver {
                 } else if (response.startsWith("DEFEAT")) {
                     String[] tab = response.split(" ");
                     interpreter.defeat(tab[1]);
+                } else if (response.startsWith("LEFT")) {
+                    interpreter.left();
+                } else if (response.startsWith("SIZE")){
+                    String[] tab = response.split(" ");
+                    int size = Integer.parseInt(tab[1]);
+                    interpreter.size(size);
                 }
             }
 
