@@ -16,6 +16,7 @@ public class Player implements Runnable {
     private PrintWriter output;
     private Game game;
     private Notifer notifer = Notifer.getInstance();
+    private int position = 0;
     public void notify(String msg) {
         output.println(msg);
     }
@@ -37,7 +38,14 @@ public class Player implements Runnable {
         // Poczatek gry
         input = new Scanner(socket.getInputStream());
         output = new PrintWriter(socket.getOutputStream(), true);
-        output.println("MESSAGE WELCOME " + number);
+        notify("MESSAGE WELCOME " + number);
+        notify("SIZE "+ game.getSize());
+    }
+    public void setPosition(int i) {
+        this.position = i;
+    }
+    public void notifyStart() {
+        notify("START "+position);
     }
     private void processCommands() {
         while (input.hasNextLine()) {
@@ -77,6 +85,7 @@ public class Player implements Runnable {
             e.printStackTrace();
         } finally {
             notifer.notifyAll("MESSAGE PLAYER " + number + " LEFT", game);
+            notifer.notifyAll("LEFT", game);
             try {
                 socket.close();
             } catch (IOException e) {
