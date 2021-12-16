@@ -47,7 +47,13 @@ public class Receiver {
                 } else if (response.startsWith("SIZE")){
                     String[] tab = response.split(" ");
                     int size = Integer.parseInt(tab[1]);
-                    interpreter.size(size);
+                    int players = Integer.parseInt(tab[2]);
+                    interpreter.size(size, players);
+                } else if (response.startsWith("NUM")) {
+                    String[] tab = response.split(" ");
+                    int players = Integer.parseInt(tab[1]);
+                    interpreter.numPlayers(players);
+
                 }
             }
 

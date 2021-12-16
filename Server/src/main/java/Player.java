@@ -39,7 +39,7 @@ public class Player implements Runnable {
         input = new Scanner(socket.getInputStream());
         output = new PrintWriter(socket.getOutputStream(), true);
         notify("MESSAGE WELCOME " + number);
-        notify("SIZE "+ game.getSize());
+        notify("SIZE "+ game.getSize()+" "+game.numPlayers());
     }
     public void setPosition(int i) {
         this.position = i;

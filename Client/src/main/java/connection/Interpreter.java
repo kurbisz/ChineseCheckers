@@ -8,5 +8,6 @@ public interface Interpreter {
     void victory();
     void defeat(String name);
     void left();
-    void size(int size);
+    void size(int size, int players);
+    void numPlayers(int players);
 }

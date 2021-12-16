@@ -1,3 +1,4 @@
+import board.Board;
 import exceptions.CannotStartGameException;
 import exceptions.InvalidMoveException;
 import exceptions.InvalidPlayerException;
@@ -11,15 +12,18 @@ public class Game {
     private Player currentPlayer = null;
     private Notifer notifer = Notifer.getInstance();
     private int size = 4;
+    private Board board;
 
     public Game(int size) {
         this.size = size;
+        this.board = new Board(size);
     }
 
     public Player createPlayer(Socket accept, int i) {
         Player p = new Player(accept, i, this);
         players.add(p);
         System.out.println("New player connected");
+        notifer.notifyAllExceptPlayer("NUM "+numPlayers(),this, p);
         return p;
     }
     public void start() throws CannotStartGameException {
@@ -53,5 +57,8 @@ public class Game {
     }
     public int getSize(){
         return this.size;
+    }
+    public int numPlayers() {
+        return players.size();
     }
 }
