@@ -7,4 +7,6 @@ public interface Interpreter {
     void start();
     void victory();
     void defeat(String name);
+    void left();
+    void size(int size);
 }
