@@ -10,6 +10,7 @@ public class ConnectionManager {
 
     private String serverAddress;
     private int serverPort;
+    private String nickName;
 
     private Socket socket;
     private Scanner scanner;
@@ -17,15 +18,17 @@ public class ConnectionManager {
     private Messenger msg;
     private Receiver rec;
     public ConnectionManager() {
-        this.msg = Messenger.getInstance();
-        this.rec = Receiver.getInstance();
         Messenger.setCMD(this);
         Receiver.setCMD(this);
+        this.msg = Messenger.getInstance();
+        this.rec = Receiver.getInstance();
     }
 
-    public void createNewConnection(String address, int port) throws UnknownHostException, IOException {
+    public void createNewConnection(String address, int port, String nick)
+            throws UnknownHostException, IOException {
         this.serverAddress = address;
         this.serverPort = port;
+        this.nickName = nick;
         connect();
     }
 
@@ -33,6 +36,8 @@ public class ConnectionManager {
         socket = new Socket(serverAddress, serverPort);
         scanner = new Scanner(socket.getInputStream());
         writer = new PrintWriter(socket.getOutputStream(), true);
+        msg.name(nickName);
+        Receiver.getInstance().listen();
     }
     public void send(String msg) {
         writer.println(msg);

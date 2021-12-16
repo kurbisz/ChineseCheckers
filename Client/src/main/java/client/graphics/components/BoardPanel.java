@@ -1,20 +1,17 @@
 package client.graphics.components;
 
-import client.graphics.components.utils.CirclePanel;
 import client.graphics.components.utils.SingleRowPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
-public class MainPanel extends Panel {
+public class BoardPanel extends Panel {
 
     int boardSize;
 
     SingleRowPanel boardRow[];
 
-    public MainPanel(JFrame jFrame, int size) {
+    public BoardPanel(JFrame jFrame, int size) {
         super(jFrame);
         this.boardSize = size;
         this.boardRow = new SingleRowPanel[getAmountOfRows()];
@@ -34,7 +31,7 @@ public class MainPanel extends Panel {
         }
 
         // Create upper (center) part of board
-        for(int i = 0; i < boardSize; i++) {
+        for(int i = 0; i < boardSize + 1; i++) {
             SingleRowPanel rowPanel = new SingleRowPanel(jFrame, counter);
             for(int j = 0; j <= 3*boardSize-i; j++) {
                 rowPanel.addCircle();
@@ -42,14 +39,6 @@ public class MainPanel extends Panel {
             boardRow[counter++] = rowPanel;
             this.add(rowPanel);
         }
-
-        // Create center line of board
-        SingleRowPanel centerPanel = new SingleRowPanel(jFrame, counter);
-        for(int j = 0; j <= 2*boardSize; j++) {
-            centerPanel.addCircle();
-        }
-        boardRow[counter++] = centerPanel;
-        this.add(centerPanel);
 
         // Create lower (center) part of board
         for(int i = 0; i < boardSize; i++) {
