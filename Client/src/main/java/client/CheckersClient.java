@@ -1,5 +1,10 @@
-import client.GraphicsManager;
+package client;
+
+import client.graphics.GraphicsManager;
 import connection.ConnectionManager;
+
+import java.io.IOException;
+import java.net.UnknownHostException;
 
 public class CheckersClient {
 
@@ -11,15 +16,16 @@ public class CheckersClient {
     public CheckersClient() {
         connectionManager = new ConnectionManager();
         graphicsManager = new GraphicsManager();
+    }
 
+    public void openGame() {
         graphicsManager.createNewWindow();
-
     }
 
-    private void createNewWindow() {
-        graphicsManager = new GraphicsManager();
+    public void connectClientToServer(String serverAddress, int serverPort) throws UnknownHostException, IOException {
+        connectionManager.createNewConnection(serverAddress, serverPort);
+        graphicsManager.drawBoard();
     }
-
 
     public static CheckersClient getInstance() {
         return client;
@@ -27,6 +33,7 @@ public class CheckersClient {
 
     public static void main(String[] args) {
         client = new CheckersClient();
+        client.openGame();
     }
 
     public ConnectionManager getConnectionManager() {
