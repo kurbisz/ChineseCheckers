@@ -1,5 +1,6 @@
 package client.graphics;
 
+import client.game.states.GameState;
 import client.graphics.components.*;
 import client.graphics.components.Panel;
 import client.graphics.listener.MouseListeners;
@@ -74,6 +75,15 @@ public class GraphicsManager {
         informationPanel.setMessage(message);
     }
 
+    public void changeGameState(GameState gameState) throws InvalidPanelException {
+        Panel panel = boardPanels.get("button");
+        if(panel == null || !(panel instanceof ButtonPanel)) {
+            throw new InvalidPanelException();
+        }
+        ButtonPanel boardPanel = (ButtonPanel) panel;
+        boardPanel.setGameState(gameState);
+    }
+
     public void setPlayerOnCircle(int row, int column, int player)
             throws InvalidPanelException, IndexOutOfBoundsException {
         BoardPanel boardPanel = getBoard();
@@ -116,10 +126,10 @@ public class GraphicsManager {
 
     private void initBoard() {
         this.boardPanels = new ConcurrentHashMap<String, Panel>();
-        boardPanels.put("board", new BoardPanel(jFrame, boardSize));
+        boardPanels.put("info", new InformationPanel(jFrame));
         boardPanels.put("players", new PlayersPanel(jFrame));
         boardPanels.put("button", new ButtonPanel(jFrame));
-        boardPanels.put("info", new InformationPanel(jFrame));
+        boardPanels.put("board", new BoardPanel(jFrame, boardSize));
     }
 
     public void initVariables() {

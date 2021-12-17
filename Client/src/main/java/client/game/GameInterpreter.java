@@ -23,29 +23,34 @@ public class GameInterpreter implements Interpreter {
     }
 
     @Override
-    public void move(int from, int to) {
-        // TODO change arguments of move() and uncomment
-        /*try {
+    public void move(int fromRow, int fromColumn, int toRow, int toColumn) {
+        try {
             graphicsManager.setPlayerMove(fromRow, fromColumn, toRow, toColumn);
         } catch (InvalidPanelException e) {
             System.out.println("Error while making move!");
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Invalid point position from server!");
-        }*/
+        }
     }
+
 
     @Override
     public void message(String substring) {
         try {
             graphicsManager.setInfoMessage(substring);
         } catch (InvalidPanelException e) {
-            System.out.println("Error while getting information!");
+            System.out.println("Information from server: " + substring);
         }
     }
 
     @Override
     public void start() {
-
+        try {
+            gameState.getStateBehaviour().startGame();
+            graphicsManager.changeGameState(gameState);
+        } catch (InvalidPanelException e) {
+            System.out.println("Error while initializing board!");
+        }
     }
 
     @Override
@@ -74,26 +79,30 @@ public class GameInterpreter implements Interpreter {
     public void numPlayers(int players) {
         try {
             graphicsManager.updatePlayers(players);
-            // TODO remove, its just test
-            paint(1, 1, 2);
-            paint(2, 2, 3);
-            paint(3, 1, 1);
         } catch (InvalidPanelException e) {
             System.out.println("Error while updating players!");
         }
     }
 
-    public void paint(int row, int column, int player) {
+    @Override
+    public void setField(int row, int col, int id) {
         try {
-            graphicsManager.setPlayerOnCircle(row, column, player);
+            graphicsManager.setPlayerOnCircle(row, col, id);
         } catch (InvalidPanelException e) {
-            System.out.println("Error while painting board!");
+            System.out.println("Error while loading board!");
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Invalid point position from server!");
         }
     }
 
-
-
+    @Override
+    public void turn() {
+        try {
+            gameState.getStateBehaviour().endMove();
+            graphicsManager.changeGameState(gameState);
+        } catch (InvalidPanelException e) {
+            System.out.println("Error while finishing move!");
+        }
+    }
 
 }
