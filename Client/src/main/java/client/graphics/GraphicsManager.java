@@ -1,17 +1,12 @@
 package client.graphics;
 
-import client.CheckersClient;
-import client.graphics.components.BoardPanel;
-import client.graphics.components.ButtonPanel;
+import client.graphics.components.*;
 import client.graphics.components.Panel;
-import client.graphics.components.PlayersPanel;
 import client.graphics.listener.ComponentListeners;
 import client.graphics.listener.WindowListeners;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,11 +15,10 @@ public class GraphicsManager {
     public static Color[] playerColors;
     private static String frameName;
 
-    //TODO private!!!
-    public JFrame jFrame;
+    private JFrame jFrame;
 
     private int boardSize;
-    private ConcurrentHashMap<String, Panel> boardPanels;
+    private ConcurrentHashMap<String, Panel> boardPanels = new ConcurrentHashMap<>();
 
 
     public void createNewWindow() {
@@ -36,7 +30,6 @@ public class GraphicsManager {
         jFrame.setVisible(true);
 
         openConnectGui();
-
     }
 
     public void lockAppSize() {
@@ -45,7 +38,6 @@ public class GraphicsManager {
     }
 
     public void drawBoard() {
-        // TODO get board size from interpreter
         initBoard();
         for(Map.Entry<String, Panel> entry : boardPanels.entrySet()) {
             Panel panel = entry.getValue();
@@ -55,65 +47,32 @@ public class GraphicsManager {
         jFrame.revalidate();
         jFrame.repaint();
 
-        try {
-            updatePlayers(1);
-        } catch (InvalidPlayerPanelException exc) { }
-
     }
 
     public void setBoardSize(int size) {
         this.boardSize = size;
     }
 
-    public void updatePlayers(int players) throws InvalidPlayerPanelException {
+    public void updatePlayers(int players) throws InvalidPanelException {
         Panel panel = boardPanels.get("players");
         if(panel == null || !(panel instanceof PlayersPanel)) {
-            throw new InvalidPlayerPanelException();
+            throw new InvalidPanelException();
         }
         PlayersPanel playersPanel = (PlayersPanel) panel;
         playersPanel.updatePlayerAmount(players);
     }
 
-    private void openConnectGui() {
-        JTextField nickField = new JTextField("lessnop", 20);
-        JTextField addressField = new JTextField("localhost", 20);
-        JTextField portField = new JTextField("59898", 20);
-
-        Object panels[] = {
-                "Nickname: ", nickField,
-                "Address: ", addressField,
-                "Port: ", portField,
-        };
-
-        int result = JOptionPane.showConfirmDialog(null, panels,
-                "Connect to the server: ", JOptionPane.OK_CANCEL_OPTION);
-
-        if(result==JOptionPane.OK_OPTION) {
-            String serverAddress = addressField.getText();
-            String port = portField.getText();
-            String nickName = nickField.getText();
-            int serverPort;
-            if(nickName.length() < 5) {
-                jFrame.dispose();
-                System.out.println("Error! Your nickname is too short!");
-            }
-            else {
-                try {
-                    serverPort = Integer.parseInt(port);
-                    CheckersClient.getInstance().connectClientToServer(serverAddress, serverPort, nickName);
-                } catch (NumberFormatException e) {
-                    jFrame.dispose();
-                    System.out.println("Error! Given port was not a number!");
-                } catch (UnknownHostException e) {
-                    jFrame.dispose();
-                    System.out.println("Error! There is no such server!");
-                } catch (IOException e) {
-                    jFrame.dispose();
-                    System.out.println("Error while connecting to server!");
-                }
-            }
+    public void setInfoMessage(String message) throws InvalidPanelException {
+        Panel panel = boardPanels.get("info");
+        if(panel == null || !(panel instanceof InformationPanel)) {
+            throw new InvalidPanelException();
         }
-        else jFrame.dispose();
+        InformationPanel informationPanel = (InformationPanel) panel;
+        informationPanel.setMessage(message);
+    }
+
+    private void openConnectGui() {
+        ConnectOptionPane.popup(jFrame);
     }
 
     private void initBoard() {
@@ -121,6 +80,7 @@ public class GraphicsManager {
         boardPanels.put("main", new BoardPanel(jFrame, boardSize));
         boardPanels.put("players", new PlayersPanel(jFrame));
         boardPanels.put("button", new ButtonPanel(jFrame));
+        boardPanels.put("info", new InformationPanel(jFrame));
     }
 
     public void initVariables() {
@@ -133,6 +93,5 @@ public class GraphicsManager {
         playerColors[4] = Color.CYAN;
         playerColors[5] = Color.MAGENTA;
     }
-
 
 }

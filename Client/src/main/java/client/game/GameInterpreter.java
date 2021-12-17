@@ -2,7 +2,10 @@ package client.game;
 
 import client.game.states.GameState;
 import client.graphics.GraphicsManager;
+import client.graphics.InvalidPanelException;
 import connection.Interpreter;
+
+import javax.swing.*;
 
 public class GameInterpreter implements Interpreter {
 
@@ -26,7 +29,9 @@ public class GameInterpreter implements Interpreter {
 
     @Override
     public void message(String substring) {
-        System.out.println(substring);
+        try {
+            graphicsManager.setInfoMessage(substring);
+        } catch (InvalidPanelException e) { }
     }
 
     @Override
@@ -50,9 +55,19 @@ public class GameInterpreter implements Interpreter {
     }
 
     @Override
-    public void size(int size) {
+    public void size(int size, int players) {
         graphicsManager.setBoardSize(size);
         graphicsManager.drawBoard();
+        numPlayers(players);
+    }
+
+    @Override
+    public void numPlayers(int players) {
+        try {
+            graphicsManager.updatePlayers(players);
+        } catch (InvalidPanelException e) {
+            System.out.println("Error while updating players!");
+        }
     }
 
 
