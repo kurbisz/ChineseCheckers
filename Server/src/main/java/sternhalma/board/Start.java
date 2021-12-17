@@ -15,27 +15,27 @@ public class Start implements StartingInterface {
         this.game = game;
     }
     private void set0(int id) {
-        for (int y=0;y<size;y++) {
-            for (int x=0;x<board.getRowSize(y);x++) {
-                board.getField(y,x).setOwner(id);
-                notifer.notifyAll(String.format("SET %d %d %d",y,x,id),game);
+        for (int y = 0; y < size; y++) {
+            for (int x = 0; x < board.getRowSize(y); x++) {
+                board.getField(y, x).setOwner(id);
+                notifer.notifyAll(String.format("SET %d %d %d", y, x, id), game);
             }
         }
     }
     private void set2(int id) {
-        for (int y=1;y<=size;y++) {
-            for (int x=0;x<y;x++) {
-                int xmax = board.getRowSize(y+2*size)-1;
-                board.getField(y+2*size, xmax-x).setOwner(id);
-                notifer.notifyAll(String.format("SET %d %d %d",y+2*size,xmax-x,id),game);
+        for (int y = 1; y <= size; y++) {
+            for (int x = 0; x < y; x++) {
+                int xmax = board.getRowSize(y + 2 * size) - 1;
+                board.getField(y + 2 * size, xmax - x).setOwner(id);
+                notifer.notifyAll(String.format("SET %d %d %d", y + 2 * size, xmax - x, id), game);
             }
         }
     }
     private void set4(int id) {
-        for (int y=1;y<=size;y++) {
-            for (int x=0;x<y;x++) {
-                board.getField(y+2*size,x).setOwner(id);
-                notifer.notifyAll(String.format("SET %d %d %d",y+2*size,x,id),game);
+        for (int y = 1; y <= size; y++) {
+            for (int x = 0; x < y; x++) {
+                board.getField(y + 2 * size, x).setOwner(id);
+                notifer.notifyAll(String.format("SET %d %d %d", y + 2 * size, x, id), game);
             }
         }
     }
@@ -56,32 +56,32 @@ public class Start implements StartingInterface {
         }
     }
     private void set5(int id) {
-        for (int y=1;y<=size;y++) {
-            for (int x=0;x<y;x++) {
-                int xmax = board.getRowSize(2*size-y)-1;
+        for (int y = 1; y <= size; y++) {
+            for (int x = 0; x < y; x++) {
+                int xmax = board.getRowSize(2 * size - y) - 1;
                 board.getField(2*size-y,xmax-x).setOwner(id);
-                notifer.notifyAll(String.format("SET %d %d %d",2*size-y,xmax-x,id),game);
+                notifer.notifyAll(String.format("SET %d %d %d",2 * size - y, xmax - x, id), game);
             }
         }
     }
     public void prepare(int num) {
         set0(0);
-        if (num==3) {
+        if (num == 3) {
             set2(1);
             set4(2);
             return;
         }
-        if (num==2) {
+        if (num == 2) {
             set3(1);
             return;
         }
-        if (num==4) {
+        if (num == 4) {
             set2(1);
             set3(2);
             set5(3);
             return;
         }
-        if (num==6) {
+        if (num == 6) {
             set1(1);
             set2(2);
             set3(3);

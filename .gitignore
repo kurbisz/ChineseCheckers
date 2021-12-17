@@ -2,3 +2,5 @@
 /Client/target/
 /sternhalma.Server/target/
 /SharedLibrary/target/
+*.class
+*.jar

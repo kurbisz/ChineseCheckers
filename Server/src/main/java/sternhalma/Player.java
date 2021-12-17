@@ -44,13 +44,13 @@ public class Player implements Runnable {
         input = new Scanner(socket.getInputStream());
         output = new PrintWriter(socket.getOutputStream(), true);
         notify("MESSAGE WELCOME " + number);
-        notify("SIZE "+ game.getSize()+" "+game.numPlayers());
+        notify("SIZE " +  game.getSize() + " " + game.numPlayers());
     }
     public void setPosition(int i) {
         this.position = i;
     }
     public void notifyStart() {
-        notify("START "+position);
+        notify("START " + position);
     }
     private void processCommands() {
         while (input.hasNextLine()) {
@@ -66,14 +66,14 @@ public class Player implements Runnable {
                     int fromC = Integer.parseInt(data[2]);
                     int toR = Integer.parseInt(data[3]);
                     int toC = Integer.parseInt(data[4]);
-                    game.move(this, fromR,fromC, toR, toC);
+                    game.move(this, fromR, fromC, toR, toC);
                 } else if (command.startsWith("NAME")) {
                     this.name = command.substring(4);
                 } else if (command.startsWith("PASS")) {
                     game.switchPlayer(this);
                 }
             } catch (CannotStartGameException e) {
-                notify("MESSAGE sternhalma.Game cannot be started");
+                notify("MESSAGE Game cannot be started");
             } catch (InvalidMoveException | NumberFormatException e) {
                 notify("MESSAGE Invalid move");
             } catch (InvalidPlayerException e) {

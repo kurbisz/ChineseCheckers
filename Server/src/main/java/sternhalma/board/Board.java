@@ -32,7 +32,7 @@ public class Board {
     }
     private void init() {
         for (int i = 0; i < size; i++) {
-            tab[i] = new Field[i];
+            tab[i] = new Field[i+1];
         }
         for (int i = 0; i <= size; i++) {
             tab[i + size] = new Field[3 * size + 1 - i];
@@ -41,7 +41,7 @@ public class Board {
             tab[i + 2 * size] = new Field[2 * size + 1 + i];
         }
         for (int i = 0; i < size; i++) {
-            tab[4 * size - i] = new Field[i];
+            tab[4 * size - i] = new Field[i+1];
         }
         for (int i = 0; i < tab.length; i++) {
             for (int j = 0; j < tab[i].length; j++) {
@@ -105,6 +105,9 @@ public class Board {
         for (int x=0; x< tab[y2].length;x++) {
                 tab[y2][x].addNeighbour(tab[y2- 1][x+size]);
                 tab[y2][x].addNeighbour(tab[y2- 1][x+size + 1]);
+        }
+        for (int i=0;i<tab.length;i++) {
+            System.out.println(tab[i].length);
         }
     }
 

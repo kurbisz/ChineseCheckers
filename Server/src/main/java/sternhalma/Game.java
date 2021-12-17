@@ -17,6 +17,7 @@ public class Game {
     private int size = 4;
     private Board board;
     private Start start;
+    private boolean running = false;
     public Game(int size) {
         this.size = size;
         this.board = new Board(size);
@@ -25,10 +26,13 @@ public class Game {
     }
 
     public Player createPlayer(Socket accept, int i) {
+        if (running || players.size()==6) {
+            return null;
+        }
         Player p = new Player(accept, i, this);
         players.add(p);
         System.out.println("New player connected");
-        notifer.notifyAllExceptPlayer("NUM "+numPlayers(),this, p);
+        notifer.notifyAllExceptPlayer("NUM " + numPlayers(), this, p);
         return p;
     }
     public void start() throws CannotStartGameException {
@@ -49,9 +53,10 @@ public class Game {
         for (Player p : players) {
             p.notifyStart();
         }
+        running = true;
     }
     public synchronized void move(Player p, int fromR, int fromC, int toR, int toC) throws InvalidMoveException, InvalidPlayerException {
-        if (p!=currentPlayer) {
+        if (p != currentPlayer) {
             throw new InvalidPlayerException();
         }
         board.move(p.getId(), fromR, fromC, toR, toC);
@@ -59,7 +64,7 @@ public class Game {
 
     }
     public void switchPlayer(Player p) throws InvalidPlayerException {
-        if(p!=currentPlayer) {
+        if (p != currentPlayer) {
             throw new InvalidPlayerException();
         }
         board.endMove();
@@ -71,7 +76,7 @@ public class Game {
     public List<Player> getAllPlayers() {
         return players;
     }
-    public int getSize(){
+    public int getSize() {
         return this.size;
     }
     public int numPlayers() {
