@@ -7,14 +7,17 @@ public class SingleRowPanel extends JPanel {
 
     private static double size = 0.02;
 
-    int counter = 0;
-    int rowNumber;
+    private int counter = 0;
+    private int rowNumber;
 
-    JFrame jFrame;
+    private JFrame jFrame;
 
-    public SingleRowPanel(JFrame frame, int row) {
+    private CirclePanel circlePanels[];
+
+    public SingleRowPanel(JFrame frame, int row, int maxSize) {
         this.jFrame = frame;
         this.rowNumber = row;
+        this.circlePanels = new CirclePanel[maxSize];
         FlowLayout layout = new FlowLayout();
         layout.setVgap(0);
         layout.setHgap((int) (jFrame.getWidth()*size));
@@ -22,7 +25,14 @@ public class SingleRowPanel extends JPanel {
     }
 
     public void addCircle() {
-        this.add(new CirclePanel(jFrame, rowNumber, counter++));
+        CirclePanel circlePanel = new CirclePanel(jFrame, rowNumber, counter);
+        circlePanels[counter] = circlePanel;
+        this.add(circlePanel);
+        counter++;
+    }
+
+    public int setPlayer(int column, int player) throws IndexOutOfBoundsException {
+        return circlePanels[column].setPlayer(player);
     }
 
 }

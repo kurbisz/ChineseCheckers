@@ -2,61 +2,69 @@ package client.graphics.components.utils;
 
 import client.CheckersClient;
 import client.graphics.GraphicsManager;
+import client.graphics.listener.circle.CircleListener;
+import client.graphics.listener.circle.EmptyCircleListener;
+import client.graphics.listener.circle.PlayerCircleListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class CirclePanel extends JPanel implements MouseListener {
+public class CirclePanel extends JPanel {
 
-    private static double sizeX = 0.3, sizeY = 0.4, scaleSizeX = 0.02, scaleSizeY = 0.03;
+    private static double size = 0.3, playerSize = 0.6, scaleSizeX = 0.02, scaleSizeY = 0.03;
 
     private int rowNumber;
     private int columnNumber;
+    private int playerNr = -1;
 
     private JFrame jFrame;
 
-    private GraphicsManager graphicsManager;
+    private CircleListener circleListener;
 
     public CirclePanel(JFrame frame, int row, int column) {
         this.jFrame = frame;
         this.rowNumber = row;
         this.columnNumber = column;
-        this.graphicsManager = CheckersClient.getInstance().getGraphicsManager();
+        circleListener = new EmptyCircleListener(rowNumber, columnNumber);
+        this.addMouseListener(circleListener);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.setSize((int) (scaleSizeX*jFrame.getWidth()), (int) (scaleSizeY * jFrame.getHeight()));
-        g.setColor(Color.BLACK);
-        g.fillOval(0 , 0,
-                (int) (getWidth() * sizeX) , (int) (getHeight() * sizeY));
+        if(playerNr < 0) {
+            g.setColor(Color.BLACK);
+            int radius = (int) (getWidth() * size);
+            g.fillOval(0, 0, radius, radius);
+        }
+        else {
+            g.setColor(GraphicsManager.playerColors[playerNr]);
+            int radius = (int) (getWidth() * playerSize);
+            g.fillOval(0, 0, radius, radius);
+            g.fillOval(0, 0, radius, radius);
+        }
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
+    public int setPlayer(int player) {
+        int copy = playerNr;
+        this.playerNr = player;
+        this.repaint();
+        this.refreshListener();
+        return copy;
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        // TODO
+    private void refreshListener() {
+        this.removeMouseListener(circleListener);
+        if(playerNr<0) {
+            circleListener = new EmptyCircleListener(rowNumber, columnNumber);
+        }
+        else {
+            circleListener = new PlayerCircleListener(rowNumber, columnNumber);
+        }
+        this.addMouseListener(circleListener);
     }
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // TODO
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
 }
