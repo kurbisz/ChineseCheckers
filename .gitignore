@@ -1,4 +1,4 @@
 # Project exclude paths
 /Client/target/
-/Server/target/
+/sternhalma.Server/target/
 /SharedLibrary/target/
