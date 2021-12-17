@@ -1,7 +1,10 @@
-import board.Board;
-import exceptions.CannotStartGameException;
-import exceptions.InvalidMoveException;
-import exceptions.InvalidPlayerException;
+package sternhalma;
+
+import sternhalma.board.Board;
+import sternhalma.board.Start;
+import sternhalma.exceptions.CannotStartGameException;
+import sternhalma.exceptions.InvalidMoveException;
+import sternhalma.exceptions.InvalidPlayerException;
 
 import java.net.Socket;
 import java.util.ArrayList;
@@ -10,13 +13,15 @@ import java.util.List;
 public class Game {
     private List<Player> players = new ArrayList<>();
     private Player currentPlayer = null;
-    private Notifer notifer = Notifer.getInstance();
+    private NotiferInterface notifer = Notifer.getInstance();
     private int size = 4;
     private Board board;
-
+    private Start start;
     public Game(int size) {
         this.size = size;
         this.board = new Board(size);
+        this.start = new Start(board, size, this);
+
     }
 
     public Player createPlayer(Socket accept, int i) {
@@ -39,16 +44,27 @@ public class Game {
         Player n0 = players.get(0);
         players.get(i).setNext(n0);
         //TODO POSITION
+
+        start.prepare(players.size());
         for (Player p : players) {
             p.notifyStart();
         }
     }
-    public synchronized void move(Player p, int from, int to) throws InvalidMoveException, InvalidPlayerException {
-        //TODO
-        switchPlayer(p);
+    public synchronized void move(Player p, int fromR, int fromC, int toR, int toC) throws InvalidMoveException, InvalidPlayerException {
+        if (p!=currentPlayer) {
+            throw new InvalidPlayerException();
+        }
+        board.move(p.getId(), fromR, fromC, toR, toC);
+        notifer.notifyAll(String.format("MOVE %d %d %d %d", fromR, fromC, toR, toC), this);
+
     }
     public void switchPlayer(Player p) throws InvalidPlayerException {
+        if(p!=currentPlayer) {
+            throw new InvalidPlayerException();
+        }
+        board.endMove();
         currentPlayer = currentPlayer.getNext();
+        notifer.notifyAll("TURN", this);
         currentPlayer.notify("MESSAGE Your move");
         notifer.notifyAllExceptPlayer("MESSAGE Wait for other player to move", this, currentPlayer);
     }

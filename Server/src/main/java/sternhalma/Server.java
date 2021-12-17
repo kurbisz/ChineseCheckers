@@ -1,3 +1,5 @@
+package sternhalma;
+
 import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.util.Arrays;
@@ -8,7 +10,7 @@ public class Server {
     static final int PORT = 59898;
     public static void main(String[] args) throws Exception {
         int size=4;
-        System.out.println(Arrays.toString(args));
+        System.out.println("CONFIG: "+Arrays.toString(args));
         if(args.length>0) {
             try {
                 size=Integer.parseInt(args[0]);

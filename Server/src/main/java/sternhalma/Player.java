@@ -1,6 +1,8 @@
-import exceptions.CannotStartGameException;
-import exceptions.InvalidMoveException;
-import exceptions.InvalidPlayerException;
+package sternhalma;
+
+import sternhalma.exceptions.CannotStartGameException;
+import sternhalma.exceptions.InvalidMoveException;
+import sternhalma.exceptions.InvalidPlayerException;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +17,7 @@ public class Player implements Runnable {
     private Scanner input;
     private PrintWriter output;
     private Game game;
-    private Notifer notifer = Notifer.getInstance();
+    private NotiferInterface notifer = Notifer.getInstance();
     private int position = 0;
     public void notify(String msg) {
         output.println(msg);
@@ -24,6 +26,9 @@ public class Player implements Runnable {
         this.number = i;
         this.socket = accept;
         this.game = game;
+    }
+    public int getId() {
+        return this.number;
     }
     public void setNext(Player next) {
         this.next = next;
@@ -57,16 +62,18 @@ public class Player implements Runnable {
                     return;
                 } else if (command.startsWith("MOVE")) {
                     String[] data = command.split(" ");
-                    int from = Integer.parseInt(data[1]);
-                    int to = Integer.parseInt(data[2]);
-                    game.move(this, from, to);
+                    int fromR = Integer.parseInt(data[1]);
+                    int fromC = Integer.parseInt(data[2]);
+                    int toR = Integer.parseInt(data[3]);
+                    int toC = Integer.parseInt(data[4]);
+                    game.move(this, fromR,fromC, toR, toC);
                 } else if (command.startsWith("NAME")) {
                     this.name = command.substring(4);
                 } else if (command.startsWith("PASS")) {
-                    //TODO
+                    game.switchPlayer(this);
                 }
             } catch (CannotStartGameException e) {
-                notify("MESSAGE Game cannot be started");
+                notify("MESSAGE sternhalma.Game cannot be started");
             } catch (InvalidMoveException | NumberFormatException e) {
                 notify("MESSAGE Invalid move");
             } catch (InvalidPlayerException e) {

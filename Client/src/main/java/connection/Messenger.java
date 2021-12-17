@@ -15,8 +15,8 @@ public class Messenger {
     public void pass() {
         cmd.send("PASS");
     }
-    public void move(int num) {
-        cmd.send("MOVE " + num);
+    public void move(int fromR, int fromC, int toR, int toC) {
+        cmd.send("MOVE "+fromR+" "+fromC+" "+toR+" "+toC);
     }
     public void end() {
         cmd.send("QUIT");
