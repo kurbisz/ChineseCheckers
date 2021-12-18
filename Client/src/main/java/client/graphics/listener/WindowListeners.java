@@ -9,6 +9,11 @@ import java.awt.event.WindowEvent;
 public class WindowListeners extends WindowAdapter {
 
 
+    /**
+     * Execute onWindowClose from CheckersClient
+     * and close whole window.
+     * @param e WindowEvent of closing window
+     */
     @Override
     public void windowClosing(WindowEvent e) {
         CheckersClient.getInstance().onWindowClose();

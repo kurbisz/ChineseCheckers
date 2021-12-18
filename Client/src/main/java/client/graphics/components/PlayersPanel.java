@@ -7,17 +7,27 @@ import java.awt.*;
 
 public class PlayersPanel extends Panel {
 
-    JPanel playerCounter;
-    JLabel playerCounterLabel;
+    private JPanel playerCounter;
+    private JLabel playerCounterLabel;
 
     private int clientNumber = 0;
 
-    SinglePlayerPanel singlePlayerPanel[] = new SinglePlayerPanel[6];
+    private SinglePlayerPanel singlePlayerPanel[] = new SinglePlayerPanel[6];
 
+    /**
+     * Responsible for whole player's panel
+     * on the right part of application.
+     * @param frame actual jFrame of application
+     */
     public PlayersPanel(JFrame frame) {
         super(frame);
     }
 
+    /**
+     * Create text 'Player: 0/6' and generate
+     * invisible SinglePlayerPanel's under it.
+     * Sets visual properties of this panel.
+     */
     @Override
     public void initialize() {
 
@@ -43,6 +53,12 @@ public class PlayersPanel extends Panel {
         //this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
+    /**
+     * Change actual amount of players.
+     * Preferred to use updatePlayers() with nicknames.
+     * @param am new amount of players
+     */
+    @Deprecated
     public void updatePlayerAmount(int am) {
         playerCounterLabel.setText("Players: " + am + "/6");
         for(int i = 0; i < am; i++) {
@@ -53,6 +69,11 @@ public class PlayersPanel extends Panel {
         }
     }
 
+    /**
+     * Changes actual players and update each
+     * of their nickname and place on list.
+     * @param players array with player's nicknames (as strings)
+     */
     public void updatePlayers(String[] players) {
         int am = players.length;
         playerCounterLabel.setText("Players: " + am + "/6");
@@ -65,6 +86,11 @@ public class PlayersPanel extends Panel {
         }
     }
 
+    /**
+     * Sets one of the players as actually playing
+     * and unsets the rest of players (from list)
+     * @param player id of player which is making move
+     */
     public void setActualPlayer(int player) {
         for(int i = 0; i < 6; i++) {
             if(i == player) {
@@ -76,10 +102,18 @@ public class PlayersPanel extends Panel {
     }
 
 
+    /**
+     * Mark out the SinglePlayerPanel which represents this
+     * client and set normal previous SinglePlayerPanel
+     * with this property.
+     * @param player id of new player which shows this client
+     */
     public void setClientNumber(int player) {
-        singlePlayerPanel[clientNumber].setClient(false);
+        if (clientNumber >= 0) {
+            singlePlayerPanel[clientNumber].setClient(false);
+        }
         clientNumber = player;
-        if(clientNumber<0) {
+        if(player>=0) {
             singlePlayerPanel[clientNumber].setClient(true);
         }
     }

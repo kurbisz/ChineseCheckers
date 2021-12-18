@@ -12,6 +12,12 @@ public abstract class CircleListener implements MouseListener {
 
     protected int row, column;
 
+    /**
+     * Mouse listeners which are handled when clicked
+     * on a single circle.
+     * @param clickRow row of clicked field (circle)
+     * @param clickColumn column of clicked field
+     */
     public CircleListener(int clickRow, int clickColumn) {
         this.row = clickRow;
         this.column = clickColumn;

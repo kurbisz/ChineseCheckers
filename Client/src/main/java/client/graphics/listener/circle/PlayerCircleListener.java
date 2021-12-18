@@ -8,6 +8,11 @@ public class PlayerCircleListener extends CircleListener {
         super(clickRow, clickColumn);
     }
 
+    /**
+     * Set first field of this move
+     * (circle from where client wants to move his pawn).
+     * @param e MouseEvent of this press
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         graphicsManager.setFromPointClick(row, column);

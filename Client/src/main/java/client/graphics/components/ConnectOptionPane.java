@@ -8,6 +8,12 @@ import java.net.UnknownHostException;
 
 public class ConnectOptionPane {
 
+    /**
+     * Create new option pane for a client.
+     * Gets nickname, address and port of a server
+     * which client wants to connect.
+     * @param jFrame actual jFrame of application
+     */
     public static void popup(JFrame jFrame) {
         JTextField nickField = new JTextField("lessnop", 20);
         JTextField addressField = new JTextField("localhost", 20);

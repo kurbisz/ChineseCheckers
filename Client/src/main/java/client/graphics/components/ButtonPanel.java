@@ -13,11 +13,18 @@ public class ButtonPanel extends Panel implements ActionListener {
     JButton jButton;
     GameState gameState;
 
+    /**
+     * Responsible for button on the bottom of application.
+     * @param frame actual jFrame of an application
+     */
     public ButtonPanel(JFrame frame) {
         super(frame);
         this.gameState = GameState.WAITING_FOR_GAME;
     }
 
+    /**
+     * Creates new button with 'Start game' text.
+     */
     @Override
     public void initialize() {
 
@@ -34,6 +41,11 @@ public class ButtonPanel extends Panel implements ActionListener {
 
     }
 
+    /**
+     * Sets another state of game and changes
+     * button's visual and text settings.
+     * @param state
+     */
     public void setGameState(GameState state) {
         this.gameState = state;
         updateButton();
@@ -43,6 +55,11 @@ public class ButtonPanel extends Panel implements ActionListener {
         gameState.getStateButton().generate(jButton);
     }
 
+    /**
+     * Handles click on a button and executes
+     * method click() in a proper StateButton.
+     * @param e ActionEvent of this button click
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         gameState.getStateButton().click();

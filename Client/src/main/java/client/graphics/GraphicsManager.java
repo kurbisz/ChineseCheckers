@@ -25,6 +25,10 @@ public class GraphicsManager {
     private ConcurrentHashMap<String, Panel> boardPanels = new ConcurrentHashMap<>();
 
 
+    /**
+     * Create new application, jFrame and
+     * open connect option pane.
+     */
     public void createNewWindow() {
         jFrame = new JFrame(frameName);
         jFrame.setLayout(null);
@@ -36,11 +40,18 @@ public class GraphicsManager {
         ConnectOptionPane.popup(jFrame);
     }
 
+    /**
+     * Set minimum size and disable resizing window.
+     */
     public void lockAppSize() {
         jFrame.setMinimumSize(jFrame.getSize());
         jFrame.setResizable(false);
     }
 
+    /**
+     * Draw whole application - all panels
+     * and repaint window.
+     */
     public void drawBoard() {
         initBoard();
         for(Map.Entry<String, Panel> entry : boardPanels.entrySet()) {
@@ -53,31 +64,67 @@ public class GraphicsManager {
 
     }
 
+    /**
+     * Set size of board.
+     * @param size board size - amount of rows of
+     *             each player triangle on the
+     *             beginning of a game
+     */
     public void setBoardSize(int size) {
         this.boardSize = size;
     }
 
+    /**
+     * Update amount of players in the game.
+     * Preferred to use updatePlayers(String[] players).
+     * @param players amount of players
+     * @throws InvalidPanelException when PlayersPanel is not added to panel map
+     */
+    @Deprecated
     public void updatePlayers(int players) throws InvalidPanelException {
         PlayersPanel playersPanel = getPlayers();
         playersPanel.updatePlayerAmount(players);
     }
 
+    /**
+     * Update players and their nicknames in the game.
+     * @param players amount of players
+     * @throws InvalidPanelException when PlayersPanel is not added to panel map
+     */
     public void updatePlayers(String[] players)
             throws InvalidPanelException {
         PlayersPanel playersPanel = getPlayers();
         playersPanel.updatePlayers(players);
     }
 
+    /**
+     * Set making move player in client application.
+     * Executes setActualPlayer() in PlayerPanel.
+     * @param player id of player
+     * @throws InvalidPanelException when PlayersPanel is not added to panel map
+     */
     public void setActualPlayer(int player) throws InvalidPanelException {
         PlayersPanel playersPanel = getPlayers();
         playersPanel.setActualPlayer(player);
     }
 
+    /**
+     * Save id of client's player and mark his SinglePlayerPanel.
+     * Executes setClientNumber() in PlayerPanel.
+     * @param player id of this client player
+     * @throws InvalidPanelException when PlayersPanel is not added to panel map
+     */
     public void setClientNumber(int player) throws InvalidPanelException {
         PlayersPanel playersPanel = getPlayers();
         playersPanel.setClientNumber(player);
     }
 
+    /**
+     * Show information message in proper box.
+     * Executes setMessage() in InformationPanel.
+     * @param message message which has to bo shown in box
+     * @throws InvalidPanelException when InformationPanel is not added to panel map
+     */
     public void setInfoMessage(String message) throws InvalidPanelException {
         Panel panel = boardPanels.get("info");
         if(!(panel instanceof InformationPanel)) {
@@ -87,6 +134,12 @@ public class GraphicsManager {
         informationPanel.setMessage(message);
     }
 
+    /**
+     * Change button appearance according to given GameState argument.
+     * Executes setGameState() in ButtonPanel.
+     * @param gameState actual game state
+     * @throws InvalidPanelException when ButtonPanel is not added to panel map
+     */
     public void changeGameState(GameState gameState) throws InvalidPanelException {
         Panel panel = boardPanels.get("button");
         if(!(panel instanceof ButtonPanel)) {
@@ -96,12 +149,29 @@ public class GraphicsManager {
         boardPanel.setGameState(gameState);
     }
 
+    /**
+     * Changes pawn on a proper field.
+     * @param row row of field
+     * @param column column of field
+     * @param player id of player
+     * @throws InvalidPanelException when BoardPanel is not added to panel map
+     * @throws IndexOutOfBoundsException when given field does not exist
+     */
     public void setPlayerOnCircle(int row, int column, int player)
             throws InvalidPanelException, IndexOutOfBoundsException {
         BoardPanel boardPanel = getBoard();
         boardPanel.setPlayerOnCircle(row, column, player);
     }
 
+    /**
+     * Move a pawn from 1st field to 2nd field.
+     * @param fromRow row of 1st field
+     * @param fromColumn column of 1st field
+     * @param toRow row of 2nd field
+     * @param toColumn column of 2nd field
+     * @throws InvalidPanelException when BoardPanel is not added to panel map
+     * @throws IndexOutOfBoundsException when one of given fields does not exist
+     */
     public void setPlayerMove(int fromRow, int fromColumn,
                               int toRow, int toColumn)
             throws InvalidPanelException, IndexOutOfBoundsException {
@@ -110,6 +180,11 @@ public class GraphicsManager {
         boardPanel.setPlayerOnCircle(toRow, toColumn, player);
     }
 
+    /**
+     * Set 1st field on handling player's move.
+     * @param row row of clicked field
+     * @param column column of clicked field
+     */
     public void setFromPointClick(int row, int column) {
         if(row < 0 || column < 0) {
             fromField = null;
@@ -119,6 +194,11 @@ public class GraphicsManager {
         }
     }
 
+    /**
+     * Set 2nd field on handling player's move.
+     * @param row row of clicked field
+     * @param column column of clicked field
+     */
     public void setToPointClick(int row, int column) {
         if(row >= 0 && column >= 0 && fromField != null) {
             toField = new SingleField(row, column);
@@ -131,26 +211,30 @@ public class GraphicsManager {
         toField = null;
     }
 
+    /**
+     * Open option pane after player won the game.
+     */
     public void openWinGui() {
         EndGameOptionPane.popup(jFrame, "You won the game!");
     }
 
+    /**
+     * Open option pane after another player won the game.
+     */
     public void openLoseGui(String string) {
         EndGameOptionPane.popup(jFrame, string);
     }
 
+    /**
+     * Open option pane after one of players left the game.
+     */
     public void openLeftGui() {
         EndGameOptionPane.popup(jFrame, "One of the players left the game!");
     }
 
-    private void initBoard() {
-        this.boardPanels = new ConcurrentHashMap<>();
-        boardPanels.put("info", new InformationPanel(jFrame));
-        boardPanels.put("players", new PlayersPanel(jFrame));
-        boardPanels.put("button", new ButtonPanel(jFrame));
-        boardPanels.put("board", new BoardPanel(jFrame, boardSize));
-    }
-
+    /**
+     * Initialize basic static variables.
+     */
     public void initVariables() {
         frameName = "Chinese Checkers";
         playerColors = new Color[6];
@@ -160,6 +244,15 @@ public class GraphicsManager {
         playerColors[3] = Color.RED;
         playerColors[4] = Color.CYAN;
         playerColors[5] = Color.MAGENTA;
+    }
+
+
+    private void initBoard() {
+        this.boardPanels = new ConcurrentHashMap<>();
+        boardPanels.put("info", new InformationPanel(jFrame));
+        boardPanels.put("players", new PlayersPanel(jFrame));
+        boardPanels.put("button", new ButtonPanel(jFrame));
+        boardPanels.put("board", new BoardPanel(jFrame, boardSize));
     }
 
     private BoardPanel getBoard() throws InvalidPanelException {

@@ -1,7 +1,5 @@
 package client.game;
 
-import client.game.states.GameState;
-import client.graphics.GraphicsManager;
 import client.graphics.InvalidPanelException;
 import connection.Interpreter;
 
@@ -9,10 +7,19 @@ public class GameInterpreter implements Interpreter {
 
     private final GameManager gameManager;
 
+    /**
+     * Supports connection with server and handles exceptions.
+     * @param gameManager manager of active game
+     */
     public GameInterpreter(GameManager gameManager) {
         this.gameManager = gameManager;
     }
 
+    /**
+     * Execute GameManager's method setPlayers()
+     * with array of nicknames from argument.
+     * @param s string with all nicknames separated by ','
+     */
     @Override
     public void setPlayers(String s) {
         // TODO
@@ -34,7 +41,6 @@ public class GameInterpreter implements Interpreter {
             System.out.println("Invalid point position from server!");
         }
     }
-
 
     @Override
     public void message(String substring) {
@@ -79,6 +85,11 @@ public class GameInterpreter implements Interpreter {
         numPlayers(players);
     }
 
+    /**
+     * Preferred to use setPlayer().
+     * @param players amount of players
+     */
+    @Deprecated
     @Override
     public void numPlayers(int players) {
         try {

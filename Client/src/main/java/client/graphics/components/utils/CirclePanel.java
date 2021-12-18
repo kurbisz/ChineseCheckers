@@ -1,6 +1,5 @@
 package client.graphics.components.utils;
 
-import client.CheckersClient;
 import client.graphics.GraphicsManager;
 import client.graphics.listener.circle.CircleListener;
 import client.graphics.listener.circle.EmptyCircleListener;
@@ -8,8 +7,6 @@ import client.graphics.listener.circle.PlayerCircleListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class CirclePanel extends JPanel {
 
@@ -23,6 +20,13 @@ public class CirclePanel extends JPanel {
 
     private CircleListener circleListener;
 
+    /**
+     * Initialize new circle with proper row and column.
+     * On the beginning create mouse listener and register it.
+     * @param frame actual JFrame of application
+     * @param row number of field's row
+     * @param column number of field's column
+     */
     public CirclePanel(JFrame frame, int row, int column) {
         this.jFrame = frame;
         this.rowNumber = row;
@@ -31,6 +35,11 @@ public class CirclePanel extends JPanel {
         this.addMouseListener(circleListener);
     }
 
+    /**
+     * Draw small black circle on empty field
+     * or big painted circle on player's field.
+     * @param g graphics of this component
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -38,7 +47,7 @@ public class CirclePanel extends JPanel {
         if(playerNr < 0) {
             g.setColor(Color.BLACK);
             int radius = (int) (getWidth() * size);
-            g.fillOval(radius/2, radius/2, radius, radius);
+            g.fillOval(radius / 2, radius / 2, radius, radius);
         }
         else {
             g.setColor(GraphicsManager.playerColors[playerNr]);
@@ -48,6 +57,11 @@ public class CirclePanel extends JPanel {
         }
     }
 
+    /**
+     * Change its owner (player on this field).
+     * @param player id of new player, -1 if it has to be empty
+     * @return id of previous player
+     */
     public int setPlayer(int player) {
         int copy = playerNr;
         this.playerNr = player;
@@ -56,6 +70,11 @@ public class CirclePanel extends JPanel {
         return copy;
     }
 
+    /**
+     * Remove actual listeners and register proper
+     * listener depending on information if this
+     * field is empty or not.
+     */
     private void refreshListener() {
         this.removeMouseListener(circleListener);
         if(playerNr<0) {

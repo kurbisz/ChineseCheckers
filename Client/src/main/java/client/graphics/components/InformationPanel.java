@@ -9,10 +9,20 @@ public class InformationPanel extends Panel {
 
     JLabel message;
 
+    /**
+     * Responsible for information rectangle and text
+     * in left bottom corner (mainly handles and
+     * shows information from server).
+     * @param frame
+     */
     public InformationPanel(JFrame frame) {
         super(frame);
     }
 
+    /**
+     * Create text 'Information' and rectangle for
+     * incoming information. Sets graphic properties.
+     */
     @Override
     public void initialize() {
 
@@ -34,6 +44,10 @@ public class InformationPanel extends Panel {
 
     }
 
+    /**
+     * Sets message which has to be shown in this box.
+     * @param infoMsg message which has to be displayed
+     */
     public void setMessage(String infoMsg) {
         message.setText(infoMsg);
     }

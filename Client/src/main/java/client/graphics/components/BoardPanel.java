@@ -7,16 +7,25 @@ import java.awt.*;
 
 public class BoardPanel extends Panel {
 
-    int boardSize;
+    private int boardSize;
 
-    SingleRowPanel boardRow[];
+    private SingleRowPanel boardRow[];
 
+    /**
+     * Responsible for board part of application.
+     * @param jFrame actual jFrame of application
+     * @param size size of a board (amount of rows of a player's triangle)
+     */
     public BoardPanel(JFrame jFrame, int size) {
         super(jFrame);
         this.boardSize = size;
         this.boardRow = new SingleRowPanel[getAmountOfRows()];
     }
 
+    /**
+     * Creates all circles needed to be placed on board.
+     * Sets appropriate visual layouts.
+     */
     @Override
     public void initialize() {
         int counter = 0;
@@ -72,6 +81,15 @@ public class BoardPanel extends Panel {
 
     }
 
+    /**
+     * Executes setPlayer() in appropriate SingleRowPanel.
+     * @param row row nr of this field
+     * @param column column nr of this field
+     * @param player id of new player
+     * @return id of previous player on this field
+     * @throws IndexOutOfBoundsException when row is not
+     * smaller than amount of rows on board
+     */
     public int setPlayerOnCircle(int row, int column, int player) throws IndexOutOfBoundsException {
         return boardRow[row].setPlayer(column, player);
     }

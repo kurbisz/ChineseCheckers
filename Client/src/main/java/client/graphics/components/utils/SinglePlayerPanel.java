@@ -15,11 +15,17 @@ public class SinglePlayerPanel extends JPanel {
     private int playerNr;
     private JLabel playerLabel;
 
+    /**
+     * Initialize new rectangle with player's nickname.
+     * On the beginning set its graphic settings.
+     * @param name
+     * @param nr
+     */
     public SinglePlayerPanel(String name, int nr) {
         super();
         this.playerNr = nr;
         this.nickName = name;
-        this.setAlignmentY(BOTTOM_ALIGNMENT);
+        this.setAlignmentY(CENTER_ALIGNMENT);
         this.setBackground(Color.GRAY);
         init();
     }
@@ -31,6 +37,13 @@ public class SinglePlayerPanel extends JPanel {
         this.add(playerLabel);
     }
 
+    /**
+     * Set this rectangle to main/normal panel (for this client).
+     * For example if this client is player nr 4 then
+     * panel nr 4 is current main panel.
+     * Change its size and set weight of text.
+     * @param isClient set true if this is main panel, false for normal panel
+     */
     public void setClient(boolean isClient) {
         int fontSize = smallFontSize;
         int weight = Font.PLAIN;
@@ -47,6 +60,11 @@ public class SinglePlayerPanel extends JPanel {
         playerLabel.setFont(font);
     }
 
+    /**
+     * Change appearance of panel of player which
+     * is actually making moves.
+     * @param isPlaying set true if this player is playing, false otherwise
+     */
     public void setActualPlaying(boolean isPlaying) {
         Font font = playerLabel.getFont();
         Map attributes = font.getAttributes();
@@ -58,6 +76,11 @@ public class SinglePlayerPanel extends JPanel {
         playerLabel.setFont(font);
     }
 
+
+    /**
+     * Change nickname of a player and update panel.
+     * @param nick new nickname of player
+     */
     public void setNickName(String nick) {
         this.nickName = nick;
         this.playerLabel.setText(nick);
