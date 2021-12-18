@@ -11,5 +11,7 @@ public interface Interpreter {
     void size(int size, int players);
     void numPlayers(int players);
     void setField(int row, int col, int id);
-    void turn();
+    void changeTurn(int id);
+    void setTurn();
+    void setClientNumber(int id);
 }
