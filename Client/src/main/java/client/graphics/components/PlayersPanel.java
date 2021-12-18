@@ -10,6 +10,8 @@ public class PlayersPanel extends Panel {
     JPanel playerCounter;
     JLabel playerCounterLabel;
 
+    private int clientNumber = 0;
+
     SinglePlayerPanel singlePlayerPanel[] = new SinglePlayerPanel[6];
 
     public PlayersPanel(JFrame frame) {
@@ -51,7 +53,20 @@ public class PlayersPanel extends Panel {
         }
     }
 
+    public void setActualPlayer(int player) {
+        for(int i = 0; i < 6; i++) {
+            if(i == player) {
+                continue;
+            }
+            singlePlayerPanel[i].setActualPlaying(false);
+        }
+        singlePlayerPanel[player].setActualPlaying(true);
+    }
 
-
+    public void setClientNumber(int player) {
+        singlePlayerPanel[clientNumber].setClient(false);
+        clientNumber = player;
+        singlePlayerPanel[clientNumber].setClient(true);
+    }
 
 }

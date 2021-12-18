@@ -2,7 +2,7 @@ package client.game.states;
 
 public interface GameStateBehaviour {
 
-
+    GameState getState();
 
     GameStateBehaviour startGame();
 
@@ -11,5 +11,7 @@ public interface GameStateBehaviour {
     GameStateBehaviour endMove();
 
     GameStateBehaviour finish();
+
+    void sendCloseInfo();
 
 }

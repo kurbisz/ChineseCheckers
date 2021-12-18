@@ -1,6 +1,7 @@
 package client;
 
 import client.game.GameInterpreter;
+import client.game.GameManager;
 import client.game.states.GameState;
 import client.graphics.GraphicsManager;
 import connection.ConnectionManager;
@@ -17,14 +18,13 @@ public class CheckersClient {
 
     private ConnectionManager connectionManager;
     private GraphicsManager graphicsManager;
-    private Interpreter interpreter;
+    private GameManager gameManager;
 
     public CheckersClient() {
         connectionManager = new ConnectionManager();
         graphicsManager = new GraphicsManager();
         graphicsManager.initVariables();
-        interpreter = new GameInterpreter(GameState.WAITING_FOR_GAME, graphicsManager);
-        Receiver.setInterpreter(interpreter);
+        gameManager = new GameManager(graphicsManager);
 
     }
 
@@ -32,8 +32,12 @@ public class CheckersClient {
         graphicsManager.createNewWindow();
     }
 
+    public void onWindowClose() {
+        gameManager.onWindowClose();
+    }
+
     public void connectClientToServer(String serverAddress, int serverPort, String nickName)
-            throws UnknownHostException, IOException {
+            throws IOException {
         graphicsManager.lockAppSize();
         connectionManager.createNewConnection(serverAddress, serverPort, nickName);
     }

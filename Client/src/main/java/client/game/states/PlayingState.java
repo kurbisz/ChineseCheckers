@@ -1,6 +1,13 @@
 package client.game.states;
 
+import connection.Messenger;
+
 public class PlayingState implements GameStateBehaviour{
+
+    @Override
+    public GameState getState() {
+        return GameState.PLAYING;
+    }
 
     @Override
     public GameStateBehaviour startGame() {
@@ -21,4 +28,11 @@ public class PlayingState implements GameStateBehaviour{
     public GameStateBehaviour finish() {
         return GameState.FINISHED.getStateBehaviour();
     }
+
+    @Override
+    public void sendCloseInfo() {
+        // TODO uncomment when Messenger is ready
+        // Messenger.getInstance().leaveGame();
+    }
+
 }

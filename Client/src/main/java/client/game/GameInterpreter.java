@@ -5,16 +5,12 @@ import client.graphics.GraphicsManager;
 import client.graphics.InvalidPanelException;
 import connection.Interpreter;
 
-import javax.swing.*;
-
 public class GameInterpreter implements Interpreter {
 
-    GameState gameState;
-    GraphicsManager graphicsManager;
+    private final GameManager gameManager;
 
-    public GameInterpreter(GameState state, GraphicsManager graphics) {
-        this.gameState = state;
-        this.graphicsManager = graphics;
+    public GameInterpreter(GameManager gameManager) {
+        this.gameManager = gameManager;
     }
 
     @Override
@@ -25,7 +21,7 @@ public class GameInterpreter implements Interpreter {
     @Override
     public void move(int fromRow, int fromColumn, int toRow, int toColumn) {
         try {
-            graphicsManager.setPlayerMove(fromRow, fromColumn, toRow, toColumn);
+            gameManager.setPlayerMove(fromRow, fromColumn, toRow, toColumn);
         } catch (InvalidPanelException e) {
             System.out.println("Error while making move!");
         } catch (IndexOutOfBoundsException e) {
@@ -37,7 +33,7 @@ public class GameInterpreter implements Interpreter {
     @Override
     public void message(String substring) {
         try {
-            graphicsManager.setInfoMessage(substring);
+            gameManager.setInfoMessage(substring);
         } catch (InvalidPanelException e) {
             System.out.println("Information from server: " + substring);
         }
@@ -46,8 +42,11 @@ public class GameInterpreter implements Interpreter {
     @Override
     public void start() {
         try {
-            gameState.getStateBehaviour().startGame();
-            graphicsManager.changeGameState(gameState);
+            gameManager.start();
+            // TODO remove next lines - just tests
+            // setClientNumber(1);
+            // changeTurn(1);
+            // setTurn();
         } catch (InvalidPanelException e) {
             System.out.println("Error while initializing board!");
         }
@@ -55,30 +54,29 @@ public class GameInterpreter implements Interpreter {
 
     @Override
     public void victory() {
-
+        gameManager.openWinGui();
     }
 
     @Override
     public void defeat(String name) {
-
+        gameManager.openLoseGui(name);
     }
 
     @Override
     public void left() {
-
+        gameManager.openLeftGui();
     }
 
     @Override
     public void size(int size, int players) {
-        graphicsManager.setBoardSize(size);
-        graphicsManager.drawBoard();
+        gameManager.size(size);
         numPlayers(players);
     }
 
     @Override
     public void numPlayers(int players) {
         try {
-            graphicsManager.updatePlayers(players);
+            gameManager.updatePlayers(players);
         } catch (InvalidPanelException e) {
             System.out.println("Error while updating players!");
         }
@@ -87,7 +85,7 @@ public class GameInterpreter implements Interpreter {
     @Override
     public void setField(int row, int col, int id) {
         try {
-            graphicsManager.setPlayerOnCircle(row, col, id);
+            gameManager.setPlayerOnCircle(row, col, id);
         } catch (InvalidPanelException e) {
             System.out.println("Error while loading board!");
         } catch (IndexOutOfBoundsException e) {
@@ -98,10 +96,33 @@ public class GameInterpreter implements Interpreter {
     @Override
     public void turn() {
         try {
-            gameState.getStateBehaviour().endMove();
-            graphicsManager.changeGameState(gameState);
+            gameManager.endMove();
         } catch (InvalidPanelException e) {
             System.out.println("Error while finishing move!");
+        }
+    }
+
+    public void setClientNumber(int player) {
+        try {
+            gameManager.setClientNumber(player);
+        } catch (InvalidPanelException e) {
+            System.out.println("Error while setting client number!");
+        }
+    }
+
+    public void setTurn() {
+        try {
+            gameManager.startMove();
+        } catch (InvalidPanelException e) {
+            System.out.println("Error while starting your turn!");
+        }
+    }
+
+    public void changeTurn(int player) {
+        try {
+            gameManager.setActualPlayer(player);
+        } catch (InvalidPanelException e) {
+            System.out.println("Error while changing active player!");
         }
     }
 

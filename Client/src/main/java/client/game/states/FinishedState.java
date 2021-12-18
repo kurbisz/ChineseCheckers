@@ -1,6 +1,11 @@
 package client.game.states;
 
-public class FinishedState implements GameStateBehaviour{
+public class FinishedState implements GameStateBehaviour {
+
+    @Override
+    public GameState getState() {
+        return GameState.FINISHED;
+    }
 
     @Override
     public GameStateBehaviour startGame() {
@@ -21,4 +26,11 @@ public class FinishedState implements GameStateBehaviour{
     public GameStateBehaviour finish() {
         return this;
     }
+
+    @Override
+    public void sendCloseInfo() {
+
+    }
+
+
 }

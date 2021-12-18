@@ -33,7 +33,7 @@ public class GraphicsManager {
         jFrame.addMouseListener(new MouseListeners(this));
         jFrame.setVisible(true);
 
-        openConnectGui();
+        ConnectOptionPane.popup(jFrame);
     }
 
     public void lockAppSize() {
@@ -58,12 +58,18 @@ public class GraphicsManager {
     }
 
     public void updatePlayers(int players) throws InvalidPanelException {
-        Panel panel = boardPanels.get("players");
-        if(panel == null || !(panel instanceof PlayersPanel)) {
-            throw new InvalidPanelException();
-        }
-        PlayersPanel playersPanel = (PlayersPanel) panel;
+        PlayersPanel playersPanel = getPlayers();
         playersPanel.updatePlayerAmount(players);
+    }
+
+    public void setActualPlayer(int player) throws InvalidPanelException {
+        PlayersPanel playersPanel = getPlayers();
+        playersPanel.setActualPlayer(player);
+    }
+
+    public void setClientNumber(int player) throws InvalidPanelException {
+        PlayersPanel playersPanel = getPlayers();
+        playersPanel.setClientNumber(player);
     }
 
     public void setInfoMessage(String message) throws InvalidPanelException {
@@ -110,22 +116,29 @@ public class GraphicsManager {
     public void setToPointClick(int row, int column) {
         if(row >= 0 && column >= 0 && fromField != null) {
             toField = new SingleField(row, column);
-            System.out.println("click: " + fromField.getRow() + "." + fromField.getColumn() + " / " + toField.getRow() + "." + toField.getColumn());
-            // TODO uncomment when messenger is ok
-            /*Messenger.getInstance().move(
+            // System.out.println("click: " + fromField.getRow() + "." + fromField.getColumn() + " / " + toField.getRow() + "." + toField.getColumn());
+            Messenger.getInstance().move(
                     fromField.getRow(), fromField.getColumn(),
-                    toField.getRow(), toField.getColumn());*/
+                    toField.getRow(), toField.getColumn());
         }
         fromField = null;
         toField = null;
     }
 
-    private void openConnectGui() {
-        ConnectOptionPane.popup(jFrame);
+    public void openWinGui() {
+        EndGameOptionPane.popup(jFrame, "You won the game!");
+    }
+
+    public void openLoseGui(String string) {
+        EndGameOptionPane.popup(jFrame, string);
+    }
+
+    public void openLeftGui() {
+        EndGameOptionPane.popup(jFrame, "One of the players left the game!");
     }
 
     private void initBoard() {
-        this.boardPanels = new ConcurrentHashMap<String, Panel>();
+        this.boardPanels = new ConcurrentHashMap<>();
         boardPanels.put("info", new InformationPanel(jFrame));
         boardPanels.put("players", new PlayersPanel(jFrame));
         boardPanels.put("button", new ButtonPanel(jFrame));
@@ -148,8 +161,15 @@ public class GraphicsManager {
         if(panel == null || !(panel instanceof BoardPanel)) {
             throw new InvalidPanelException();
         }
-        BoardPanel boardPanel = (BoardPanel) panel;
-        return boardPanel;
+        return (BoardPanel) panel;
+    }
+
+    private PlayersPanel getPlayers() throws InvalidPanelException {
+        Panel panel = boardPanels.get("players");
+        if(panel == null || !(panel instanceof PlayersPanel)) {
+            throw new InvalidPanelException();
+        }
+        return (PlayersPanel) panel;
     }
 
 }

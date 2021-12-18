@@ -38,7 +38,7 @@ public class CirclePanel extends JPanel {
         if(playerNr < 0) {
             g.setColor(Color.BLACK);
             int radius = (int) (getWidth() * size);
-            g.fillOval(0, 0, radius, radius);
+            g.fillOval(radius/2, radius/2, radius, radius);
         }
         else {
             g.setColor(GraphicsManager.playerColors[playerNr]);
