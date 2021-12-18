@@ -15,7 +15,13 @@ public class GameInterpreter implements Interpreter {
 
     @Override
     public void setPlayers(String s) {
-
+        // TODO
+        try {
+            String[] players = s.split(",");
+            gameManager.updatePlayers(players);
+        } catch (InvalidPanelException e) {
+            System.out.println("Error while updating players!");
+        }
     }
 
     @Override

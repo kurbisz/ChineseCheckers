@@ -48,14 +48,19 @@ public class SinglePlayerPanel extends JPanel {
     }
 
     public void setActualPlaying(boolean isPlaying) {
-            Font font = playerLabel.getFont();
-            Map attributes = font.getAttributes();
-            if(isPlaying)
-                attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-            else
-                attributes.remove(TextAttribute.UNDERLINE);
-            font = font.deriveFont(attributes);
-            playerLabel.setFont(font);
+        Font font = playerLabel.getFont();
+        Map attributes = font.getAttributes();
+        if(isPlaying)
+            attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        else
+            attributes.remove(TextAttribute.UNDERLINE);
+        font = font.deriveFont(attributes);
+        playerLabel.setFont(font);
+    }
+
+    public void setNickName(String nick) {
+        this.nickName = nick;
+        this.playerLabel.setText(nick);
     }
 
 }

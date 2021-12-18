@@ -53,6 +53,18 @@ public class PlayersPanel extends Panel {
         }
     }
 
+    public void updatePlayers(String[] players) {
+        int am = players.length;
+        playerCounterLabel.setText("Players: " + am + "/6");
+        for(int i = 0; i < am; i++) {
+            singlePlayerPanel[i].setNickName(players[i]);
+            singlePlayerPanel[i].setVisible(true);
+        }
+        for(int i = am; i < 6; i++) {
+            singlePlayerPanel[i].setVisible(false);
+        }
+    }
+
     public void setActualPlayer(int player) {
         for(int i = 0; i < 6; i++) {
             if(i == player) {
@@ -63,10 +75,14 @@ public class PlayersPanel extends Panel {
         singlePlayerPanel[player].setActualPlaying(true);
     }
 
+
     public void setClientNumber(int player) {
         singlePlayerPanel[clientNumber].setClient(false);
         clientNumber = player;
-        singlePlayerPanel[clientNumber].setClient(true);
+        if(clientNumber<0) {
+            singlePlayerPanel[clientNumber].setClient(true);
+        }
     }
+
 
 }

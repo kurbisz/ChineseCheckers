@@ -62,6 +62,12 @@ public class GraphicsManager {
         playersPanel.updatePlayerAmount(players);
     }
 
+    public void updatePlayers(String[] players)
+            throws InvalidPanelException {
+        PlayersPanel playersPanel = getPlayers();
+        playersPanel.updatePlayers(players);
+    }
+
     public void setActualPlayer(int player) throws InvalidPanelException {
         PlayersPanel playersPanel = getPlayers();
         playersPanel.setActualPlayer(player);
@@ -74,7 +80,7 @@ public class GraphicsManager {
 
     public void setInfoMessage(String message) throws InvalidPanelException {
         Panel panel = boardPanels.get("info");
-        if(panel == null || !(panel instanceof InformationPanel)) {
+        if(!(panel instanceof InformationPanel)) {
             throw new InvalidPanelException();
         }
         InformationPanel informationPanel = (InformationPanel) panel;
@@ -83,7 +89,7 @@ public class GraphicsManager {
 
     public void changeGameState(GameState gameState) throws InvalidPanelException {
         Panel panel = boardPanels.get("button");
-        if(panel == null || !(panel instanceof ButtonPanel)) {
+        if(!(panel instanceof ButtonPanel)) {
             throw new InvalidPanelException();
         }
         ButtonPanel boardPanel = (ButtonPanel) panel;
@@ -158,7 +164,7 @@ public class GraphicsManager {
 
     private BoardPanel getBoard() throws InvalidPanelException {
         Panel panel = boardPanels.get("board");
-        if(panel == null || !(panel instanceof BoardPanel)) {
+        if(!(panel instanceof BoardPanel)) {
             throw new InvalidPanelException();
         }
         return (BoardPanel) panel;
@@ -166,7 +172,7 @@ public class GraphicsManager {
 
     private PlayersPanel getPlayers() throws InvalidPanelException {
         Panel panel = boardPanels.get("players");
-        if(panel == null || !(panel instanceof PlayersPanel)) {
+        if(!(panel instanceof PlayersPanel)) {
             throw new InvalidPanelException();
         }
         return (PlayersPanel) panel;

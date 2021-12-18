@@ -71,6 +71,11 @@ public class GameManager {
         graphicsManager.updatePlayers(players);
     }
 
+    public void updatePlayers(String[] players)
+            throws InvalidPanelException {
+        graphicsManager.updatePlayers(players);
+    }
+
     public void setPlayerOnCircle(int row, int col, int id)
             throws InvalidPanelException, IndexOutOfBoundsException {
         graphicsManager.setPlayerOnCircle(row, col, id);
