@@ -55,13 +55,23 @@ public class Game {
         }
         running = true;
     }
+    public void checkFinished() {
+        int p = board.checkFinished();
+        if (p == -1) {
+            return;
+        }
+        Player winner = players.get(p);
+        running = false;
+        winner.notify("VICTORY");
+        notifer.notifyAllExceptPlayer("DEFEAT#" + winner.getName(), this, winner);
+    }
     public synchronized void move(Player p, int fromR, int fromC, int toR, int toC) throws InvalidMoveException, InvalidPlayerException {
         if (p != currentPlayer) {
             throw new InvalidPlayerException();
         }
         board.move(p.getId(), fromR, fromC, toR, toC);
         notifer.notifyAll(String.format("MOVE %d %d %d %d", fromR, fromC, toR, toC), this);
-
+        checkFinished();
     }
     public void switchPlayer(Player p) throws InvalidPlayerException {
         if (p != currentPlayer) {
@@ -69,9 +79,8 @@ public class Game {
         }
         board.endMove();
         currentPlayer = currentPlayer.getNext();
-        notifer.notifyAll("TURN", this);
-        currentPlayer.notify("MESSAGE Your move");
-        notifer.notifyAllExceptPlayer("MESSAGE Wait for other player to move", this, currentPlayer);
+        notifer.notifyAllExceptPlayer("TURN " + currentPlayer.getId(), this, currentPlayer);
+        currentPlayer.notify("TURNSET");
     }
     public List<Player> getAllPlayers() {
         return players;

@@ -18,8 +18,8 @@ public class Messenger {
     public void move(int fromR, int fromC, int toR, int toC) {
         cmd.send("MOVE "+fromR+" "+fromC+" "+toR+" "+toC);
     }
-    public void end() {
-        cmd.send("QUIT");
+    public void leave() {
+        cmd.send("LEAVE");
     }
     public void name(String name) {
         cmd.send("NAME " + name);

@@ -15,7 +15,9 @@ public class Board {
         addNeighbours();
         this.moving = new Move();
     }
-
+    public int checkFinished() {
+        return -1;
+    }
     public Field getField(int row, int col) {
         return tab[row][col];
     }
@@ -105,9 +107,6 @@ public class Board {
         for (int x=0; x< tab[y2].length;x++) {
                 tab[y2][x].addNeighbour(tab[y2- 1][x+size]);
                 tab[y2][x].addNeighbour(tab[y2- 1][x+size + 1]);
-        }
-        for (int i=0;i<tab.length;i++) {
-            System.out.println(tab[i].length);
         }
     }
 

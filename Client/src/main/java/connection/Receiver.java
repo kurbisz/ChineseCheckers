@@ -26,7 +26,7 @@ public class Receiver {
             while (scanner.hasNextLine()) {
                 response = scanner.nextLine();
                 if (response.startsWith("PLAYERS")) {
-                    String[] tab = response.split(" ");
+                    String[] tab = response.split("#");
                     interpreter.setPlayers(tab[1]);
                 } else if (response.startsWith("MOVE")) {
                     String[] tab = response.split(" ");
@@ -42,7 +42,7 @@ public class Receiver {
                 } else if (response.startsWith("VICTORY")) {
                     interpreter.victory();
                 } else if (response.startsWith("DEFEAT")) {
-                    String[] tab = response.split(" ");
+                    String[] tab = response.split("#");
                     interpreter.defeat(tab[1]);
                 } else if (response.startsWith("LEFT")) {
                     interpreter.left();
@@ -56,13 +56,21 @@ public class Receiver {
                     int players = Integer.parseInt(tab[1]);
                     interpreter.numPlayers(players);
                 } else if (response.startsWith("TURN")) {
-                    interpreter.turn();
+                    String[] tab = response.split(" ");
+                    int num = Integer.parseInt(tab[1]);
+                    interpreter.changeTurn(num);
                 } else if (response.startsWith("SET")) {
                     String[] tab = response.split(" ");
                     int row = Integer.parseInt(tab[1]);
                     int col = Integer.parseInt(tab[2]);
                     int id = Integer.parseInt(tab[3]);
                     interpreter.setField(row, col, id);
+                } else if (response.startsWith("SPN")) {
+                    String[] tab = response.split(" ");
+                    int num = Integer.parseInt(tab[1]);
+                    interpreter.setClientNumber(num);
+                } else if (response.startsWith("TURNSET")) {
+                    interpreter.setTurn();
                 }
             }
 
