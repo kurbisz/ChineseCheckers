@@ -55,10 +55,6 @@ public class GameInterpreter implements Interpreter {
     public void start() {
         try {
             gameManager.start();
-            // TODO remove next lines - just tests
-            // setClientNumber(1);
-            // changeTurn(1);
-            // setTurn();
         } catch (InvalidPanelException e) {
             System.out.println("Error while initializing board!");
         }
@@ -111,14 +107,6 @@ public class GameInterpreter implements Interpreter {
     }
 
     @Override
-    public void turn() {
-        try {
-            gameManager.endMove();
-        } catch (InvalidPanelException e) {
-            System.out.println("Error while finishing move!");
-        }
-    }
-
     public void setClientNumber(int player) {
         try {
             gameManager.setClientNumber(player);
@@ -127,6 +115,7 @@ public class GameInterpreter implements Interpreter {
         }
     }
 
+    @Override
     public void setTurn() {
         try {
             gameManager.startMove();
@@ -135,6 +124,7 @@ public class GameInterpreter implements Interpreter {
         }
     }
 
+    @Override
     public void changeTurn(int player) {
         try {
             gameManager.setActualPlayer(player);
