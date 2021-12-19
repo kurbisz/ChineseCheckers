@@ -70,6 +70,7 @@ public class Player implements Runnable {
                     game.move(this, fromR, fromC, toR, toC);
                 } else if (command.startsWith("NAME")) {
                     this.name = command.substring(4);
+                    game.sendNames();
                 } else if (command.startsWith("PASS")) {
                     game.switchPlayer(this);
                 } else if (command.startsWith("LEAVE")) {

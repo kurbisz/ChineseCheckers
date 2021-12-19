@@ -31,7 +31,6 @@ public class Game {
         Player p = new Player(accept, i, this);
         players.add(p);
         System.out.println("New player connected");
-        notifer.notifyAllExceptPlayer("NUM " + numPlayers(), this, p);
         return p;
     }
     public void start() throws CannotStartGameException {
@@ -53,7 +52,6 @@ public class Game {
             p.notifyStart();
         }
         running = true;
-        sendNames();
         notifer.notifyAll("TURN " + currentPlayer.getId(), this);
         currentPlayer.notify("TURNSET");
     }
@@ -93,7 +91,7 @@ public class Game {
     public int numPlayers() {
         return players.size();
     }
-    private void sendNames(){
+    public void sendNames(){
         String msg = "";
         for (Player p: players) {
             msg += p.getName()+"$";
@@ -102,11 +100,11 @@ public class Game {
     }
     public void leave(Player p) {
         notifer.notifyAll("MESSAGE PLAYER " + p.getId() + " LEFT", this);
-        if(!running) {
+        if (!running) {
             players.remove(p);
-            notifer.notifyAll("LLOBBY "+p.getId(),this);
+            sendNames();
         }
-        if(running) {
+        if (running) {
             notifer.notifyAll("LEFT", this);
         }
     }
