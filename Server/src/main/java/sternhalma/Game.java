@@ -79,7 +79,7 @@ public class Game {
         }
         board.endMove();
         currentPlayer = currentPlayer.getNext();
-        notifer.notifyAllExceptPlayer("TURN " + currentPlayer.getId(), this, currentPlayer);
+        notifer.notifyAll("TURN " + currentPlayer.getId(), this);
         currentPlayer.notify("TURNSET");
     }
     public List<Player> getAllPlayers() {

@@ -2,6 +2,7 @@ package sternhalma.board;
 
 import sternhalma.Game;
 import sternhalma.exceptions.InvalidMoveException;
+import sternhalma.exceptions.InvalidPlayerException;
 
 public class Board {
     private int size;
@@ -24,7 +25,7 @@ public class Board {
     public int getRowSize(int y) {
         return tab[y].length;
     }
-    public void move(int id, int fromR, int fromC, int toR, int toC) throws InvalidMoveException {
+    public void move(int id, int fromR, int fromC, int toR, int toC) throws InvalidMoveException, InvalidPlayerException {
         Field from = getField(fromR, fromC);
         Field to = getField(toR, toC);
         moving.move(id, from, to);

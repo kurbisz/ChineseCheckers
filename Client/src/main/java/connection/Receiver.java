@@ -55,6 +55,8 @@ public class Receiver {
                     String[] tab = response.split(" ");
                     int players = Integer.parseInt(tab[1]);
                     interpreter.numPlayers(players);
+                } else if (response.startsWith("TURNSET")) {
+                    interpreter.setTurn();
                 } else if (response.startsWith("TURN")) {
                     String[] tab = response.split(" ");
                     int num = Integer.parseInt(tab[1]);
@@ -69,8 +71,6 @@ public class Receiver {
                     String[] tab = response.split(" ");
                     int num = Integer.parseInt(tab[1]);
                     interpreter.setClientNumber(num);
-                } else if (response.startsWith("TURNSET")) {
-                    interpreter.setTurn();
                 }
             }
 

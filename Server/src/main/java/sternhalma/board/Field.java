@@ -19,5 +19,8 @@ public class Field {
     public void setOwner(int id) {
         owner = id;
     }
+    public int getOwner() {
+        return owner;
+    }
 
 }
