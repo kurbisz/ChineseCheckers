@@ -72,6 +72,8 @@ public class Player implements Runnable {
                     this.name = command.substring(4);
                 } else if (command.startsWith("PASS")) {
                     game.switchPlayer(this);
+                } else if (command.startsWith("LEAVE")) {
+                    game.leave(this);
                 }
             } catch (CannotStartGameException e) {
                 notify("MESSAGE Game cannot be started");
@@ -92,8 +94,7 @@ public class Player implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            notifer.notifyAll("MESSAGE PLAYER " + number + " LEFT", game);
-            notifer.notifyAll("LEFT", game);
+            game.leave(this);
             try {
                 socket.close();
             } catch (IOException e) {

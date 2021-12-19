@@ -47,7 +47,7 @@ public class Start implements StartingInterface {
             }
         }
     }
-    private void set1(int id) {
+    private void set5(int id) {
         for (int y=1;y<=size;y++) {
             for (int x=0;x<y;x++) {
                 board.getField(2*size-y,x).setOwner(id);
@@ -55,7 +55,7 @@ public class Start implements StartingInterface {
             }
         }
     }
-    private void set5(int id) {
+    private void set1(int id) {
         for (int y = 1; y <= size; y++) {
             for (int x = 0; x < y; x++) {
                 int xmax = board.getRowSize(2 * size - y) - 1;

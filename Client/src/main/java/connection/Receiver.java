@@ -46,6 +46,10 @@ public class Receiver {
                     interpreter.defeat(tab[1]);
                 } else if (response.startsWith("LEFT")) {
                     interpreter.left();
+                } else if (response.startsWith("LLOBBY")) {
+                    String[] tab = response.split(" ");
+                    int num = Integer.parseInt(tab[1]);
+                    interpreter.leftLobby(num);
                 } else if (response.startsWith("SIZE")){
                     String[] tab = response.split(" ");
                     int size = Integer.parseInt(tab[1]);

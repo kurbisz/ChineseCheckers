@@ -22,7 +22,6 @@ public class Game {
         this.size = size;
         this.board = new Board(size);
         this.start = new Start(board, size, this);
-
     }
 
     public Player createPlayer(Socket accept, int i) {
@@ -43,7 +42,7 @@ public class Game {
         int i;
         for (i = 0; i < players.size() - 1; i++) {
             Player n = players.get(i + 1);
-            players.get(0).setNext(n);
+            players.get(i).setNext(n);
         }
         Player n0 = players.get(0);
         players.get(i).setNext(n0);
@@ -54,6 +53,9 @@ public class Game {
             p.notifyStart();
         }
         running = true;
+        sendNames();
+        notifer.notifyAll("TURN " + currentPlayer.getId(), this);
+        currentPlayer.notify("TURNSET");
     }
     public void checkFinished() {
         int p = board.checkFinished();
@@ -90,5 +92,28 @@ public class Game {
     }
     public int numPlayers() {
         return players.size();
+    }
+    private void sendNames(){
+        String msg = "";
+        for (Player p: players) {
+            msg += p.getName()+"$";
+        }
+        notifer.notifyAll("PLAYERS#"+msg, this);
+    }
+    public void leave(Player p) {
+        notifer.notifyAll("MESSAGE PLAYER " + p.getId() + " LEFT", this);
+        if(!running) {
+            players.remove(p);
+            notifer.notifyAll("LLOBBY "+p.getId(),this);
+        }
+        if(running) {
+            notifer.notifyAll("LEFT", this);
+        }
+    }
+    public boolean canJoin() {
+        if(running||players.size()==6) {
+            return false;
+        }
+        return true;
     }
 }
