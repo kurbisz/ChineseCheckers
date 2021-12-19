@@ -2,8 +2,7 @@ package client.graphics.components.utils;
 
 import client.graphics.GraphicsManager;
 import client.graphics.listener.circle.CircleListener;
-import client.graphics.listener.circle.EmptyCircleListener;
-import client.graphics.listener.circle.PlayerCircleListener;
+import client.graphics.listener.circle.SingleCircleListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +30,7 @@ public class CirclePanel extends JPanel {
         this.jFrame = frame;
         this.rowNumber = row;
         this.columnNumber = column;
-        circleListener = new EmptyCircleListener(rowNumber, columnNumber);
+        circleListener = new SingleCircleListener(rowNumber, columnNumber);
         this.addMouseListener(circleListener);
     }
 
@@ -66,24 +65,8 @@ public class CirclePanel extends JPanel {
         int copy = playerNr;
         this.playerNr = player;
         this.repaint();
-        this.refreshListener();
         return copy;
     }
 
-    /**
-     * Remove actual listeners and register proper
-     * listener depending on information if this
-     * field is empty or not.
-     */
-    private void refreshListener() {
-        this.removeMouseListener(circleListener);
-        if(playerNr<0) {
-            circleListener = new EmptyCircleListener(rowNumber, columnNumber);
-        }
-        else {
-            circleListener = new PlayerCircleListener(rowNumber, columnNumber);
-        }
-        this.addMouseListener(circleListener);
-    }
 
 }

@@ -1,5 +1,7 @@
 package client.game.states;
 
+import connection.Messenger;
+
 public class WaitingForMoveState implements GameStateBehaviour {
 
     @Override
@@ -29,8 +31,7 @@ public class WaitingForMoveState implements GameStateBehaviour {
 
     @Override
     public void sendCloseInfo() {
-        // TODO uncomment when Messenger is ready
-        // Messenger.getInstance().leave();
+        Messenger.getInstance().leave();
     }
 
 }

@@ -24,7 +24,7 @@ public class GameInterpreter implements Interpreter {
     public void setPlayers(String s) {
         // TODO
         try {
-            String[] players = s.split(",");
+            String[] players = s.split("\\$");
             gameManager.updatePlayers(players);
         } catch (InvalidPanelException e) {
             System.out.println("Error while updating players!");
@@ -127,6 +127,7 @@ public class GameInterpreter implements Interpreter {
     @Override
     public void changeTurn(int player) {
         try {
+            gameManager.endMove();
             gameManager.setActualPlayer(player);
         } catch (InvalidPanelException e) {
             System.out.println("Error while changing active player!");

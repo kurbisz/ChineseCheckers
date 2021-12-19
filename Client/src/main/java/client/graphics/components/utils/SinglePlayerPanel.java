@@ -3,6 +3,7 @@ package client.graphics.components.utils;
 import client.graphics.GraphicsManager;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.util.Map;
@@ -18,14 +19,13 @@ public class SinglePlayerPanel extends JPanel {
     /**
      * Initialize new rectangle with player's nickname.
      * On the beginning set its graphic settings.
-     * @param name
-     * @param nr
+     * @param name player's nickname
+     * @param nr number of this single player panel
      */
     public SinglePlayerPanel(String name, int nr) {
         super();
         this.playerNr = nr;
         this.nickName = name;
-        this.setAlignmentY(CENTER_ALIGNMENT);
         this.setBackground(Color.GRAY);
         init();
     }
@@ -68,10 +68,13 @@ public class SinglePlayerPanel extends JPanel {
     public void setActualPlaying(boolean isPlaying) {
         Font font = playerLabel.getFont();
         Map attributes = font.getAttributes();
-        if(isPlaying)
-            attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-        else
-            attributes.remove(TextAttribute.UNDERLINE);
+        if(isPlaying) {
+            Border border = BorderFactory.createLineBorder(Color.RED, 5);
+            playerLabel.setBorder(border);
+        }
+        else {
+            playerLabel.setBorder(BorderFactory.createEmptyBorder());
+        }
         font = font.deriveFont(attributes);
         playerLabel.setFont(font);
     }

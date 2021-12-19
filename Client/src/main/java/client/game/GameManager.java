@@ -4,6 +4,7 @@ import client.game.states.GameState;
 import client.graphics.GraphicsManager;
 import client.graphics.InvalidPanelException;
 import connection.Interpreter;
+import connection.Messenger;
 import connection.Receiver;
 
 public class GameManager {
@@ -30,7 +31,7 @@ public class GameManager {
      * Send information to server about client window close.
      */
     public void onWindowClose() {
-        gameState.getStateBehaviour().sendCloseInfo();
+        Messenger.getInstance().leave();
     }
 
     /**
@@ -87,6 +88,7 @@ public class GameManager {
      * Finish game and show that one of the players left.
      */
     public void openLeftGui() {
+        gameState.getStateBehaviour().finish().sendCloseInfo();
         graphicsManager.openLeftGui();
     }
 

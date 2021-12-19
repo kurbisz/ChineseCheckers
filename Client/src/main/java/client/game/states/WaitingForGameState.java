@@ -31,8 +31,7 @@ public class WaitingForGameState implements GameStateBehaviour {
 
     @Override
     public void sendCloseInfo() {
-        // TODO uncomment when Messenger is ready
-        // Messenger.getInstance().leave();
+        Messenger.getInstance().leave();
     }
 
 }

@@ -24,10 +24,6 @@ public abstract class CircleListener implements MouseListener {
         this.graphicsManager = CheckersClient.getInstance().getGraphicsManager();
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
 
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -36,6 +32,16 @@ public abstract class CircleListener implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
 
     }
 

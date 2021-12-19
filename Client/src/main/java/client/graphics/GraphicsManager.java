@@ -3,7 +3,6 @@ package client.graphics;
 import client.game.states.GameState;
 import client.graphics.components.*;
 import client.graphics.components.Panel;
-import client.graphics.listener.MouseListeners;
 import client.graphics.listener.WindowListeners;
 import connection.Messenger;
 
@@ -34,7 +33,6 @@ public class GraphicsManager {
         jFrame.setLayout(null);
         jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         jFrame.addWindowListener(new WindowListeners());
-        jFrame.addMouseListener(new MouseListeners(this));
         jFrame.setVisible(true);
 
         ConnectOptionPane.popup(jFrame);
@@ -176,21 +174,29 @@ public class GraphicsManager {
                               int toRow, int toColumn)
             throws InvalidPanelException, IndexOutOfBoundsException {
         BoardPanel boardPanel = getBoard();
+        fromField = null;
+        toField = null;
+        setInfoMessage("");
         int player = boardPanel.setPlayerOnCircle(fromRow, fromColumn, -1);
         boardPanel.setPlayerOnCircle(toRow, toColumn, player);
     }
 
     /**
-     * Set 1st field on handling player's move.
+     * Set 1st field on handling player's move or 2nd field
+     * when 1st field (fromField variable) is not null.
      * @param row row of clicked field
      * @param column column of clicked field
      */
-    public void setFromPointClick(int row, int column) {
-        if(row < 0 || column < 0) {
-            fromField = null;
+    public void setPointClick(int row, int column) {
+        if(fromField != null) {
+            setToPointClick(row, column);
         }
         else {
-            fromField = new SingleField(row, column);
+            if (row < 0 || column < 0) {
+                fromField = null;
+            } else {
+                fromField = new SingleField(row, column);
+            }
         }
     }
 
@@ -202,12 +208,13 @@ public class GraphicsManager {
     public void setToPointClick(int row, int column) {
         if(row >= 0 && column >= 0 && fromField != null) {
             toField = new SingleField(row, column);
-            // System.out.println("click: " + fromField.getRow() + "." + fromField.getColumn() + " / " + toField.getRow() + "." + toField.getColumn());
-            Messenger.getInstance().move(
-                    fromField.getRow(), fromField.getColumn(),
-                    toField.getRow(), toField.getColumn());
+            if(fromField.getRow()!=toField.getRow()||fromField.getColumn()!=toField.getColumn()) {
+                Messenger.getInstance().move(
+                        fromField.getRow(), fromField.getColumn(),
+                        toField.getRow(), toField.getColumn());
+            }
         }
-        fromField = null;
+        fromField = toField;
         toField = null;
     }
 
