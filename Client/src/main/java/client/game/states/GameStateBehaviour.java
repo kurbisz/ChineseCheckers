@@ -1,5 +1,7 @@
 package client.game.states;
 
+import client.graphics.GraphicsManager;
+
 public interface GameStateBehaviour {
 
     /**
@@ -36,10 +38,11 @@ public interface GameStateBehaviour {
      */
     GameStateBehaviour finish();
 
+
     /**
-     * Set information to server that
-     * this client closed application.
+     * Closes application if it is
+     * still visible.
      */
-    void sendCloseInfo();
+    void closeClient(GraphicsManager graphicsManager);
 
 }

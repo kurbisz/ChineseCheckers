@@ -28,7 +28,7 @@ public class ButtonPanel extends Panel implements ActionListener {
     @Override
     public void initialize() {
 
-        this.setBounds((int) (0.35*jFrame.getWidth()), (int) (0.75*jFrame.getHeight()),
+        this.setBounds((int) (0.35*jFrame.getWidth()), (int) (0.8*jFrame.getHeight()),
                 (int) (0.3*jFrame.getWidth()), (int) (0.1*jFrame.getHeight()));
 
         jButton = new JButton("Start game");

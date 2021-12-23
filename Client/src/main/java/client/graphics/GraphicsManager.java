@@ -63,6 +63,30 @@ public class GraphicsManager {
     }
 
     /**
+     * Add new Panel to JFrame using
+     * external project.
+     * @param key string which will be key to this panel
+     * @param panel new panel which has to be shown in application
+     */
+    public void addPanel(String key, Panel panel) {
+        boardPanels.put(key, panel);
+        panel.initialize();
+        jFrame.add(panel);
+        jFrame.revalidate();
+        jFrame.repaint();
+    }
+
+    /**
+     * Get certain panel by its id.
+     * Size of characters makes difference.
+     * @param key string key of panel
+     * @return panel by its id, null when there is no such panel
+     */
+    public Panel getPanel(String key) {
+        return boardPanels.get(key);
+    }
+
+    /**
      * Set size of board.
      * @param size board size - amount of rows of
      *             each player triangle on the

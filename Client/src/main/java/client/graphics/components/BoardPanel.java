@@ -75,8 +75,8 @@ public class BoardPanel extends Panel {
         gridLayout.setHgap(1);
         this.setLayout(gridLayout);
 
-        this.setBounds((int) (0.2*jFrame.getWidth()), (int) (0.1*jFrame.getHeight()),
-                (int) (0.4*jFrame.getWidth()), (int) (0.5*jFrame.getHeight()));
+        this.setBounds((int) (0.2*jFrame.getWidth()), (int) (0.05*jFrame.getHeight()),
+                (int) (0.45*jFrame.getWidth()), (int) (0.7*jFrame.getHeight()));
 
 
     }

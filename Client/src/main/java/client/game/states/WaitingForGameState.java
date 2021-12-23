@@ -1,5 +1,6 @@
 package client.game.states;
 
+import client.graphics.GraphicsManager;
 import connection.Messenger;
 
 public class WaitingForGameState implements GameStateBehaviour {
@@ -30,8 +31,8 @@ public class WaitingForGameState implements GameStateBehaviour {
     }
 
     @Override
-    public void sendCloseInfo() {
-        Messenger.getInstance().leave();
+    public void closeClient(GraphicsManager graphicsManager) {
+        graphicsManager.openLeftGui();
     }
 
 }

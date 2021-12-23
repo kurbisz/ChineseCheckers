@@ -32,6 +32,7 @@ public class PlayersPanel extends Panel {
     public void initialize() {
 
         playerCounter = new JPanel();
+        playerCounter.setLayout(new GridBagLayout());
         playerCounterLabel = new JLabel("Players: 0/6");
         playerCounterLabel.setFont(new Font(Font.SERIF, Font.BOLD, 30));
         playerCounter.add(playerCounterLabel);

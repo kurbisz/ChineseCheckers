@@ -31,6 +31,7 @@ public class GameManager {
      * Send information to server about client window close.
      */
     public void onWindowClose() {
+        gameState = gameState.getStateBehaviour().finish().getState();
         Messenger.getInstance().leave();
     }
 
@@ -88,8 +89,8 @@ public class GameManager {
      * Finish game and show that one of the players left.
      */
     public void openLeftGui() {
-        gameState.getStateBehaviour().finish().sendCloseInfo();
-        graphicsManager.openLeftGui();
+        gameState.getStateBehaviour().closeClient(graphicsManager);
+        gameState = gameState.getStateBehaviour().finish().getState();
     }
 
     /**

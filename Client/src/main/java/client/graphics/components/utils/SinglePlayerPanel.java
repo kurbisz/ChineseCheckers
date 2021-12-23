@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class SinglePlayerPanel extends JPanel {
 
-    private final static int smallFontSize = 24, bigFontSize = 32;
+    private final static int smallFontSize = 24, bigFontSize = 36;
 
     private String nickName;
     private int playerNr;
@@ -27,6 +27,8 @@ public class SinglePlayerPanel extends JPanel {
         this.playerNr = nr;
         this.nickName = name;
         this.setBackground(Color.GRAY);
+        this.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        setLayout(new GridBagLayout());
         init();
     }
 
