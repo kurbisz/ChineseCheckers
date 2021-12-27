@@ -25,21 +25,24 @@ public class ConnectionManager {
     }
 
     public void createNewConnection(String address, int port, String nick)
-            throws UnknownHostException, IOException {
+            throws UnknownHostException, IOException, NoConnectionException {
         this.serverAddress = address;
         this.serverPort = port;
         this.nickName = nick;
         connect();
     }
 
-    private void connect() throws UnknownHostException, IOException {
+    private void connect() throws UnknownHostException, IOException, NoConnectionException {
         socket = new Socket(serverAddress, serverPort);
         scanner = new Scanner(socket.getInputStream());
         writer = new PrintWriter(socket.getOutputStream(), true);
         msg.name(nickName);
         Receiver.getInstance().listen();
     }
-    public void send(String msg) {
+    public void send(String msg) throws NoConnectionException {
+        if(writer == null) {
+            throw new NoConnectionException("No writer is set!");
+        }
         writer.println(msg);
     }
     public Scanner getScanner() {

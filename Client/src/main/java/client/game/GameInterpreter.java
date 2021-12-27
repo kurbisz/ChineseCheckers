@@ -1,6 +1,7 @@
 package client.game;
 
 import client.graphics.InvalidPanelException;
+import client.graphics.NoJFrameException;
 import connection.Interpreter;
 
 public class GameInterpreter implements Interpreter {
@@ -61,22 +62,34 @@ public class GameInterpreter implements Interpreter {
 
     @Override
     public void victory() {
-        gameManager.openWinGui();
+        try {
+            gameManager.openWinGui();
+        } catch (NoJFrameException e) {
+            System.out.println("No application opened!");
+        }
     }
 
     @Override
     public void defeat(String name) {
-        gameManager.openLoseGui(name);
+        try {
+            gameManager.openLoseGui(name);
+        } catch (NoJFrameException e) {
+            System.out.println("No application opened!");
+        }
     }
 
     @Override
     public void left() {
-        gameManager.openLeftGui();
+        try {
+            gameManager.openLeftGui();
+        } catch (NoJFrameException e) {
+            System.out.println("No application opened!");
+        }
     }
 
     @Override
     public void size(int size, int players) {
-        gameManager.size(size);
+        gameManager.setBoardSize(size);
         numPlayers(players);
     }
 

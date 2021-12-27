@@ -52,4 +52,12 @@ public class InformationPanel extends Panel {
         message.setText(infoMsg);
     }
 
+    /**
+     * Returns actual message from message label.
+     * @return text from message label
+     */
+    public String getMessage() {
+        return message.getText();
+    }
+
 }

@@ -1,6 +1,7 @@
 package client.graphics.components.buttons;
 
 import connection.Messenger;
+import connection.NoConnectionException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +16,8 @@ public class WaitingForGameButton extends StateButton {
     }
 
     @Override
-    public void click() {
-        Messenger.getInstance().start();
+    public void click(Messenger messenger) throws NoConnectionException  {
+        messenger.start();
     }
 
 }

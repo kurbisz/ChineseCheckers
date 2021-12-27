@@ -1,6 +1,7 @@
 package client.game.states;
 
 import client.graphics.GraphicsManager;
+import client.graphics.NoJFrameException;
 
 public class FinishedState implements GameStateBehaviour {
 
@@ -30,7 +31,7 @@ public class FinishedState implements GameStateBehaviour {
     }
 
     @Override
-    public void closeClient(GraphicsManager graphicsManager) {
+    public void closeClient(GraphicsManager graphicsManager) throws NoJFrameException {
 
     }
 

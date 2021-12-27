@@ -1,6 +1,7 @@
 package client.game.states;
 
 import client.graphics.GraphicsManager;
+import client.graphics.NoJFrameException;
 
 public interface GameStateBehaviour {
 
@@ -43,6 +44,6 @@ public interface GameStateBehaviour {
      * Closes application if it is
      * still visible.
      */
-    void closeClient(GraphicsManager graphicsManager);
+    void closeClient(GraphicsManager graphicsManager) throws NoJFrameException;
 
 }

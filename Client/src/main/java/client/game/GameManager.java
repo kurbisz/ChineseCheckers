@@ -1,10 +1,13 @@
 package client.game;
 
+import client.CheckersClient;
 import client.game.states.GameState;
 import client.graphics.GraphicsManager;
 import client.graphics.InvalidPanelException;
+import client.graphics.NoJFrameException;
 import connection.Interpreter;
 import connection.Messenger;
+import connection.NoConnectionException;
 import connection.Receiver;
 
 public class GameManager {
@@ -30,9 +33,9 @@ public class GameManager {
     /**
      * Send information to server about client window close.
      */
-    public void onWindowClose() {
+    public void onWindowClose() throws NoConnectionException {
         gameState = gameState.getStateBehaviour().finish().getState();
-        Messenger.getInstance().leave();
+        CheckersClient.getMessenger().leave();
     }
 
     /**
@@ -74,21 +77,21 @@ public class GameManager {
     /**
      * Finish game and show victory screen.
      */
-    public void openWinGui() {
+    public void openWinGui() throws NoJFrameException {
         graphicsManager.openWinGui();
     }
 
     /**
      * Finish game and show defeat screen.
      */
-    public void openLoseGui(String name) {
+    public void openLoseGui(String name) throws NoJFrameException {
         graphicsManager.openLoseGui(name);
     }
 
     /**
      * Finish game and show that one of the players left.
      */
-    public void openLeftGui() {
+    public void openLeftGui() throws NoJFrameException {
         gameState.getStateBehaviour().closeClient(graphicsManager);
         gameState = gameState.getStateBehaviour().finish().getState();
     }
@@ -98,7 +101,7 @@ public class GameManager {
      * go to update players list.
      * @param size board size
      */
-    public void size(int size) {
+    public void setBoardSize(int size) {
         graphicsManager.setBoardSize(size);
         graphicsManager.drawBoard();
     }
@@ -162,5 +165,31 @@ public class GameManager {
      */
     public void setActualPlayer(int player) throws InvalidPanelException {
         graphicsManager.setActualPlayer(player);
+    }
+
+    /**
+     * Getter for private variable graphicsManager.
+     * @return actual instance of GraphicsManager
+     */
+    public GraphicsManager getGraphicsManager() {
+        return graphicsManager;
+    }
+
+    /**
+     * Getter for private variable interpreter.
+     * @return actual instance of Interpreter
+     */
+    public Interpreter getInterpreter() {
+        return interpreter;
+    }
+
+    /**
+     * Setter for private variable interpreter.
+     * Allows setting own type of interpreter from
+     * external project.
+     * @param interpreter new Interpreter
+     */
+    public void setInterpreter(Interpreter interpreter) {
+        this.interpreter = interpreter;
     }
 }

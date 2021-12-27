@@ -119,5 +119,11 @@ public class PlayersPanel extends Panel {
         }
     }
 
-
+    /**
+     * Getter of private variable singlePlayerPanel.
+     * @return array with 6 singlePlayerPanels
+     */
+    public SinglePlayerPanel[] getSinglePlayerPanel() {
+        return singlePlayerPanel;
+    }
 }

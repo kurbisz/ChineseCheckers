@@ -94,6 +94,7 @@ public class BoardPanel extends Panel {
         return boardRow[row].setPlayer(column, player);
     }
 
+
     private int getAmountOfRows() {
         return 4 * boardSize + 1;
     }

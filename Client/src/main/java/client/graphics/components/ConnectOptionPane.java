@@ -1,6 +1,7 @@
 package client.graphics.components;
 
 import client.CheckersClient;
+import connection.NoConnectionException;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -24,9 +25,11 @@ public class ConnectOptionPane {
                 "Address: ", addressField,
                 "Port: ", portField,
         };
-
-        int result = JOptionPane.showConfirmDialog(null, panels,
-                "Connect to the server: ", JOptionPane.OK_CANCEL_OPTION);
+        int result = JOptionPane.CANCEL_OPTION;
+        if(CheckersClient.isHumanMode()) {
+            result = JOptionPane.showConfirmDialog(null, panels,
+                    "Connect to the server: ", JOptionPane.OK_CANCEL_OPTION);
+        }
 
         if (result == JOptionPane.OK_OPTION) {
             String serverAddress = addressField.getText();
@@ -47,7 +50,7 @@ public class ConnectOptionPane {
                 } catch (UnknownHostException e) {
                     jFrame.dispose();
                     System.out.println("Error! There is no such server!");
-                } catch (IOException e) {
+                } catch (IOException | NoConnectionException e) {
                     jFrame.dispose();
                     System.out.println("Error while connecting to server!");
                 }

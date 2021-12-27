@@ -3,16 +3,20 @@ package client;
 import client.game.GameManager;
 import client.graphics.GraphicsManager;
 import connection.ConnectionManager;
+import connection.Messenger;
+import connection.NoConnectionException;
 
 import java.io.IOException;
 
 public class CheckersClient {
 
     private static CheckersClient client;
+    private static boolean humanMode = true;
 
     private ConnectionManager connectionManager;
     private GraphicsManager graphicsManager;
     private GameManager gameManager;
+    private static Messenger messenger;
 
     /**
      * Main client class with all crucial
@@ -35,13 +39,21 @@ public class CheckersClient {
         return client;
     }
 
+    public synchronized static CheckersClient generateClient() {
+        if(client == null) {
+            client = new CheckersClient();
+            client.openGame();
+        }
+        return client;
+    }
+
     /**
      * Create new client and initialize it.
      * @param args
      */
     public static void main(String[] args) {
-        client = new CheckersClient();
-        client.openGame();
+        generateClient();
+        setHumanMode(true);
     }
 
     /**
@@ -55,7 +67,7 @@ public class CheckersClient {
      * Execute onWindowClose() from GameManager
      * on application close.
      */
-    public void onWindowClose() {
+    public void onWindowClose() throws NoConnectionException {
         gameManager.onWindowClose();
     }
 
@@ -66,9 +78,10 @@ public class CheckersClient {
      * @param serverPort server's port
      * @param nickName nickname of a player
      * @throws IOException when occurred problem when connecting to certain server
+     * @throws NoConnectionException when occurred problem when connecting to certain server
      */
     public void connectClientToServer(String serverAddress, int serverPort, String nickName)
-            throws IOException {
+            throws IOException, NoConnectionException {
         graphicsManager.lockAppSize();
         connectionManager.createNewConnection(serverAddress, serverPort, nickName);
     }
@@ -96,4 +109,38 @@ public class CheckersClient {
     public GameManager getGameManager() {
         return gameManager;
     }
+
+    /**
+     * Set new messenger for other classes.
+     * Should be used only for testing.
+     * @param newMessenger new Messenger instance, null means that
+     *                     it will return method Messenger.getInstance()
+     */
+    public synchronized static void setMessenger(Messenger newMessenger) {
+        messenger = newMessenger;
+    }
+
+    public synchronized static Messenger getMessenger() {
+        if(messenger == null) return Messenger.getInstance();
+        return messenger;
+    }
+
+    /**
+     * Turn on/off notifications from JOptionPane and
+     * other features only for human (false means tests
+     * or other purposes).
+     * @param mode new status of human mode
+     */
+    public static void setHumanMode(boolean mode) {
+        humanMode = mode;
+    }
+
+    /**
+     * Check if human mode is enabled or disabled.
+     * @return true if human mode is enabled, false otherwise
+     */
+    public static boolean isHumanMode() {
+        return humanMode;
+    }
+
 }

@@ -1,7 +1,7 @@
 package client.game.states;
 
 import client.graphics.GraphicsManager;
-import connection.Messenger;
+import client.graphics.NoJFrameException;
 
 public class PlayingState implements GameStateBehaviour{
 
@@ -31,7 +31,7 @@ public class PlayingState implements GameStateBehaviour{
     }
 
     @Override
-    public void closeClient(GraphicsManager graphicsManager) {
+    public void closeClient(GraphicsManager graphicsManager) throws NoJFrameException {
         graphicsManager.openLeftGui();
     }
 

@@ -1,5 +1,7 @@
 package client.graphics.components;
 
+import client.CheckersClient;
+
 import javax.swing.*;
 
 public class EndGameOptionPane {
@@ -11,7 +13,10 @@ public class EndGameOptionPane {
      * @param message message which has to be shown in this menu
      */
     public static void popup(JFrame jFrame, String message) {
-        JOptionPane.showMessageDialog(jFrame, message);
+        if(CheckersClient.isHumanMode()) {
+            JOptionPane.showMessageDialog(jFrame, message);
+        }
+        jFrame.setSize(10, 10);
         jFrame.dispose();
     }
 
