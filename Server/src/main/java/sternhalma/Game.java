@@ -1,7 +1,6 @@
 package sternhalma;
 
-import sternhalma.board.Board;
-import sternhalma.board.Start;
+import sternhalma.board.*;
 import sternhalma.exceptions.CannotStartGameException;
 import sternhalma.exceptions.InvalidMoveException;
 import sternhalma.exceptions.InvalidPlayerException;
@@ -16,12 +15,14 @@ public class Game {
     private NotiferInterface notifer = Notifer.getInstance();
     private int size = 4;
     private Board board;
-    private Start start;
+    private StartingInterface start;
+    private FinishInterface finish;
     private boolean running = false;
     public Game(int size) {
         this.size = size;
         this.board = new Board(size);
         this.start = new Start(board, size, this);
+        this.finish = new Finish(board, size, this);
     }
 
     public Player createPlayer(Socket accept, int i) {
@@ -56,7 +57,7 @@ public class Game {
         currentPlayer.notify("TURNSET");
     }
     public void checkFinished() {
-        int p = board.checkFinished();
+        int p = finish.checkEnd(players.size());
         if (p == -1) {
             return;
         }

@@ -2,6 +2,7 @@ package sternhalma;
 
 import java.net.Inet4Address;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,15 +23,23 @@ public class Server {
             System.out.println("The Sternhalma server is running");
             System.out.println("IP: " + Inet4Address.getLocalHost().getHostAddress());
             System.out.println("PORT: " + PORT);
-            ExecutorService pool = Executors.newFixedThreadPool(6);
+            ExecutorService pool = Executors.newFixedThreadPool(200);
             while (true) {
                 Game game = new Game(size);
-                for (int i = 0; i < 6; i++) {
-                    try {
-                        pool.execute(game.createPlayer(listener.accept(), i));
-                    } catch (NullPointerException e) {
-                        break;
+                Socket socket = null;
+                int i=0;
+                while (true) {
+                    socket = listener.accept();
+                    if (socket==null) {
+                        return;
                     }
+                    if(!game.canJoin()) {
+                        game = new Game(size);
+                        i = 0;
+                    }
+                    pool.execute(game.createPlayer(socket,i));
+                    i++;
+
                 }
             }
         }

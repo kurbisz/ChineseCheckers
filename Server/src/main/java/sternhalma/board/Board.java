@@ -8,16 +8,12 @@ public class Board {
     private int size;
     private Field[][] tab;
     private MovingInterface moving;
-    private StartingInterface start;
     public Board(int size) {
         this.size = size;
         this.tab = new Field[4 * size + 1][];
         init();
         addNeighbours();
         this.moving = new Move();
-    }
-    public int checkFinished() {
-        return -1;
     }
     public Field getField(int row, int col) {
         return tab[row][col];
