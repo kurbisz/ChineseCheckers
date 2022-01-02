@@ -30,7 +30,7 @@ public enum GameState {
 
         @Override
         public StateButton getStateButton() {
-            return new WaitingforMoveButton();
+            return new WaitingForMoveButton();
         }
     },
 
@@ -64,7 +64,13 @@ public enum GameState {
         public StateButton getStateButton() {
             return new FinishedButton();
         }
-    };
+    },
+
+    /**
+     * State used to test or to show
+     * that error occurred.
+     */
+    OTHER;
 
 
     /**

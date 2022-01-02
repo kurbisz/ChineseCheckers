@@ -8,11 +8,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Server" />
         <module name="Client" />
-        <module name="SharedLibrary" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Packaging" target="8" />
+      <module name="SharedLibrary" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

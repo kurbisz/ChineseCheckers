@@ -39,7 +39,7 @@ public class InformationPanel extends Panel {
         message.setBorder(border);
         this.add(message);
 
-        this.setBounds((int) (0.05*jFrame.getWidth()), (int) (0.75*jFrame.getHeight()),
+        this.setBounds((int) (0.05*jFrame.getWidth()), (int) (0.8*jFrame.getHeight()),
                 (int) (0.15*jFrame.getWidth()), (int) (0.1*jFrame.getHeight()));
 
     }
@@ -50,6 +50,14 @@ public class InformationPanel extends Panel {
      */
     public void setMessage(String infoMsg) {
         message.setText(infoMsg);
+    }
+
+    /**
+     * Returns actual message from message label.
+     * @return text from message label
+     */
+    public String getMessage() {
+        return message.getText();
     }
 
 }

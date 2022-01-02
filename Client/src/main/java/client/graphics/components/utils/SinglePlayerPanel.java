@@ -10,11 +10,12 @@ import java.util.Map;
 
 public class SinglePlayerPanel extends JPanel {
 
-    private final static int smallFontSize = 24, bigFontSize = 32;
+    private final static int smallFontSize = 24, bigFontSize = 36;
 
     private String nickName;
     private int playerNr;
     private JLabel playerLabel;
+    private boolean isThisClient;
 
     /**
      * Initialize new rectangle with player's nickname.
@@ -27,6 +28,8 @@ public class SinglePlayerPanel extends JPanel {
         this.playerNr = nr;
         this.nickName = name;
         this.setBackground(Color.GRAY);
+        this.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        setLayout(new GridBagLayout());
         init();
     }
 
@@ -45,6 +48,7 @@ public class SinglePlayerPanel extends JPanel {
      * @param isClient set true if this is main panel, false for normal panel
      */
     public void setClient(boolean isClient) {
+        this.isThisClient = isClient;
         int fontSize = smallFontSize;
         int weight = Font.PLAIN;
         if(isClient) {
@@ -89,4 +93,20 @@ public class SinglePlayerPanel extends JPanel {
         this.playerLabel.setText(nick);
     }
 
+    /**
+     * Getter of private variable nickName.
+     * @return nickname of player shown in this field
+     */
+    public String getNickName() {
+        return nickName;
+    }
+
+    /**
+     * Getter of private variable isThisClient
+     * @return true if this panel belongs to this client,
+     * false if it is from other client
+     */
+    public boolean isThisClient() {
+        return isThisClient;
+    }
 }

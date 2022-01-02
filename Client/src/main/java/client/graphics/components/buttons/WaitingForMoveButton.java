@@ -1,11 +1,12 @@
 package client.graphics.components.buttons;
 
 import connection.Messenger;
+import connection.NoConnectionException;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class WaitingforMoveButton extends StateButton {
+public class WaitingForMoveButton extends StateButton {
 
 
     @Override
@@ -16,8 +17,8 @@ public class WaitingforMoveButton extends StateButton {
     }
 
     @Override
-    public void click() {
-        Messenger.getInstance().pass();
+    public void click(Messenger messenger) throws NoConnectionException  {
+        messenger.pass();
     }
 
 }

@@ -1,10 +1,12 @@
 package client.graphics;
 
+import client.CheckersClient;
 import client.game.states.GameState;
 import client.graphics.components.*;
 import client.graphics.components.Panel;
 import client.graphics.listener.WindowListeners;
 import connection.Messenger;
+import connection.NoConnectionException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,6 +62,30 @@ public class GraphicsManager {
         jFrame.revalidate();
         jFrame.repaint();
 
+    }
+
+    /**
+     * Add new Panel to JFrame using
+     * external project.
+     * @param key string which will be key to this panel
+     * @param panel new panel which has to be shown in application
+     */
+    public void addPanel(String key, Panel panel) {
+        boardPanels.put(key, panel);
+        panel.initialize();
+        jFrame.add(panel);
+        jFrame.revalidate();
+        jFrame.repaint();
+    }
+
+    /**
+     * Get certain panel by its id.
+     * Size of characters makes difference.
+     * @param key string key of panel
+     * @return panel by its id, null when there is no such panel
+     */
+    public Panel getPanel(String key) {
+        return boardPanels.get(key);
     }
 
     /**
@@ -143,8 +169,8 @@ public class GraphicsManager {
         if(!(panel instanceof ButtonPanel)) {
             throw new InvalidPanelException();
         }
-        ButtonPanel boardPanel = (ButtonPanel) panel;
-        boardPanel.setGameState(gameState);
+        ButtonPanel buttonPanel = (ButtonPanel) panel;
+        buttonPanel.setGameState(gameState);
     }
 
     /**
@@ -186,8 +212,10 @@ public class GraphicsManager {
      * when 1st field (fromField variable) is not null.
      * @param row row of clicked field
      * @param column column of clicked field
+     * @throws NoConnectionException when occurred problem to connect
+     * to server (by Messenger)
      */
-    public void setPointClick(int row, int column) {
+    public void setPointClick(int row, int column) throws NoConnectionException {
         if(fromField != null) {
             setToPointClick(row, column);
         }
@@ -205,13 +233,13 @@ public class GraphicsManager {
      * @param row row of clicked field
      * @param column column of clicked field
      */
-    public void setToPointClick(int row, int column) {
+    public void setToPointClick(int row, int column) throws NoConnectionException {
         if(row >= 0 && column >= 0 && fromField != null) {
             toField = new SingleField(row, column);
             if(fromField.getRow()!=toField.getRow()||fromField.getColumn()!=toField.getColumn()) {
-                Messenger.getInstance().move(
-                        fromField.getRow(), fromField.getColumn(),
-                        toField.getRow(), toField.getColumn());
+                    CheckersClient.getMessenger().move(
+                            fromField.getRow(), fromField.getColumn(),
+                            toField.getRow(), toField.getColumn());
             }
         }
         fromField = toField;
@@ -221,21 +249,30 @@ public class GraphicsManager {
     /**
      * Open option pane after player won the game.
      */
-    public void openWinGui() {
+    public void openWinGui() throws NoJFrameException {
+        if(jFrame == null) {
+            throw new NoJFrameException("Invalid JFrame!");
+        }
         EndGameOptionPane.popup(jFrame, "You won the game!");
     }
 
     /**
      * Open option pane after another player won the game.
      */
-    public void openLoseGui(String string) {
+    public void openLoseGui(String string) throws NoJFrameException {
+        if(jFrame == null) {
+            throw new NoJFrameException("Invalid JFrame!");
+        }
         EndGameOptionPane.popup(jFrame, string);
     }
 
     /**
      * Open option pane after one of players left the game.
      */
-    public void openLeftGui() {
+    public void openLeftGui() throws NoJFrameException {
+        if(jFrame == null) {
+            throw new NoJFrameException("Invalid JFrame!");
+        }
         EndGameOptionPane.popup(jFrame, "One of the players left the game!");
     }
 
@@ -253,6 +290,23 @@ public class GraphicsManager {
         playerColors[5] = Color.MAGENTA;
     }
 
+    /**
+     * Getter from private jFrame variable.
+     * @return actual jFrame of this graphicsManager
+     */
+    public JFrame getJFrame() {
+        return jFrame;
+    }
+
+    /**
+     * Setter from private jFrame variable.
+     * It should not be changed to other instance
+     * while application is running!
+     * @param jFrame new jFrame for this graphicsManager
+     */
+    public void setJFrame(JFrame jFrame) {
+        this.jFrame = jFrame;
+    }
 
     private void initBoard() {
         this.boardPanels = new ConcurrentHashMap<>();

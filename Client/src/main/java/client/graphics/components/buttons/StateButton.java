@@ -1,5 +1,8 @@
 package client.graphics.components.buttons;
 
+import connection.Messenger;
+import connection.NoConnectionException;
+
 import javax.swing.*;
 
 public abstract class StateButton {
@@ -13,7 +16,10 @@ public abstract class StateButton {
     /**
      * Do some stuff when button in this
      * state was clicked.
+     * @param messenger messenger which will trigger
+     *                  something on server
+     * @throws NoConnectionException when messenger is not connected
      */
-    public abstract void click();
+    public abstract void click(Messenger messenger) throws NoConnectionException;
 
 }

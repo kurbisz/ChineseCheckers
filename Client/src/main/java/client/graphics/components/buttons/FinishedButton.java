@@ -1,5 +1,7 @@
 package client.graphics.components.buttons;
 
+import connection.Messenger;
+
 import javax.swing.*;
 
 public class FinishedButton extends StateButton {
@@ -10,7 +12,7 @@ public class FinishedButton extends StateButton {
     }
 
     @Override
-    public void click() {
+    public void click(Messenger messenger) {
 
     }
 

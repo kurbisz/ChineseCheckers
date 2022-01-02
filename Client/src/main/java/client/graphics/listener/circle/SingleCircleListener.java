@@ -1,5 +1,7 @@
 package client.graphics.listener.circle;
 
+import connection.NoConnectionException;
+
 import java.awt.event.MouseEvent;
 
 public class SingleCircleListener extends CircleListener {
@@ -16,7 +18,9 @@ public class SingleCircleListener extends CircleListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        graphicsManager.setPointClick(row, column);
+        try {
+            graphicsManager.setPointClick(row, column);
+        } catch (NoConnectionException exc) { }
     }
 
 

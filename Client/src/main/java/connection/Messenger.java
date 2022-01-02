@@ -12,19 +12,19 @@ public class Messenger {
     public static void setCMD(ConnectionManager cmd) {
         Messenger.cmd = cmd;
     }
-    public void pass() {
+    public void pass() throws NoConnectionException {
         cmd.send("PASS");
     }
-    public void move(int fromR, int fromC, int toR, int toC) {
+    public void move(int fromR, int fromC, int toR, int toC) throws NoConnectionException {
         cmd.send("MOVE "+fromR+" "+fromC+" "+toR+" "+toC);
     }
-    public void leave() {
+    public void leave() throws NoConnectionException {
         cmd.send("LEAVE");
     }
-    public void name(String name) {
+    public void name(String name) throws NoConnectionException {
         cmd.send("NAME " + name);
     }
-    public void start() {
+    public void start() throws NoConnectionException {
         cmd.send("START");
     }
 }

@@ -1,6 +1,7 @@
 package client.game.states;
 
-import connection.Messenger;
+import client.graphics.GraphicsManager;
+import client.graphics.NoJFrameException;
 
 public class WaitingForMoveState implements GameStateBehaviour {
 
@@ -26,12 +27,12 @@ public class WaitingForMoveState implements GameStateBehaviour {
 
     @Override
     public GameStateBehaviour finish() {
-        return this;
+        return GameState.FINISHED.getStateBehaviour();
     }
 
     @Override
-    public void sendCloseInfo() {
-        Messenger.getInstance().leave();
+    public void closeClient(GraphicsManager graphicsManager) throws NoJFrameException {
+        graphicsManager.openLeftGui();
     }
 
 }
