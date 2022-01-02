@@ -4,11 +4,21 @@ import sternhalma.Game;
 import sternhalma.Notifer;
 import sternhalma.NotiferInterface;
 
+/**
+ * Class generating pieces acording to sternhalma classic rules.
+ */
 public class Start implements StartingInterface {
     private Board board;
     private Game game;
     private int size;
     private NotiferInterface notifer = Notifer.getInstance();
+
+    /**
+     * Create the pieces.
+     * @param board reference to the board
+     * @param size board size
+     * @param game reference to the game
+     */
     public Start(Board board, int size, Game game) {
         this.board = board;
         this.size = size;
@@ -64,6 +74,7 @@ public class Start implements StartingInterface {
             }
         }
     }
+
     public void prepare(int num) {
         set0(0);
         if (num == 3) {

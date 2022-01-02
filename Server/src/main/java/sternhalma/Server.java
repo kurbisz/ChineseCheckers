@@ -7,8 +7,17 @@ import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Game server.
+ */
 public class Server {
-    static final int PORT = 59898;
+    private static final int PORT = 59898;
+
+    /**
+     * Create and start game server.
+     * @param args args[0] -> game size
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         int size = 4;
         System.out.println("CONFIG: " + Arrays.toString(args));
@@ -39,7 +48,6 @@ public class Server {
                     }
                     pool.execute(game.createPlayer(socket,i));
                     i++;
-
                 }
             }
         }

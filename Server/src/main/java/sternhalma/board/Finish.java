@@ -4,11 +4,21 @@ import sternhalma.Game;
 import sternhalma.Notifer;
 import sternhalma.NotiferInterface;
 
+/**
+ * Class implementing sternhalma classic rules of game end.
+ */
 public class Finish implements FinishInterface {
     private Board board;
     private Game game;
     private int size;
     private NotiferInterface notifer = Notifer.getInstance();
+
+    /**
+     *
+     * @param board reference to board
+     * @param size size of the board
+     * @param game reference to game
+     */
     public Finish(Board board, int size, Game game) {
         this.board = board;
         this.size = size;
