@@ -98,7 +98,7 @@ public class GameManager {
 
     /**
      * Set board size and generate it and then
-     * go to update players list.
+     * start drawing board.
      * @param size board size
      */
     public void setBoardSize(int size) {

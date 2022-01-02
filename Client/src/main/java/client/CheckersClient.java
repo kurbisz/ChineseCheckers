@@ -52,8 +52,8 @@ public class CheckersClient {
      * @param args
      */
     public static void main(String[] args) {
-        generateClient();
         setHumanMode(true);
+        generateClient();
     }
 
     /**
@@ -116,11 +116,16 @@ public class CheckersClient {
      * @param newMessenger new Messenger instance, null means that
      *                     it will return method Messenger.getInstance()
      */
-    public synchronized static void setMessenger(Messenger newMessenger) {
+    public static void setMessenger(Messenger newMessenger) {
         messenger = newMessenger;
     }
 
-    public synchronized static Messenger getMessenger() {
+    /**
+     * Gives Messenger.getInstance() when messenger was not set.
+     * Otherwise returns instance from variable messenger.
+     * @return actual instance of Messenger class
+     */
+    public static Messenger getMessenger() {
         if(messenger == null) return Messenger.getInstance();
         return messenger;
     }
