@@ -8,6 +8,7 @@ import sternhalma.exceptions.InvalidPlayerException;
  */
 public class Move implements MovingInterface{
     private boolean last=false;
+    private Field current = null;
     @Override
     public void move(int id, Field from, Field to) throws InvalidMoveException, InvalidPlayerException {
 
@@ -18,6 +19,9 @@ public class Move implements MovingInterface{
             throw new InvalidMoveException();
         }
         if (last) {
+            throw new InvalidMoveException();
+        }
+        if (current != null && current!=from) {
             throw new InvalidMoveException();
         }
         if (from.getNeighbours().contains(to)) {
@@ -31,6 +35,7 @@ public class Move implements MovingInterface{
                 last = false;
                 from.setOwner(-1);
                 to.setOwner(id);
+                current = to;
                 return;
             }
         }
@@ -39,6 +44,7 @@ public class Move implements MovingInterface{
 
     @Override
     public void end() {
+        current = null;
         last = false;
     }
 }
