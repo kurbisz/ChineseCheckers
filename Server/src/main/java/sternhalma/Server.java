@@ -1,5 +1,6 @@
 package sternhalma;
 
+import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,19 +12,20 @@ import java.util.concurrent.Executors;
  * Game server.
  */
 public class Server {
-    private static final int PORT = 59898;
+    private static int PORT = 59898;
 
     /**
      * Create and start game server.
      * @param args args[0] -> game size
      * @throws Exception
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         int size = 4;
         System.out.println("CONFIG: " + Arrays.toString(args));
-        if (args.length > 0) {
+        if (args.length > 1) {
             try {
                 size = Integer.parseInt(args[0]);
+                PORT = Integer.parseInt(args[1]);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -50,6 +52,8 @@ public class Server {
                     i++;
                 }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

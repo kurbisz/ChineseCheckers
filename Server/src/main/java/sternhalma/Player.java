@@ -113,7 +113,8 @@ public class Player implements Runnable {
                     int toR = Integer.parseInt(data[3]);
                     int toC = Integer.parseInt(data[4]);
                     game.move(this, fromR, fromC, toR, toC);
-                } else if (command.startsWith("NAME")) {
+                }
+                else if (command.startsWith("NAME")) {
                     this.name = command.substring(4);
                     game.sendNames();
                 } else if (command.startsWith("PASS")) {

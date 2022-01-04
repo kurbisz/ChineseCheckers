@@ -7,7 +7,8 @@ import sternhalma.exceptions.InvalidPlayerException;
  * Class implementing sternhalma classic move rules.
  */
 public class Move implements MovingInterface{
-    private boolean last=false;
+    private boolean last = false;
+    private boolean moved = false;
     private Field current = null;
     @Override
     public void move(int id, Field from, Field to) throws InvalidMoveException, InvalidPlayerException {
@@ -24,7 +25,7 @@ public class Move implements MovingInterface{
         if (current != null && current!=from) {
             throw new InvalidMoveException();
         }
-        if (from.getNeighbours().contains(to)) {
+        if (!moved && from.getNeighbours().contains(to)) {
             last = true;
             from.setOwner(-1);
             to.setOwner(id);
@@ -32,6 +33,7 @@ public class Move implements MovingInterface{
         }
         for (Field f : from.getNeighbours()) {
             if (f.getOwner() != -1 && f.getNeighbours().contains(to)) {
+                moved = true;
                 last = false;
                 from.setOwner(-1);
                 to.setOwner(id);
@@ -44,6 +46,7 @@ public class Move implements MovingInterface{
 
     @Override
     public void end() {
+        moved = false;
         current = null;
         last = false;
     }

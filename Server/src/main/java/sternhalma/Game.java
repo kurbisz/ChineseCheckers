@@ -54,7 +54,7 @@ public class Game {
      * @throws CannotStartGameException game cannot be started
      */
     public void start() throws CannotStartGameException {
-        if (players.size() < 2 || players.size() == 5) {
+        if (running || players.size() < 2 || players.size() == 5) {
             throw new CannotStartGameException();
         }
         this.currentPlayer = players.get(0);
