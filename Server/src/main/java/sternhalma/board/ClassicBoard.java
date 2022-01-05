@@ -1,5 +1,6 @@
 package sternhalma.board;
 
+import sternhalma.board.direction.Direction;
 import sternhalma.exceptions.InvalidMoveException;
 import sternhalma.exceptions.InvalidPlayerException;
 
@@ -20,6 +21,7 @@ public class ClassicBoard implements BoardInterface {
         this.size = s;
         this.tab = new Field[4 * s + 1][];
         init();
+        setDirections();
         addNeighbours();
         this.moving = mv;
     }
@@ -67,6 +69,15 @@ public class ClassicBoard implements BoardInterface {
         moving.end();
     }
 
+
+    /**
+     * Initialise the directions on the board.
+     * */
+    private void setDirections() {
+    Direction.LEFT.getStateBehaviour().setOpposite(Direction.RIGHT.getStateBehaviour());
+    Direction.UPLEFT.getStateBehaviour().setOpposite(Direction.DOWNRIGHT.getStateBehaviour());
+    Direction.DOWNLEFT.getStateBehaviour().setOpposite(Direction.UPRIGHT.getStateBehaviour());
+    }
     /**
      * Initialise the board.
      */
@@ -98,7 +109,7 @@ public class ClassicBoard implements BoardInterface {
         for (int y = 0; y < tab.length; y++) {
             for (int x = 0; x < tab[y].length; x++) {
                 try {
-                    tab[y][x].addNeighbour(tab[y][x + 1]);
+                    tab[y][x].addNeighbour(Direction.RIGHT.getStateBehaviour(), tab[y][x + 1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     //This field don't exists.
                 }
@@ -107,8 +118,8 @@ public class ClassicBoard implements BoardInterface {
         for (int y = 0; y <= size - 2; y++) {
             for (int x = 0; x < tab[y].length; x++) {
                 try {
-                    tab[y][x].addNeighbour(tab[y + 1][x]);
-                    tab[y][x].addNeighbour(tab[y + 1][x + 1]);
+                    tab[y][x].addNeighbour(Direction.DOWNLEFT.getStateBehaviour(),tab[y + 1][x]);
+                    tab[y][x].addNeighbour(Direction.DOWNRIGHT.getStateBehaviour(), tab[y + 1][x + 1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     //This field don't exists.
                 }
@@ -117,8 +128,8 @@ public class ClassicBoard implements BoardInterface {
         for (int y = 2 * size; y <= 3 * size - 1; y++) {
             for (int x = 0; x < tab[y].length; x++) {
                 try {
-                    tab[y][x].addNeighbour(tab[y + 1][x]);
-                    tab[y][x].addNeighbour(tab[y + 1][x + 1]);
+                    tab[y][x].addNeighbour(Direction.DOWNLEFT.getStateBehaviour(), tab[y + 1][x]);
+                    tab[y][x].addNeighbour(Direction.DOWNRIGHT.getStateBehaviour(), tab[y + 1][x + 1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     //This field don't exists.
                 }
@@ -127,8 +138,8 @@ public class ClassicBoard implements BoardInterface {
         for (int y = 3 * size + 2; y <= 4 * size; y++) {
             for (int x = 0; x < tab[y].length; x++) {
                 try {
-                    tab[y][x].addNeighbour(tab[y - 1][x]);
-                    tab[y][x].addNeighbour(tab[y - 1][x + 1]);
+                    tab[y][x].addNeighbour(Direction.UPLEFT.getStateBehaviour(), tab[y - 1][x]);
+                    tab[y][x].addNeighbour(Direction.UPRIGHT.getStateBehaviour(), tab[y - 1][x + 1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     //This field don't exists.
                 }
@@ -137,8 +148,8 @@ public class ClassicBoard implements BoardInterface {
         for (int y = size + 1; y <= 2 * size; y++) {
             for (int x = 0; x < tab[y].length; x++) {
                 try {
-                    tab[y][x].addNeighbour(tab[y - 1][x]);
-                    tab[y][x].addNeighbour(tab[y - 1][x + 1]);
+                    tab[y][x].addNeighbour(Direction.UPLEFT.getStateBehaviour(), tab[y - 1][x]);
+                    tab[y][x].addNeighbour(Direction.UPRIGHT.getStateBehaviour(), tab[y - 1][x + 1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     //This field don't exists.
                 }
@@ -146,13 +157,13 @@ public class ClassicBoard implements BoardInterface {
         }
         int y1 = size - 1;
         for (int x = 0; x < tab[y1].length; x++) {
-                tab[y1][x].addNeighbour(tab[y1 + 1][x + size]);
-                tab[y1][x].addNeighbour(tab[y1 + 1][x + size + 1]);
+                tab[y1][x].addNeighbour(Direction.DOWNLEFT.getStateBehaviour(), tab[y1 + 1][x + size]);
+                tab[y1][x].addNeighbour(Direction.DOWNRIGHT.getStateBehaviour(), tab[y1 + 1][x + size + 1]);
         }
         int y2 = 3 * size + 1;
         for (int x = 0; x < tab[y2].length; x++) {
-                tab[y2][x].addNeighbour(tab[y2 - 1][x + size]);
-                tab[y2][x].addNeighbour(tab[y2 - 1][x + size + 1]);
+                tab[y2][x].addNeighbour(Direction.UPLEFT.getStateBehaviour(), tab[y2 - 1][x + size]);
+                tab[y2][x].addNeighbour(Direction.UPRIGHT.getStateBehaviour(), tab[y2 - 1][x + size + 1]);
         }
     }
 }

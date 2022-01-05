@@ -98,14 +98,14 @@ class GameTest extends StandardTest{
     void startStartedGame() {
         Game game = new Game(4);
         pool.execute(game.createPlayer(socket1,0));
-        assertEquals(game.canJoin(),true);
+        assertTrue(game.canJoin());
         pool.execute(game.createPlayer(socket2,1));
         try {
             synchronized (this){
                 wait(100);
                 game.start();
-                assertEquals(game.canJoin(),false);
-                CannotStartGameException e = assertThrows(CannotStartGameException.class,()->game.start());;
+                assertFalse(game.canJoin());
+                CannotStartGameException e = assertThrows(CannotStartGameException.class,()->game.start());
 
             }
         } catch (CannotStartGameException | InterruptedException e) {
@@ -179,10 +179,13 @@ class GameTest extends StandardTest{
                     game.move(p1,1,1,2,1);
                     game.switchPlayer(p1);
                     game.switchPlayer(p2);
-                    game.move(p1,2,1,4,0);
+                    game.move(p1,2,1,3,1);
+                    game.switchPlayer(p1);
+                    game.switchPlayer(p2);
+                    game.move(p1,3,1,4,0);
                     Field running = Game.class.getDeclaredField("running");
                     running.setAccessible(true);
-                    assertEquals(false, (boolean) running.get(game));
+                    assertFalse((boolean) running.get(game));
                 } catch (InvalidPlayerException e) {
                     e.printStackTrace();
                     assertEquals(0,1);

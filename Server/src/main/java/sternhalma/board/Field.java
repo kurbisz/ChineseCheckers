@@ -1,29 +1,33 @@
 package sternhalma.board;
 
+import sternhalma.board.direction.DirBehaviour;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class representing a field.
  */
 public class Field {
-    private List<Field> neighbours;
+    private Map<DirBehaviour, Field> neighbours;
     private int owner=-1;
 
     /**
      * Create a field
      */
     public Field() {
-        this.neighbours = new ArrayList<>();
+        this.neighbours = new HashMap<>();
     }
 
     /**
      * Add neighbour to this field.
      * @param f Field to add
      */
-    public void addNeighbour(Field f) {
-        this.neighbours.add(f);
-        f.neighbours.add(this);
+    public void addNeighbour(DirBehaviour d, Field f) {
+        this.neighbours.put(d,f);
+        f.neighbours.put(d.getOpposite(),this);
     }
 
     /**
@@ -31,7 +35,7 @@ public class Field {
      * @return list of neighbours of this field
      */
     public List<Field> getNeighbours() {
-        return neighbours;
+        return new ArrayList<>(neighbours.values());
     }
 
     /**
@@ -50,4 +54,20 @@ public class Field {
         return owner;
     }
 
+    /**
+     * Get direction between two fields;
+     * @param f the other field
+     * @return direction between this field and field f
+     */
+    public DirBehaviour getDirBehaviour(Field f) {
+        if (f==null) {
+            return null;
+        }
+        for (Map.Entry<DirBehaviour, Field> e : neighbours.entrySet()) {
+            if (f.equals(e.getValue())) {
+               return e.getKey();
+            }
+        }
+        return null;
+    }
 }

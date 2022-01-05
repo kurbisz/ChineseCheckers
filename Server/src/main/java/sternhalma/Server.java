@@ -22,14 +22,21 @@ public class Server {
     public static void main(String[] args) {
         int size = 4;
         System.out.println("CONFIG: " + Arrays.toString(args));
-        if (args.length > 1) {
+        if (args.length > 0) {
             try {
                 size = Integer.parseInt(args[0]);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        if (args.length > 1) {
+            try {
                 PORT = Integer.parseInt(args[1]);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
+
         try (ServerSocket listener = new ServerSocket(PORT)) {
             System.out.println("The Sternhalma server is running");
             System.out.println(

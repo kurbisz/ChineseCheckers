@@ -34,6 +34,9 @@ public class ClassicMove implements MovingInterface {
         }
         for (Field f : from.getNeighbours()) {
             if (f.getOwner() != -1 && f.getNeighbours().contains(to)) {
+                if (from.getDirBehaviour(f)!=f.getDirBehaviour(to)) {
+                    throw new InvalidMoveException();
+                }
                 moved = true;
                 last = false;
                 from.setOwner(-1);
