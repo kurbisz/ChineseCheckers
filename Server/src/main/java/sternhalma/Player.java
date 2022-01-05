@@ -85,7 +85,7 @@ public class Player implements Runnable {
         output = new PrintWriter(socket.getOutputStream(), true);
         notify("MESSAGE WELCOME " + number);
         notify("SIZE " +  game.getSize() + " " + game.numPlayers());
-        notify("SPN "+number);
+        notify("SPN " + number);
     }
 
     /**
@@ -95,6 +95,10 @@ public class Player implements Runnable {
     public void setPosition(int i) {
         this.position = i;
     }
+
+    /**
+     * Notify player about game start.
+     */
     public void notifyStart() {
         notify("START");
     }
@@ -113,8 +117,7 @@ public class Player implements Runnable {
                     int toR = Integer.parseInt(data[3]);
                     int toC = Integer.parseInt(data[4]);
                     game.move(this, fromR, fromC, toR, toC);
-                }
-                else if (command.startsWith("NAME")) {
+                } else if (command.startsWith("NAME")) {
                     this.name = command.substring(4);
                     game.sendNames();
                 } else if (command.startsWith("PASS")) {

@@ -17,20 +17,23 @@ public class Game {
     private Player currentPlayer = null;
     private NotiferInterface notifer = Notifer.getInstance();
     private int size;
-    private Board board;
+    private BoardInterface board;
     private StartingInterface start;
     private FinishInterface finish;
     private boolean running = false;
 
     /**
-     * Create the game of specific board's size
+     * Create the game of specific board's size.
      * @param size size of the boards
      */
     public Game(int size) {
         this.size = size;
-        this.board = new Board(size);
-        this.start = new Start(board, size, this);
-        this.finish = new Finish(board, size, this);
+        FactoryProducer fp = FactoryProducer.getInstance();
+        RulesFactory rules = fp.getFactory("classic");
+        MovingInterface mv = rules.getMoving();
+        this.board = rules.getBoard(size, mv);
+        this.start = rules.getStart(board, size, this);
+        this.finish = rules.getFinish(board, size, this);
     }
 
     /**
@@ -40,7 +43,7 @@ public class Game {
      * @return Player
      */
     public Player createPlayer(Socket accept, int i) {
-        if (running || players.size()==6) {
+        if (running || players.size() == 6) {
             return null;
         }
         Player p = new Player(accept, i, this);
@@ -85,7 +88,8 @@ public class Game {
         Player winner = players.get(p);
         running = false;
         winner.notify("VICTORY");
-        notifer.notifyAllExceptPlayer("DEFEAT#" + winner.getName(), this, winner);
+        notifer.notifyAllExceptPlayer(
+                "DEFEAT#" + winner.getName(), this, winner);
     }
 
     /**
@@ -98,12 +102,15 @@ public class Game {
      * @throws InvalidMoveException move cannot be proceeded
      * @throws InvalidPlayerException move cannot be proceeded
      */
-    public synchronized void move(Player p, int fromR, int fromC, int toR, int toC) throws InvalidMoveException, InvalidPlayerException {
+    public synchronized void move(
+            Player p, int fromR, int fromC, int toR, int toC)
+            throws InvalidMoveException, InvalidPlayerException {
         if (p != currentPlayer) {
             throw new InvalidPlayerException();
         }
         board.move(p.getId(), fromR, fromC, toR, toC);
-        notifer.notifyAll(String.format("MOVE %d %d %d %d", fromR, fromC, toR, toC), this);
+        notifer.notifyAll(String.format(
+                "MOVE %d %d %d %d", fromR, fromC, toR, toC), this);
         checkFinished();
     }
 
@@ -149,12 +156,12 @@ public class Game {
     /**
      * Send players' names to all players.
      */
-    public void sendNames(){
+    public void sendNames() {
         String msg = "";
         for (Player p: players) {
-            msg += p.getName()+"$";
+            msg += p.getName() + "$";
         }
-        notifer.notifyAll("PLAYERS#"+msg, this);
+        notifer.notifyAll("PLAYERS#" + msg, this);
     }
 
     /**
@@ -177,7 +184,7 @@ public class Game {
      * @return true if player can join
      */
     public boolean canJoin() {
-        if(running || players.size() == 6) {
+        if (running || players.size() == 6) {
             return false;
         }
         return true;

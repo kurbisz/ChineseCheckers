@@ -6,23 +6,24 @@ import sternhalma.exceptions.InvalidPlayerException;
 /**
  * Class implementing sternhalma classic move rules.
  */
-public class Move implements MovingInterface{
+public class ClassicMove implements MovingInterface {
     private boolean last = false;
     private boolean moved = false;
     private Field current = null;
     @Override
-    public void move(int id, Field from, Field to) throws InvalidMoveException, InvalidPlayerException {
+    public void move(int id, Field from, Field to)
+            throws InvalidMoveException, InvalidPlayerException {
 
-        if (from.getOwner()!=id) {
+        if (from.getOwner() != id) {
             throw new InvalidPlayerException();
         }
-        if (to.getOwner()!=-1) {
+        if (to.getOwner() != -1) {
             throw new InvalidMoveException();
         }
         if (last) {
             throw new InvalidMoveException();
         }
-        if (current != null && current!=from) {
+        if (current != null && current != from) {
             throw new InvalidMoveException();
         }
         if (!moved && from.getNeighbours().contains(to)) {

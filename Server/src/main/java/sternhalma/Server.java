@@ -32,23 +32,24 @@ public class Server {
         }
         try (ServerSocket listener = new ServerSocket(PORT)) {
             System.out.println("The Sternhalma server is running");
-            System.out.println("IP: " + Inet4Address.getLocalHost().getHostAddress());
+            System.out.println(
+                    "IP: " + Inet4Address.getLocalHost().getHostAddress());
             System.out.println("PORT: " + PORT);
             ExecutorService pool = Executors.newFixedThreadPool(200);
             while (true) {
                 Game game = new Game(size);
                 Socket socket = null;
-                int i=0;
+                int i = 0;
                 while (true) {
                     socket = listener.accept();
-                    if (socket==null) {
+                    if (socket == null) {
                         return;
                     }
-                    if(!game.canJoin()) {
+                    if (!game.canJoin()) {
                         game = new Game(size);
                         i = 0;
                     }
-                    pool.execute(game.createPlayer(socket,i));
+                    pool.execute(game.createPlayer(socket, i));
                     i++;
                 }
             }

@@ -6,12 +6,12 @@ import sternhalma.exceptions.InvalidPlayerException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BoardTest {
+class ClassicBoardTest {
 
 
     @Test
     void moveSimple() {
-        Board b = new Board(4);
+        ClassicBoard b = new ClassicBoard(4, new ClassicMove());
         b.getField(0,0).setOwner(5);
         try {
             b.move(5,0,0,1,1);
@@ -26,7 +26,7 @@ class BoardTest {
 
     @Test
     void moveMore() {
-        Board b = new Board(4);
+        ClassicBoard b = new ClassicBoard(4, new ClassicMove());
         b.getField(0,0).setOwner(5);
         b.getField(1,0).setOwner(5);
         try {
@@ -43,7 +43,7 @@ class BoardTest {
 
     @Test
     void moveTwo() {
-        Board b = new Board(4);
+        ClassicBoard b = new ClassicBoard(4, new ClassicMove());
         b.getField(0,0).setOwner(5);
         try {
             b.move(5,0,0,1,1);
@@ -58,26 +58,26 @@ class BoardTest {
     }
     @Test
     void moveUnconnected() {
-        Board b = new Board(4);
+        ClassicBoard b = new ClassicBoard(4, new ClassicMove());
         b.getField(0,0).setOwner(5);
         InvalidMoveException e = assertThrows(InvalidMoveException.class,()->b.move(5,0,0,5,0));
     }
     @Test
     void movePlayer() {
-        Board b = new Board(4);
+        ClassicBoard b = new ClassicBoard(4, new ClassicMove());
         b.getField(0,0).setOwner(5);
         InvalidPlayerException e = assertThrows(InvalidPlayerException.class,()->b.move(2,0,0,1,0));
     }
     @Test
     void moveTaken() {
-        Board b = new Board(4);
+        ClassicBoard b = new ClassicBoard(4, new ClassicMove());
         b.getField(0,0).setOwner(5);
         b.getField(1,0).setOwner(5);
         InvalidMoveException e = assertThrows(InvalidMoveException.class,()->b.move(5,0,0,1,0));
     }
     @Test
     void moveJumpS() {
-        Board b = new Board(4);
+        ClassicBoard b = new ClassicBoard(4, new ClassicMove());
         b.getField(0,0).setOwner(5);
         b.getField(1,0).setOwner(5);
         b.getField(3,0).setOwner(5);
@@ -101,7 +101,7 @@ class BoardTest {
     }
     @Test
     void moveJumpF() {
-        Board b = new Board(4);
+        ClassicBoard b = new ClassicBoard(4, new ClassicMove());
         b.getField(0,0).setOwner(5);
         b.getField(1,0).setOwner(5);
         try {
@@ -118,7 +118,7 @@ class BoardTest {
     }
     @Test
     void moveJumpF2() {
-        Board b = new Board(4);
+        ClassicBoard b = new ClassicBoard(4, new ClassicMove());
         b.getField(0,0).setOwner(5);
         b.getField(1,0).setOwner(5);
         try {
@@ -135,7 +135,7 @@ class BoardTest {
     }
     @Test
     void moveJumpS2() {
-        Board b = new Board(4);
+        ClassicBoard b = new ClassicBoard(4, new ClassicMove());
         b.getField(0,0).setOwner(5);
         b.getField(1,0).setOwner(5);
         try {

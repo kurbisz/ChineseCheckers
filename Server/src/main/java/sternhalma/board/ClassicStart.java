@@ -7,8 +7,8 @@ import sternhalma.NotiferInterface;
 /**
  * Class generating pieces acording to sternhalma classic rules.
  */
-public class Start implements StartingInterface {
-    private Board board;
+public class ClassicStart implements StartingInterface {
+    private BoardInterface board;
     private Game game;
     private int size;
     private NotiferInterface notifer = Notifer.getInstance();
@@ -19,7 +19,7 @@ public class Start implements StartingInterface {
      * @param size board size
      * @param game reference to the game
      */
-    public Start(Board board, int size, Game game) {
+    public ClassicStart(BoardInterface board, int size, Game game) {
         this.board = board;
         this.size = size;
         this.game = game;
@@ -28,7 +28,8 @@ public class Start implements StartingInterface {
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < board.getRowSize(y); x++) {
                 board.getField(y, x).setOwner(id);
-                notifer.notifyAll(String.format("SET %d %d %d", y, x, id), game);
+                notifer.notifyAll(String.format(
+                        "SET %d %d %d", y, x, id), game);
             }
         }
     }
@@ -37,7 +38,8 @@ public class Start implements StartingInterface {
             for (int x = 0; x < y; x++) {
                 int xmax = board.getRowSize(y + 2 * size) - 1;
                 board.getField(y + 2 * size, xmax - x).setOwner(id);
-                notifer.notifyAll(String.format("SET %d %d %d", y + 2 * size, xmax - x, id), game);
+                notifer.notifyAll(String.format(
+                        "SET %d %d %d", y + 2 * size, xmax - x, id), game);
             }
         }
     }
@@ -45,23 +47,26 @@ public class Start implements StartingInterface {
         for (int y = 1; y <= size; y++) {
             for (int x = 0; x < y; x++) {
                 board.getField(y + 2 * size, x).setOwner(id);
-                notifer.notifyAll(String.format("SET %d %d %d", y + 2 * size, x, id), game);
+                notifer.notifyAll(String.format(
+                        "SET %d %d %d", y + 2 * size, x, id), game);
             }
         }
     }
     private void set3(int id) {
-        for (int y=1;y<=size;y++) {
-            for (int x=0;x<y;x++) {
-                board.getField(4*size+1-y,x).setOwner(id);
-                notifer.notifyAll(String.format("SET %d %d %d",4*size+1-y,x,id),game);
+        for (int y = 1; y <= size; y++) {
+            for (int x = 0; x < y; x++) {
+                board.getField(4 * size + 1 - y, x).setOwner(id);
+                notifer.notifyAll(String.format(
+                        "SET %d %d %d", 4 * size + 1 - y, x, id), game);
             }
         }
     }
     private void set5(int id) {
-        for (int y=1;y<=size;y++) {
-            for (int x=0;x<y;x++) {
-                board.getField(2*size-y,x).setOwner(id);
-                notifer.notifyAll(String.format("SET %d %d %d",2*size-y,x,id),game);
+        for (int y = 1; y <= size; y++) {
+            for (int x = 0; x < y; x++) {
+                board.getField(2 * size - y, x).setOwner(id);
+                notifer.notifyAll(String.format(
+                        "SET %d %d %d", 2 * size - y, x, id), game);
             }
         }
     }
@@ -69,12 +74,16 @@ public class Start implements StartingInterface {
         for (int y = 1; y <= size; y++) {
             for (int x = 0; x < y; x++) {
                 int xmax = board.getRowSize(2 * size - y) - 1;
-                board.getField(2*size-y,xmax-x).setOwner(id);
-                notifer.notifyAll(String.format("SET %d %d %d",2 * size - y, xmax - x, id), game);
+                board.getField(2 * size - y, xmax - x).setOwner(id);
+                notifer.notifyAll(String.format(
+                        "SET %d %d %d", 2 * size - y, xmax - x, id), game);
             }
         }
     }
-
+    /**
+     * Generate pieces
+     * @param num number of players
+     */
     public void prepare(int num) {
         set0(0);
         if (num == 3) {

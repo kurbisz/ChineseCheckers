@@ -5,22 +5,22 @@ import sternhalma.Game;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StartTest {
+class ClassicStartTest {
 
     @Test
     void Generate2(){
-        Board b = new Board(4);
+        ClassicBoard b = new ClassicBoard(4, new ClassicMove());
         Game g = new Game(4);
-        Start s = new Start(b,4,g);
+        ClassicStart s = new ClassicStart(b,4,g);
         s.prepare(2);
         assertEquals(b.getField(0,0).getOwner(),0);
         assertEquals(b.getField(16,0).getOwner(),1);
     }
     @Test
     void Generate6(){
-        Board b = new Board(4);
+        ClassicBoard b = new ClassicBoard(4, new ClassicMove());
         Game g = new Game(4);
-        Start s = new Start(b,4,g);
+        ClassicStart s = new ClassicStart(b,4,g);
         s.prepare(6);
         assertEquals(b.getField(0,0).getOwner(),0);
         assertEquals(b.getField(16,0).getOwner(),3);
@@ -31,9 +31,9 @@ class StartTest {
     }
     @Test
     void Generate4(){
-        Board b = new Board(4);
+        ClassicBoard b = new ClassicBoard(4, new ClassicMove());
         Game g = new Game(4);
-        Start s = new Start(b,4,g);
+        ClassicStart s = new ClassicStart(b,4,g);
         s.prepare(4);
         assertEquals(b.getField(0,0).getOwner(),0);
         assertEquals(b.getField(16,0).getOwner(),2);
@@ -42,9 +42,9 @@ class StartTest {
     }
     @Test
     void Generate3(){
-        Board b = new Board(4);
+        ClassicBoard b = new ClassicBoard(4, new ClassicMove());
         Game g = new Game(4);
-        Start s = new Start(b,4,g);
+        ClassicStart s = new ClassicStart(b,4,g);
         s.prepare(3);
         assertEquals(b.getField(0,0).getOwner(),0);
         assertEquals(b.getField(12,0).getOwner(),2);
