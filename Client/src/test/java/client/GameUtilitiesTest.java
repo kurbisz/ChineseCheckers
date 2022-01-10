@@ -1,12 +1,9 @@
 package client;
 
-import client.CheckersClient;
-import client.ClientTest;
 import client.game.GameInterpreter;
 import client.game.GameManager;
 import client.game.states.GameState;
 import client.graphics.components.*;
-import connection.Messenger;
 import connection.NoConnectionException;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -33,7 +30,7 @@ public class GameUtilitiesTest extends ClientTest {
         Panel panel = gameManager.getGraphicsManager().getPanel("players");
         assertTrue(panel instanceof PlayersPanel);
         PlayersPanel playersPanel = (PlayersPanel) panel;
-        List<String> playerList = new ArrayList<String>();
+        List<String> playerList = new ArrayList<>();
         for(int i = 0; i < 3; i++) {
             playerList.add(playersPanel.getSinglePlayerPanel()[i].getNickName());
         }

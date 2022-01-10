@@ -120,7 +120,7 @@ public class GraphicsManager {
      * @param players amount of players
      * @throws InvalidPanelException when PlayersPanel is not added to panel map
      */
-    public void updatePlayers(String[] players)
+    public void updatePlayers(String... players)
             throws InvalidPanelException {
         PlayersPanel playersPanel = getPlayers();
         playersPanel.updatePlayers(players);
@@ -274,7 +274,7 @@ public class GraphicsManager {
             throw new NoJFrameException("Invalid JFrame!");
         }
         EndGameOptionPane.popup(jFrame, "You lose the game. Player "
-                + string + "won!");
+                + string + " won!");
     }
 
     /**
