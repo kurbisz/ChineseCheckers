@@ -119,7 +119,7 @@ public class GameManager {
      * Update player list in client's application.
      * @param players array of strings with players nicknames
      */
-    public void updatePlayers(String[] players)
+    public void updatePlayers(String... players)
             throws InvalidPanelException {
         graphicsManager.updatePlayers(players);
     }

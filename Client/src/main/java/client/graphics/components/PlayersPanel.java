@@ -82,7 +82,7 @@ public class PlayersPanel extends Panel {
      * of their nickname and place on list.
      * @param players array with player's nicknames (as strings)
      */
-    public void updatePlayers(String[] players) {
+    public void updatePlayers(String... players) {
         int am = players.length;
         playerCounterLabel.setText("Players: " + am + "/6");
         for (int i = 0; i < am; i++) {

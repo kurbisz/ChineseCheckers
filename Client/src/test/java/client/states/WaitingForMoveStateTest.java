@@ -7,7 +7,6 @@ import client.graphics.GraphicsManager;
 import client.graphics.NoJFrameException;
 import org.junit.jupiter.api.Assertions;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 
 public class WaitingForMoveStateTest extends SingleStateTest  {

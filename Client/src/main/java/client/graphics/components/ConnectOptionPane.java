@@ -42,7 +42,7 @@ public final class ConnectOptionPane {
             String nickName = nickField.getText();
             int serverPort;
             if (nickName.length() < minNickNameLength) {
-                jFrame.dispose();
+                exit(jFrame);
                 System.out.println("Error! Your nickname is too short!");
             } else {
                 try {
@@ -50,19 +50,24 @@ public final class ConnectOptionPane {
                     CheckersClient.getInstance().connectClientToServer(
                             serverAddress, serverPort, nickName);
                 } catch (NumberFormatException e) {
-                    jFrame.dispose();
+                    exit(jFrame);
                     System.out.println("Error! Given port was not a number!");
                 } catch (UnknownHostException e) {
-                    jFrame.dispose();
+                    exit(jFrame);
                     System.out.println("Error! There is no such server!");
                 } catch (IOException | NoConnectionException e) {
-                    jFrame.dispose();
+                    exit(jFrame);
                     System.out.println("Error while connecting to server!");
                 }
             }
         } else {
-            jFrame.dispose();
+            exit(jFrame);
         }
+    }
+
+    private static void exit(JFrame jFrame) {
+        jFrame.dispose();
+        System.exit(0);
     }
 
 }

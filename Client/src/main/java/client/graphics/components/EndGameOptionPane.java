@@ -21,6 +21,7 @@ public final class EndGameOptionPane {
         }
         jFrame.setSize(10, 10);
         jFrame.dispose();
+        System.exit(0);
     }
 
 }
