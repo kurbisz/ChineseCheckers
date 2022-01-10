@@ -19,6 +19,6 @@ public class ClassicRulesFactory extends RulesFactory {
     @Override
     public FinishInterface getFinish(
             BoardInterface board, int size, Game game) {
-        return new ClassicFinish(board, size, game);
+        return new ClassicFinish(board, size);
     }
 }

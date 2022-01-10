@@ -44,7 +44,7 @@ public class Server {
             System.out.println("PORT: " + PORT);
             ExecutorService pool = Executors.newFixedThreadPool(200);
             Game game = new Game(size);
-            Socket socket = null;
+            Socket socket;
             int i = 0;
             while (true) {
                 socket = listener.accept();

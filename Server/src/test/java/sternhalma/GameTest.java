@@ -1,7 +1,6 @@
 package sternhalma;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +13,6 @@ import sternhalma.exceptions.InvalidPlayerException;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.net.Socket;
-import java.util.ConcurrentModificationException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -72,6 +70,7 @@ class GameTest extends StandardTest {
             synchronized (this){
                 wait(100);
                 game.start();
+                assertFalse(game.canJoin());
             }
         } catch (CannotStartGameException | InterruptedException e) {
             System.out.println(game.numPlayers());
@@ -87,7 +86,7 @@ class GameTest extends StandardTest {
             synchronized (this){
                 wait(100);
                 game.start();
-                NullPointerException e = assertThrows(NullPointerException.class,()->pool.execute(game.createPlayer(socket3,2)));;
+                NullPointerException e = assertThrows(NullPointerException.class,()->pool.execute(game.createPlayer(socket3,2)));
 
             }
         } catch (CannotStartGameException | InterruptedException e) {
@@ -125,9 +124,7 @@ class GameTest extends StandardTest {
                 game.start();
                 try {
                     game.move(p1,0,0,1,1);
-                } catch (InvalidMoveException e) {
-                    e.printStackTrace();
-                } catch (InvalidPlayerException e) {
+                } catch (InvalidMoveException | InvalidPlayerException e) {
                     e.printStackTrace();
                 }
                 assertThrows(InvalidMoveException.class,()->game.move(p1,0,0,1,1));
@@ -186,10 +183,7 @@ class GameTest extends StandardTest {
                     Field finished = Game.class.getDeclaredField("finished");
                     finished.setAccessible(true);
                     assertTrue((boolean) finished.get(game));
-                } catch (InvalidPlayerException e) {
-                    e.printStackTrace();
-                    assertEquals(0,1);
-                } catch (InvalidMoveException e) {
+                } catch (InvalidPlayerException | InvalidMoveException e) {
                     e.printStackTrace();
                     assertEquals(0,1);
                 } catch (IllegalAccessException e) {

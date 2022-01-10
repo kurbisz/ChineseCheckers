@@ -1,15 +1,8 @@
 package sternhalma;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
-
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.time.Duration;
 import java.util.Scanner;
 
@@ -26,7 +19,7 @@ class ServerTest extends StandardTest{
     void mainSize() {
         String[] args = {"4","8080"};
         try {
-            AssertionFailedError as = assertThrows(AssertionFailedError.class,() -> assertTimeoutPreemptively(Duration.ofSeconds(1),()->Server.main(args)));
+            AssertionFailedError as = assertThrows(AssertionFailedError.class, () -> assertTimeoutPreemptively(Duration.ofSeconds(1),()->Server.main(args)));
             check("CONFIG: [4, 8080]");
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,7 +29,7 @@ class ServerTest extends StandardTest{
     void mainNull() {
         String[] args = new String[0];
         try {
-            AssertionFailedError as = assertThrows(AssertionFailedError.class,() -> assertTimeoutPreemptively(Duration.ofSeconds(1),()->Server.main(args)));
+            AssertionFailedError as = assertThrows(AssertionFailedError.class, () -> assertTimeoutPreemptively(Duration.ofSeconds(1),()->Server.main(args)));
             check("CONFIG: []");
         } catch (Exception e) {
             e.printStackTrace();

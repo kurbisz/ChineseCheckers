@@ -14,21 +14,17 @@ import java.util.Map;
  */
 public class ClassicFinish implements FinishInterface {
     private BoardInterface board;
-    private Game game;
     private int size;
-    private NotiferInterface notifer = Notifer.getInstance();
     private Map<Integer, List<Field>> mp = new HashMap<>();
     private boolean set = false;
     /**
      *
      * @param board reference to board
      * @param size size of the board
-     * @param game reference to game
      */
-    public ClassicFinish(BoardInterface board, int size, Game game) {
+    public ClassicFinish(BoardInterface board, int size) {
         this.board = board;
         this.size = size;
-        this.game = game;
     }
     private void set0(int id) {
         List<Field> ls = new ArrayList<>();

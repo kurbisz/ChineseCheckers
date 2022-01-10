@@ -1,16 +1,15 @@
 package sternhalma.board;
 
-import java.util.Locale;
-
 public class FactoryProducer {
     private static FactoryProducer instance=new FactoryProducer();
     public static FactoryProducer getInstance()
     {
         return instance;
     }
+    private final static String classic = "classic";
     public RulesFactory getFactory(String rules)
     {
-        if ( rules.equalsIgnoreCase("classic")) {
+        if (classic.equalsIgnoreCase(rules)) {
             return new ClassicRulesFactory();
         }
         return null;

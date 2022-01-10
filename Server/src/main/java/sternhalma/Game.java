@@ -13,13 +13,22 @@ import java.util.List;
  * Class representing one game.
  */
 public class Game {
+    /**
+     * List of players.
+     */
     private List<Player> players = new ArrayList<>();
+    /**
+     * Current player.
+     */
     private Player currentPlayer = null;
     private NotiferInterface notifer = Notifer.getInstance();
+    /**
+     * Size of the board.
+     */
     private int size;
     private BoardInterface board;
-    private StartingInterface start;
-    private FinishInterface finish;
+    private StartingInterface starting;
+    private FinishInterface finishing;
     private boolean running = false;
     private boolean finished = false;
 
@@ -30,13 +39,13 @@ public class Game {
     public Game(int size) {
         System.out.println("New game created.");
         this.size = size;
-        FactoryProducer fp = FactoryProducer.getInstance();
-        RulesFactory rules = fp.getFactory("classic");
-        MovingInterface mv = rules.getMoving();
-        this.board = rules.getBoard(size, mv);
-        this.start = rules.getStart(board, size, this);
-        this.finish = rules.getFinish(board, size, this);
-        mv.setFinish(finish);
+        FactoryProducer factory = FactoryProducer.getInstance();
+        RulesFactory rules = factory.getFactory("classic");
+        MovingInterface moving = rules.getMoving();
+        this.board = rules.getBoard(size, moving);
+        this.starting = rules.getStart(board, size, this);
+        this.finishing = rules.getFinish(board, size, this);
+        moving.setFinish(finishing);
     }
 
     /**
@@ -71,11 +80,11 @@ public class Game {
         }
         Player n0 = players.get(0);
         players.get(i).setNext(n0);
-        start.prepare(players.size());
+        starting.prepare(players.size());
         for (Player p : players) {
             p.notifyStart();
         }
-        finish.setPlayers(numPlayers());
+        finishing.setPlayers(numPlayers());
         running = true;
         notifer.notifyAll("TURN " + currentPlayer.getId(), this);
         currentPlayer.notify("TURNSET");
@@ -85,7 +94,7 @@ public class Game {
      * Check if game is finished.
      */
     public void checkFinished() {
-        int p = finish.checkEnd(players.size());
+        int p = finishing.checkEnd(players.size());
         if (p == -1) {
             return;
         }
@@ -188,9 +197,6 @@ public class Game {
      * @return true if player can join
      */
     public boolean canJoin() {
-        if (running || players.size() == 6) {
-            return false;
-        }
-        return true;
+        return !(running || players.size() == 6);
     }
 }

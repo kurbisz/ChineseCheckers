@@ -20,7 +20,7 @@ public class Player implements Runnable {
     private Scanner input;
     private PrintWriter output;
     private Game game;
-    private NotiferInterface notifer = Notifer.getInstance();
+    @Deprecated
     private int position = 0;
 
     /**
@@ -92,6 +92,7 @@ public class Player implements Runnable {
      * Set player's position in game.
      * @param i position in game
      */
+    @Deprecated
     public void setPosition(int i) {
         this.position = i;
     }
