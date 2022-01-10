@@ -17,7 +17,6 @@ public class Server {
     /**
      * Create and start game server.
      * @param args args[0] -> game size
-     * @throws Exception
      */
     public static void main(String[] args) {
         int size = 4;

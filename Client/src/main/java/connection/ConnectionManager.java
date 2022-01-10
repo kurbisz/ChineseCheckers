@@ -6,6 +6,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+/**
+ * Class responsible for handling the connection.
+ */
 public class ConnectionManager {
 
     private String serverAddress;
@@ -24,6 +27,15 @@ public class ConnectionManager {
         this.rec = Receiver.getInstance();
     }
 
+    /**
+     * Create new connection.
+     * @param address server address
+     * @param port server port
+     * @param nick your nickname
+     * @throws UnknownHostException
+     * @throws IOException
+     * @throws NoConnectionException
+     */
     public void createNewConnection(String address, int port, String nick)
             throws UnknownHostException, IOException, NoConnectionException {
         this.serverAddress = address;
@@ -39,12 +51,23 @@ public class ConnectionManager {
         msg.name(nickName);
         Receiver.getInstance().listen();
     }
+
+    /**
+     * Send message to server.
+     * @param msg
+     * @throws NoConnectionException
+     */
     public void send(String msg) throws NoConnectionException {
         if(writer == null) {
             throw new NoConnectionException("No writer is set!");
         }
         writer.println(msg);
     }
+
+    /**
+     * Get input from server.
+     * @return input stream from server
+     */
     public Scanner getScanner() {
         return this.scanner;
     }

@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
 
 public final class ConnectOptionPane {
 
-    private static int minNickNameLength = 5;
+    private static int minNickNameLength = 2;
 
     private ConnectOptionPane() { }
     /**

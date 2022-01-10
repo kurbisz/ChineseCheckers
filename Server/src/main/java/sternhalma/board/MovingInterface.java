@@ -8,7 +8,7 @@ import sternhalma.exceptions.InvalidPlayerException;
  */
 public interface MovingInterface {
     /**
-     *
+     * Move a piece from one field to another.
      * @param id id of player performing move.
      * @param from starting field
      * @param to ending field

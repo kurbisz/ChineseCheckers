@@ -2,6 +2,9 @@ package connection;
 
 import java.util.Scanner;
 
+/**
+ * Singleton class responsible for receiving data from server.
+ */
 public class Receiver {
     private static Receiver instance;
     public static Interpreter interpreter;
@@ -13,12 +16,25 @@ public class Receiver {
         }
         return instance;
     }
+
+    /**
+     * Set connection manager.
+     * @param cmd connection manager
+     */
     public static void setCMD(ConnectionManager cmd) {
         Receiver.cmd = cmd;
     }
+    /**
+     * Set commands interpreter.
+     * @param in commands interpreter
+     */
     public static void setInterpreter(Interpreter in) {
         Receiver.interpreter = in;
     }
+
+    /**
+     * Listen to server.
+     */
     public void listen() {
         try {
             scanner = cmd.getScanner();

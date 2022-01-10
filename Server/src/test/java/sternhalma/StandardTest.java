@@ -6,6 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+/**
+ * Class created to redirect and test System.out.println output.
+ */
 public class StandardTest {
     protected final PrintStream standardOut = System.out;
     protected final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
