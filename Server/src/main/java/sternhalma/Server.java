@@ -43,23 +43,22 @@ public class Server {
                     "IP: " + Inet4Address.getLocalHost().getHostAddress());
             System.out.println("PORT: " + PORT);
             ExecutorService pool = Executors.newFixedThreadPool(200);
+            Game game = new Game(size);
+            Socket socket = null;
+            int i = 0;
             while (true) {
-                Game game = new Game(size);
-                Socket socket = null;
-                int i = 0;
-                while (true) {
-                    socket = listener.accept();
-                    if (socket == null) {
-                        return;
-                    }
-                    if (!game.canJoin()) {
-                        game = new Game(size);
-                        i = 0;
-                    }
-                    pool.execute(game.createPlayer(socket, i));
-                    i++;
+                socket = listener.accept();
+                if (socket == null) {
+                    return;
                 }
+                if (!game.canJoin()) {
+                    game = new Game(size);
+                    i = 0;
+                }
+                pool.execute(game.createPlayer(socket, i));
+                i++;
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

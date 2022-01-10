@@ -2,10 +2,11 @@ package sternhalma.board;
 
 import org.junit.jupiter.api.Test;
 import sternhalma.Game;
+import sternhalma.StandardTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ClassicStartTest {
+class ClassicStartTest extends StandardTest {
 
     @Test
     void Generate2(){

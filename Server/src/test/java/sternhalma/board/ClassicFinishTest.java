@@ -2,10 +2,11 @@ package sternhalma.board;
 
 import org.junit.jupiter.api.Test;
 import sternhalma.Game;
+import sternhalma.StandardTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ClassicFinishTest {
+class ClassicFinishTest extends StandardTest {
     @Test
     void End2(){
         ClassicBoard b = new ClassicBoard(1, new ClassicMove());
