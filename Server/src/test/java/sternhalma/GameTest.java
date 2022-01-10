@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-class GameTest extends StandardTest{
+class GameTest extends StandardTest {
     final Socket socket1 = mock(Socket.class);
     final OutputStream of1 = mock(OutputStream.class);
     final InputStream in1 = mock(InputStream.class, Mockito.CALLS_REAL_METHODS);
@@ -183,9 +183,9 @@ class GameTest extends StandardTest{
                     game.switchPlayer(p1);
                     game.switchPlayer(p2);
                     game.move(p1,3,1,4,0);
-                    Field running = Game.class.getDeclaredField("running");
-                    running.setAccessible(true);
-                    assertFalse((boolean) running.get(game));
+                    Field finished = Game.class.getDeclaredField("finished");
+                    finished.setAccessible(true);
+                    assertTrue((boolean) finished.get(game));
                 } catch (InvalidPlayerException e) {
                     e.printStackTrace();
                     assertEquals(0,1);

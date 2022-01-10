@@ -21,12 +21,14 @@ public class Game {
     private StartingInterface start;
     private FinishInterface finish;
     private boolean running = false;
+    private boolean finished = false;
 
     /**
      * Create the game of specific board's size.
      * @param size size of the boards
      */
     public Game(int size) {
+        System.out.println("New game created.");
         this.size = size;
         FactoryProducer fp = FactoryProducer.getInstance();
         RulesFactory rules = fp.getFactory("classic");
@@ -88,7 +90,7 @@ public class Game {
             return;
         }
         Player winner = players.get(p);
-        running = false;
+        finished = true;
         winner.notify("VICTORY");
         notifer.notifyAllExceptPlayer(
                 "DEFEAT#" + winner.getName(), this, winner);

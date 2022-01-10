@@ -1,12 +1,13 @@
 package sternhalma.board;
 
 import org.junit.jupiter.api.Test;
+import sternhalma.StandardTest;
 import sternhalma.exceptions.InvalidMoveException;
 import sternhalma.exceptions.InvalidPlayerException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ClassicBoardTest {
+class ClassicBoardTest extends StandardTest {
 
 
     @Test
