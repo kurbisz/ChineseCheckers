@@ -4,6 +4,11 @@ import sternhalma.Game;
 import sternhalma.Notifer;
 import sternhalma.NotiferInterface;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Class implementing sternhalma classic rules of game end.
  */
@@ -12,7 +17,8 @@ public class ClassicFinish implements FinishInterface {
     private Game game;
     private int size;
     private NotiferInterface notifer = Notifer.getInstance();
-
+    private Map<Integer, List<Field>> mp = new HashMap<>();
+    private boolean set = false;
     /**
      *
      * @param board reference to board
@@ -24,114 +30,110 @@ public class ClassicFinish implements FinishInterface {
         this.size = size;
         this.game = game;
     }
-    private boolean check0(int id) {
+    private void set0(int id) {
+        List<Field> ls = new ArrayList<>();
         for (int y = 1; y <= size; y++) {
             for (int x = 0; x < y; x++) {
-                if (board.getField(4 * size + 1 - y, x).getOwner() != id) {
-                    return false;
-                }
+                ls.add(board.getField(4 * size + 1 - y, x));
             }
         }
-        return true;
+        mp.put(id, ls);
     }
-    private boolean check1(int id) {
+    private void set1(int id) {
+        List<Field> ls = new ArrayList<>();
         for (int y = 1; y <= size; y++) {
             for (int x = 0; x < y; x++) {
-                if (board.getField(y + 2 * size, x).getOwner() != id) {
-                    return false;
-                }
+                ls.add(board.getField(y + 2 * size, x));
             }
         }
-        return true;
+        mp.put(id, ls);
     }
-    private boolean check2(int id) {
+    private void set2(int id) {
+        List<Field> ls = new ArrayList<>();
         for (int y = 1; y <= size; y++) {
             for (int x = 0; x < y; x++) {
-                if (board.getField(2 * size - y, x).getOwner() != id) {
-                    return false;
-                }
+                ls.add(board.getField(2 * size - y, x));
             }
         }
-        return true;
+        mp.put(id, ls);
     }
-    private boolean check3(int id) {
+    private void set3(int id) {
+        List<Field> ls = new ArrayList<>();
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < board.getRowSize(y); x++) {
-                if (board.getField(y, x).getOwner() != id) {
-                    return false;
-                }
+                ls.add(board.getField(y, x));
             }
         }
-        return true;
+        mp.put(id, ls);
     }
-    private boolean check4(int id) {
+    private void set4(int id) {
+        List<Field> ls = new ArrayList<>();
         for (int y = 1; y <= size; y++) {
+            int xmax = board.getRowSize(2 * size - y) - 1;
             for (int x = 0; x < y; x++) {
-                int xmax = board.getRowSize(2 * size - y) - 1;
-                if (board.getField(2 * size - y, xmax - x).getOwner() != id) {
-                    return false;
-                }
+                ls.add(board.getField(2 * size - y, xmax - x));
             }
         }
-        return true;
+        mp.put(id, ls);
     }
-    private boolean check5(int id) {
+    private void set5(int id) {
+        List<Field> ls = new ArrayList<>();
         for (int y = 1; y <= size; y++) {
+            int xmax = board.getRowSize(y + 2 * size) - 1;
             for (int x = 0; x < y; x++) {
-                int xmax = board.getRowSize(y + 2 * size) - 1;
-                if (board.getField(y + 2 * size, xmax - x).getOwner() != id) {
-                    return false;
-                }
+                ls.add(board.getField(y + 2 * size, xmax - x));
+            }
+        }
+        mp.put(id, ls);
+    }
+
+    private boolean check(int id) {
+        for (Field f : mp.get(id)) {
+            if (f.getOwner() != id) {
+                return false;
             }
         }
         return true;
     }
+
     @Override
     public int checkEnd(int num) {
-        if (check0(0)) {
-             return 0;
+        if (!set) {
+            setPlayers(num);
+            set = true;
         }
-        if (num == 3) {
-            if (check2(1)) {
-                return 1;
-            }
-            if (check4(2)) {
-                return 2;
-            }
-        }
-        if (num == 2) {
-            if (check3(1)) {
-                return 1;
-            }
-        }
-        if (num == 4) {
-            if (check2(1)) {
-                return 1;
-            }
-            if (check3(2)) {
-                return 2;
-            }
-            if (check5(3)) {
-                return 3;
-            }
-        }
-        if (num == 6) {
-            if (check1(1)) {
-                return 1;
-            }
-            if (check2(2)) {
-                return 2;
-            }
-            if (check3(3)) {
-                return 3;
-            }
-            if (check4(4)) {
-                return 4;
-            }
-            if (check5(5)) {
-                return 5;
+        for (int i = 0; i < num; i++) {
+            if (check(i)) {
+                return i;
             }
         }
         return -1;
+    }
+    @Override
+    public void setPlayers(int num) {
+        set0(0);
+        if (num == 3) {
+            set2(1);
+            set4(2);
+        }
+        if (num == 2) {
+            set3(1);
+        }
+        if (num == 4) {
+            set2(1);
+            set3(2);
+            set5(3);
+        }
+        if (num == 6) {
+            set1(1);
+            set2(2);
+            set3(3);
+            set4(4);
+            set5(5);
+        }
+    }
+    @Override
+    public List<Field> getCorner(int player) {
+        return mp.get(player);
     }
 }

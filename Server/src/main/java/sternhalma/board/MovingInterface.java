@@ -21,4 +21,10 @@ public interface MovingInterface {
      * End the turn.
      */
     void end();
+
+    /**
+     * Set the finish interface for additional rules.
+     * @param finish FinishInterface to be used in other rules
+     */
+    void setFinish(FinishInterface finish);
 }

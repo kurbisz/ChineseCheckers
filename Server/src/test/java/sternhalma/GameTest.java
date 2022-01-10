@@ -130,7 +130,7 @@ class GameTest extends StandardTest{
                 } catch (InvalidPlayerException e) {
                     e.printStackTrace();
                 }
-                assertThrows(InvalidPlayerException.class,()->game.move(p1,0,0,1,1));
+                assertThrows(InvalidMoveException.class,()->game.move(p1,0,0,1,1));
 
             }
         } catch (CannotStartGameException | InterruptedException e) {

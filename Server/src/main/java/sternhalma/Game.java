@@ -34,6 +34,7 @@ public class Game {
         this.board = rules.getBoard(size, mv);
         this.start = rules.getStart(board, size, this);
         this.finish = rules.getFinish(board, size, this);
+        mv.setFinish(finish);
     }
 
     /**
@@ -72,6 +73,7 @@ public class Game {
         for (Player p : players) {
             p.notifyStart();
         }
+        finish.setPlayers(numPlayers());
         running = true;
         notifer.notifyAll("TURN " + currentPlayer.getId(), this);
         currentPlayer.notify("TURNSET");
