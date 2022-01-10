@@ -4,12 +4,21 @@ import client.graphics.GraphicsManager;
 import client.graphics.listener.circle.CircleListener;
 import client.graphics.listener.circle.SingleCircleListener;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import java.awt.Color;
+import java.awt.Graphics;
 
 public class CirclePanel extends JPanel {
 
-    private static double size = 0.3, playerSize = 0.6, scaleSizeX = 0.02, scaleSizeY = 0.03;
+    /**
+     * These static variables define size of a single circle
+     * comparing to size of a full window.
+     */
+    private static double size = 0.3;
+    private static double playerSize = 0.6;
+    private static double scaleSizeX = 0.02;
+    private static double scaleSizeY = 0.03;
 
     private int rowNumber;
     private int columnNumber;
@@ -42,13 +51,13 @@ public class CirclePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        this.setSize((int) (scaleSizeX*jFrame.getWidth()), (int) (scaleSizeY * jFrame.getHeight()));
-        if(playerNr < 0) {
+        this.setSize((int) (scaleSizeX * jFrame.getWidth()),
+                (int) (scaleSizeY * jFrame.getHeight()));
+        if (playerNr < 0) {
             g.setColor(Color.BLACK);
             int radius = (int) (getWidth() * size);
             g.fillOval(radius / 2, radius / 2, radius, radius);
-        }
-        else {
+        } else {
             g.setColor(GraphicsManager.playerColors[playerNr]);
             int radius = (int) (getWidth() * playerSize);
             g.fillOval(0, 0, radius, radius);

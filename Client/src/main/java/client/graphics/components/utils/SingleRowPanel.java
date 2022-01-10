@@ -1,7 +1,8 @@
 package client.graphics.components.utils;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import java.awt.FlowLayout;
 
 public class SingleRowPanel extends JPanel {
 
@@ -12,7 +13,7 @@ public class SingleRowPanel extends JPanel {
 
     private JFrame jFrame;
 
-    private CirclePanel circlePanels[];
+    private CirclePanel[] circlePanels;
 
     /**
      * Initialize new empty row of circles.
@@ -28,7 +29,7 @@ public class SingleRowPanel extends JPanel {
         this.circlePanels = new CirclePanel[maxSize];
         FlowLayout layout = new FlowLayout();
         layout.setVgap(0);
-        layout.setHgap((int) (jFrame.getWidth()*size));
+        layout.setHgap((int) (jFrame.getWidth() * size));
         setLayout(layout);
     }
 
@@ -43,7 +44,7 @@ public class SingleRowPanel extends JPanel {
     }
 
     /**
-     * Executes setPlayer(int player) in CirclePanel
+     * Executes setPlayer(int player) in CirclePanel.
      * having column nr 'column'
      * @param column column of a field
      * @param player nr of player to set in this field
@@ -51,7 +52,8 @@ public class SingleRowPanel extends JPanel {
      * @throws IndexOutOfBoundsException when column is not smaller
      * than size of circlePanels array (amount of circles)
      */
-    public int setPlayer(int column, int player) throws IndexOutOfBoundsException {
+    public int setPlayer(int column, int player)
+            throws IndexOutOfBoundsException {
         return circlePanels[column].setPlayer(player);
     }
 

@@ -1,7 +1,6 @@
 package client.graphics.listener;
 
 import client.CheckersClient;
-import client.graphics.GraphicsManager;
 import connection.NoConnectionException;
 
 import java.awt.event.WindowAdapter;

@@ -3,11 +3,16 @@ package client.graphics.components.buttons;
 import connection.Messenger;
 import connection.NoConnectionException;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import java.awt.Color;
 
-public class PlayingButton extends StateButton {
+public class PlayingButton extends GameStateButton {
 
+
+    /**
+     * (8, 8, 180) is new color of JButton in RGB.
+     * @param jButton button which has to be changed
+     */
     @Override
     public void generate(JButton jButton) {
         jButton.setText("End your move");

@@ -6,7 +6,6 @@ import client.graphics.GraphicsManager;
 import client.graphics.InvalidPanelException;
 import client.graphics.NoJFrameException;
 import connection.Interpreter;
-import connection.Messenger;
 import connection.NoConnectionException;
 import connection.Receiver;
 
@@ -26,8 +25,7 @@ public class GameManager {
     public GameManager(GraphicsManager graphics) {
         this.graphicsManager = graphics;
         this.gameState = GameState.WAITING_FOR_GAME;
-        interpreter = new GameInterpreter(this);
-        Receiver.setInterpreter(interpreter);
+        initInterpreter();
     }
 
     /**
@@ -45,7 +43,8 @@ public class GameManager {
      * @param toRow row of 2nd field
      * @param toColumn column of 2nd field
      */
-    public void setPlayerMove(int fromRow, int fromColumn, int toRow, int toColumn)
+    public void setPlayerMove(int fromRow, int fromColumn,
+                              int toRow, int toColumn)
             throws InvalidPanelException, IndexOutOfBoundsException {
         graphicsManager.setPlayerMove(fromRow, fromColumn, toRow, toColumn);
     }
@@ -83,6 +82,7 @@ public class GameManager {
 
     /**
      * Finish game and show defeat screen.
+     * @param name name of player who has won game
      */
     public void openLoseGui(String name) throws NoJFrameException {
         graphicsManager.openLoseGui(name);
@@ -192,4 +192,10 @@ public class GameManager {
     public void setInterpreter(Interpreter interpreter) {
         this.interpreter = interpreter;
     }
+
+    private void initInterpreter() {
+        interpreter = new GameInterpreter(this);
+        Receiver.setInterpreter(interpreter);
+    }
+
 }

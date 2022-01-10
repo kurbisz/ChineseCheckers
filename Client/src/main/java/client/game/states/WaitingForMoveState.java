@@ -31,7 +31,8 @@ public class WaitingForMoveState implements GameStateBehaviour {
     }
 
     @Override
-    public void closeClient(GraphicsManager graphicsManager) throws NoJFrameException {
+    public void closeClient(GraphicsManager graphicsManager)
+            throws NoJFrameException {
         graphicsManager.openLeftGui();
     }
 

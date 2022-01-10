@@ -5,25 +5,30 @@ import client.game.states.GameState;
 import client.graphics.components.*;
 import client.graphics.components.Panel;
 import client.graphics.listener.WindowListeners;
-import connection.Messenger;
 import connection.NoConnectionException;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import java.awt.Color;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class GraphicsManager {
 
+    /**
+     * Colors of each player which are set
+     * in method initVariables().
+     */
     public static Color[] playerColors;
     private static String frameName;
 
     private JFrame jFrame;
 
-    private SingleField fromField, toField;
+    private SingleField fromField;
+    private SingleField toField;
 
     private int boardSize;
-    private ConcurrentHashMap<String, Panel> boardPanels = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, Panel> boardPanels =
+            new ConcurrentHashMap<>();
 
 
     /**
@@ -54,7 +59,7 @@ public class GraphicsManager {
      */
     public void drawBoard() {
         initBoard();
-        for(Map.Entry<String, Panel> entry : boardPanels.entrySet()) {
+        for (Map.Entry<String, Panel> entry : boardPanels.entrySet()) {
             Panel panel = entry.getValue();
             panel.initialize();
             jFrame.add(panel);
@@ -147,11 +152,12 @@ public class GraphicsManager {
      * Show information message in proper box.
      * Executes setMessage() in InformationPanel.
      * @param message message which has to bo shown in box
-     * @throws InvalidPanelException when InformationPanel is not added to panel map
+     * @throws InvalidPanelException when InformationPanel
+     * is not added to panel map
      */
     public void setInfoMessage(String message) throws InvalidPanelException {
         Panel panel = boardPanels.get("info");
-        if(!(panel instanceof InformationPanel)) {
+        if (!(panel instanceof InformationPanel)) {
             throw new InvalidPanelException();
         }
         InformationPanel informationPanel = (InformationPanel) panel;
@@ -164,9 +170,10 @@ public class GraphicsManager {
      * @param gameState actual game state
      * @throws InvalidPanelException when ButtonPanel is not added to panel map
      */
-    public void changeGameState(GameState gameState) throws InvalidPanelException {
+    public void changeGameState(GameState gameState)
+            throws InvalidPanelException {
         Panel panel = boardPanels.get("button");
-        if(!(panel instanceof ButtonPanel)) {
+        if (!(panel instanceof ButtonPanel)) {
             throw new InvalidPanelException();
         }
         ButtonPanel buttonPanel = (ButtonPanel) panel;
@@ -215,11 +222,11 @@ public class GraphicsManager {
      * @throws NoConnectionException when occurred problem to connect
      * to server (by Messenger)
      */
-    public void setPointClick(int row, int column) throws NoConnectionException {
-        if(fromField != null) {
+    public void setPointClick(int row, int column)
+            throws NoConnectionException {
+        if (fromField != null) {
             setToPointClick(row, column);
-        }
-        else {
+        } else {
             if (row < 0 || column < 0) {
                 fromField = null;
             } else {
@@ -233,10 +240,12 @@ public class GraphicsManager {
      * @param row row of clicked field
      * @param column column of clicked field
      */
-    public void setToPointClick(int row, int column) throws NoConnectionException {
-        if(row >= 0 && column >= 0 && fromField != null) {
+    private void setToPointClick(int row, int column)
+            throws NoConnectionException {
+        if (row >= 0 && column >= 0 && fromField != null) {
             toField = new SingleField(row, column);
-            if(fromField.getRow()!=toField.getRow()||fromField.getColumn()!=toField.getColumn()) {
+            if (fromField.getRow() != toField.getRow()
+                    || fromField.getColumn() != toField.getColumn()) {
                     CheckersClient.getMessenger().move(
                             fromField.getRow(), fromField.getColumn(),
                             toField.getRow(), toField.getColumn());
@@ -250,7 +259,7 @@ public class GraphicsManager {
      * Open option pane after player won the game.
      */
     public void openWinGui() throws NoJFrameException {
-        if(jFrame == null) {
+        if (jFrame == null) {
             throw new NoJFrameException("Invalid JFrame!");
         }
         EndGameOptionPane.popup(jFrame, "You won the game!");
@@ -258,19 +267,21 @@ public class GraphicsManager {
 
     /**
      * Open option pane after another player won the game.
+     * @param string nickname of player who has won the game
      */
     public void openLoseGui(String string) throws NoJFrameException {
-        if(jFrame == null) {
+        if (jFrame == null) {
             throw new NoJFrameException("Invalid JFrame!");
         }
-        EndGameOptionPane.popup(jFrame, string);
+        EndGameOptionPane.popup(jFrame, "You lose the game. Player "
+                + string + "won!");
     }
 
     /**
      * Open option pane after one of players left the game.
      */
     public void openLeftGui() throws NoJFrameException {
-        if(jFrame == null) {
+        if (jFrame == null) {
             throw new NoJFrameException("Invalid JFrame!");
         }
         EndGameOptionPane.popup(jFrame, "One of the players left the game!");
@@ -318,7 +329,7 @@ public class GraphicsManager {
 
     private BoardPanel getBoard() throws InvalidPanelException {
         Panel panel = boardPanels.get("board");
-        if(!(panel instanceof BoardPanel)) {
+        if (!(panel instanceof BoardPanel)) {
             throw new InvalidPanelException();
         }
         return (BoardPanel) panel;
@@ -326,7 +337,7 @@ public class GraphicsManager {
 
     private PlayersPanel getPlayers() throws InvalidPanelException {
         Panel panel = boardPanels.get("players");
-        if(!(panel instanceof PlayersPanel)) {
+        if (!(panel instanceof PlayersPanel)) {
             throw new InvalidPanelException();
         }
         return (PlayersPanel) panel;

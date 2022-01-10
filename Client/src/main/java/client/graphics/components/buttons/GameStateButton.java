@@ -3,9 +3,9 @@ package client.graphics.components.buttons;
 import connection.Messenger;
 import connection.NoConnectionException;
 
-import javax.swing.*;
+import javax.swing.JButton;
 
-public abstract class StateButton {
+public abstract class GameStateButton {
 
     /**
      * Set actual appearance of button.
@@ -20,6 +20,7 @@ public abstract class StateButton {
      *                  something on server
      * @throws NoConnectionException when messenger is not connected
      */
-    public abstract void click(Messenger messenger) throws NoConnectionException;
+    public abstract void click(Messenger messenger)
+            throws NoConnectionException;
 
 }

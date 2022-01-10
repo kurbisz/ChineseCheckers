@@ -2,15 +2,24 @@ package client.graphics.components.utils;
 
 import client.graphics.GraphicsManager;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.BorderFactory;
 import javax.swing.border.Border;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.font.TextAttribute;
 import java.util.Map;
 
 public class SinglePlayerPanel extends JPanel {
 
-    private final static int smallFontSize = 24, bigFontSize = 36;
+    /**
+     * These static variables defines size of font
+     * for this player (big) and other players (small).
+     */
+    private static int smallFontSize = 24;
+    private static int bigFontSize = 36;
 
     private String nickName;
     private int playerNr;
@@ -51,7 +60,7 @@ public class SinglePlayerPanel extends JPanel {
         this.isThisClient = isClient;
         int fontSize = smallFontSize;
         int weight = Font.PLAIN;
-        if(isClient) {
+        if (isClient) {
             fontSize = bigFontSize;
             weight = Font.BOLD;
         }
@@ -72,11 +81,10 @@ public class SinglePlayerPanel extends JPanel {
     public void setActualPlaying(boolean isPlaying) {
         Font font = playerLabel.getFont();
         Map attributes = font.getAttributes();
-        if(isPlaying) {
+        if (isPlaying) {
             Border border = BorderFactory.createLineBorder(Color.RED, 5);
             playerLabel.setBorder(border);
-        }
-        else {
+        } else {
             playerLabel.setBorder(BorderFactory.createEmptyBorder());
         }
         font = font.deriveFont(attributes);
@@ -102,7 +110,7 @@ public class SinglePlayerPanel extends JPanel {
     }
 
     /**
-     * Getter of private variable isThisClient
+     * Getter of private variable isThisClient.
      * @return true if this panel belongs to this client,
      * false if it is from other client
      */
