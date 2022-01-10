@@ -6,7 +6,7 @@ import client.game.states.WaitingForGameState;
 import client.graphics.GraphicsManager;
 import client.graphics.NoJFrameException;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import static org.mockito.Mockito.verify;
 

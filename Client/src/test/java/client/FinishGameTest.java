@@ -2,13 +2,11 @@ package client;
 
 import client.game.GameInterpreter;
 import client.game.GameManager;
-import client.game.states.GameState;
 import connection.NoConnectionException;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import javax.swing.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -67,8 +65,6 @@ public class FinishGameTest extends ClientTest {
         }
 
         assertTrue(informationSent);
-
-        assertEquals(GameState.FINISHED, gameManager.getGameState());
 
     }
 

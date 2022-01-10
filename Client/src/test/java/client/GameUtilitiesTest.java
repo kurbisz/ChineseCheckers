@@ -5,7 +5,7 @@ import client.game.GameManager;
 import client.game.states.GameState;
 import client.graphics.components.*;
 import connection.NoConnectionException;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 

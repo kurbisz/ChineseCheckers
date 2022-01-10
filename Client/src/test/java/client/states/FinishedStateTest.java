@@ -5,7 +5,6 @@ import client.game.states.GameState;
 import client.game.states.GameStateBehaviour;
 import org.junit.jupiter.api.Assertions;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FinishedStateTest extends SingleStateTest {
 

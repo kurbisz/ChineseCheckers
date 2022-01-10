@@ -5,7 +5,7 @@ import client.graphics.components.buttons.FinishedButton;
 import client.graphics.components.buttons.PlayingButton;
 import client.graphics.components.buttons.WaitingForGameButton;
 import client.graphics.components.buttons.WaitingForMoveButton;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

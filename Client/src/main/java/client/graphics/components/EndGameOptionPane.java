@@ -21,7 +21,9 @@ public final class EndGameOptionPane {
         }
         jFrame.setSize(10, 10);
         jFrame.dispose();
-        System.exit(0);
+        if (CheckersClient.isHumanMode()) {
+            System.exit(0);
+        }
     }
 
 }

@@ -6,7 +6,7 @@ import client.graphics.GraphicsManager;
 import client.graphics.components.BoardPanel;
 import client.graphics.components.Panel;
 import connection.NoConnectionException;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

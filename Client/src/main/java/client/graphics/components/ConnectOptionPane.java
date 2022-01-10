@@ -67,7 +67,9 @@ public final class ConnectOptionPane {
 
     private static void exit(JFrame jFrame) {
         jFrame.dispose();
-        System.exit(0);
+        if (CheckersClient.isHumanMode()) {
+            System.exit(0);
+        }
     }
 
 }
