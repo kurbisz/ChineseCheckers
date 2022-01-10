@@ -10,10 +10,13 @@ public class ClassicMove implements MovingInterface {
     private boolean last = false;
     private boolean moved = false;
     private Field current = null;
+    private FinishInterface finish;
     @Override
     public void move(int id, Field from, Field to)
             throws InvalidMoveException, InvalidPlayerException {
-
+        if (from.getOwner() == -1) {
+            throw new InvalidMoveException();
+        }
         if (from.getOwner() != id) {
             throw new InvalidPlayerException();
         }
@@ -24,6 +27,10 @@ public class ClassicMove implements MovingInterface {
             throw new InvalidMoveException();
         }
         if (current != null && current != from) {
+            throw new InvalidMoveException();
+        }
+        if (finish != null && finish.getCorner(id).contains(from) &&
+                !finish.getCorner(id).contains(to)) {
             throw new InvalidMoveException();
         }
         if (!moved && from.getNeighbours().contains(to)) {
@@ -53,5 +60,10 @@ public class ClassicMove implements MovingInterface {
         moved = false;
         current = null;
         last = false;
+    }
+
+    @Override
+    public void setFinish(FinishInterface finish) {
+        this.finish = finish;
     }
 }
