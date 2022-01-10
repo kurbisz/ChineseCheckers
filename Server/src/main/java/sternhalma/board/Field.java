@@ -15,7 +15,7 @@ public class Field {
     private int owner=-1;
 
     /**
-     * Create a field
+     * Create a field.
      */
     public Field() {
         this.neighbours = new HashMap<>();

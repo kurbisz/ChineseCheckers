@@ -2,6 +2,9 @@ package sternhalma.board;
 
 import sternhalma.Game;
 
+/**
+ * Factory responsible for creating
+ */
 public class ClassicRulesFactory extends RulesFactory {
     @Override
     public BoardInterface getBoard(int n, MovingInterface mv) {
