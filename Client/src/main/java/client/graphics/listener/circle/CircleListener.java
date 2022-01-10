@@ -10,7 +10,8 @@ public abstract class CircleListener implements MouseListener {
 
     protected GraphicsManager graphicsManager;
 
-    protected int row, column;
+    protected int row;
+    protected int column;
 
     /**
      * Mouse listeners which are handled when clicked
@@ -21,7 +22,8 @@ public abstract class CircleListener implements MouseListener {
     public CircleListener(int clickRow, int clickColumn) {
         this.row = clickRow;
         this.column = clickColumn;
-        this.graphicsManager = CheckersClient.getInstance().getGraphicsManager();
+        this.graphicsManager = CheckersClient.
+                getInstance().getGraphicsManager();
     }
 
 

@@ -1,8 +1,7 @@
 package client.graphics.components;
 
-import javax.swing.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
 
 public abstract class Panel extends JPanel {
 
@@ -12,7 +11,7 @@ public abstract class Panel extends JPanel {
      * Creates new panel which extends JPanel.
      * @param frame actual jFrame of application
      */
-    public Panel(JFrame frame) {
+    public Panel(final JFrame frame) {
         this.jFrame = frame;
     }
 

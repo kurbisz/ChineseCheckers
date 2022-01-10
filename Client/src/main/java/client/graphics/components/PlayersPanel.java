@@ -2,8 +2,13 @@ package client.graphics.components;
 
 import client.graphics.components.utils.SinglePlayerPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.GridBagLayout;
 
 public class PlayersPanel extends Panel {
 
@@ -12,7 +17,7 @@ public class PlayersPanel extends Panel {
 
     private int clientNumber = 0;
 
-    private SinglePlayerPanel singlePlayerPanel[] = new SinglePlayerPanel[6];
+    private SinglePlayerPanel[] singlePlayerPanel = new SinglePlayerPanel[6];
 
     /**
      * Responsible for whole player's panel
@@ -40,8 +45,9 @@ public class PlayersPanel extends Panel {
         playerCounter.setBackground(Color.LIGHT_GRAY);
         this.add(playerCounter);
 
-        for(int i = 0; i < 6; i++) {
-            singlePlayerPanel[i] = new SinglePlayerPanel("Player nr " + (i+1), i);
+        for (int i = 0; i < 6; i++) {
+            singlePlayerPanel[i] = new SinglePlayerPanel(
+                    "Player nr " + (i + 1), i);
             singlePlayerPanel[i].setVisible(false);
             this.add(singlePlayerPanel[i]);
         }
@@ -49,9 +55,10 @@ public class PlayersPanel extends Panel {
         GridLayout gridLayout = new GridLayout(0, 1);
         this.setLayout(gridLayout);
 
-        this.setBounds((int) (0.75*jFrame.getWidth()), (int) (0.1*jFrame.getHeight()),
-                (int) (0.15*jFrame.getWidth()), (int) (0.5*jFrame.getHeight()));
-        //this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        this.setBounds((int) (0.75 * jFrame.getWidth()),
+                (int) (0.1 * jFrame.getHeight()),
+                (int) (0.15 * jFrame.getWidth()),
+                (int) (0.5 * jFrame.getHeight()));
     }
 
     /**
@@ -62,10 +69,10 @@ public class PlayersPanel extends Panel {
     @Deprecated
     public void updatePlayerAmount(int am) {
         playerCounterLabel.setText("Players: " + am + "/6");
-        for(int i = 0; i < am; i++) {
+        for (int i = 0; i < am; i++) {
             singlePlayerPanel[i].setVisible(true);
         }
-        for(int i = am; i < 6; i++) {
+        for (int i = am; i < 6; i++) {
             singlePlayerPanel[i].setVisible(false);
         }
     }
@@ -78,23 +85,23 @@ public class PlayersPanel extends Panel {
     public void updatePlayers(String[] players) {
         int am = players.length;
         playerCounterLabel.setText("Players: " + am + "/6");
-        for(int i = 0; i < am; i++) {
+        for (int i = 0; i < am; i++) {
             singlePlayerPanel[i].setNickName(players[i]);
             singlePlayerPanel[i].setVisible(true);
         }
-        for(int i = am; i < 6; i++) {
+        for (int i = am; i < 6; i++) {
             singlePlayerPanel[i].setVisible(false);
         }
     }
 
     /**
      * Sets one of the players as actually playing
-     * and unsets the rest of players (from list)
+     * and unsets the rest of players (from list).
      * @param player id of player which is making move
      */
     public void setActualPlayer(int player) {
-        for(int i = 0; i < 6; i++) {
-            if(i == player) {
+        for (int i = 0; i < 6; i++) {
+            if (i == player) {
                 continue;
             }
             singlePlayerPanel[i].setActualPlaying(false);
@@ -114,7 +121,7 @@ public class PlayersPanel extends Panel {
             singlePlayerPanel[clientNumber].setClient(false);
         }
         clientNumber = player;
-        if(player>=0) {
+        if (player >= 0) {
             singlePlayerPanel[clientNumber].setClient(true);
         }
     }

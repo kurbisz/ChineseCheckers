@@ -40,7 +40,7 @@ public class CheckersClient {
     }
 
     public synchronized static CheckersClient generateClient() {
-        if(client == null) {
+        if (client == null) {
             client = new CheckersClient();
             client.openGame();
         }
@@ -77,13 +77,17 @@ public class CheckersClient {
      * @param serverAddress server's address
      * @param serverPort server's port
      * @param nickName nickname of a player
-     * @throws IOException when occurred problem when connecting to certain server
-     * @throws NoConnectionException when occurred problem when connecting to certain server
+     * @throws IOException when occurred problem
+     * when connecting to certain server
+     * @throws NoConnectionException when occurred problem
+     * when connecting to certain server
      */
-    public void connectClientToServer(String serverAddress, int serverPort, String nickName)
+    public void connectClientToServer(String serverAddress,
+                                      int serverPort, String nickName)
             throws IOException, NoConnectionException {
         graphicsManager.lockAppSize();
-        connectionManager.createNewConnection(serverAddress, serverPort, nickName);
+        connectionManager.createNewConnection(
+                serverAddress, serverPort, nickName);
     }
 
     /**
@@ -126,7 +130,9 @@ public class CheckersClient {
      * @return actual instance of Messenger class
      */
     public static Messenger getMessenger() {
-        if(messenger == null) return Messenger.getInstance();
+        if (messenger == null) {
+            return Messenger.getInstance();
+        }
         return messenger;
     }
 

@@ -14,7 +14,7 @@ public enum GameState {
         }
 
         @Override
-        public StateButton getStateButton() {
+        public GameStateButton getStateButton() {
             return new WaitingForGameButton();
         }
     },
@@ -29,7 +29,7 @@ public enum GameState {
         }
 
         @Override
-        public StateButton getStateButton() {
+        public GameStateButton getStateButton() {
             return new WaitingForMoveButton();
         }
     },
@@ -44,7 +44,7 @@ public enum GameState {
         }
 
         @Override
-        public StateButton getStateButton() {
+        public GameStateButton getStateButton() {
             return new PlayingButton();
         }
     },
@@ -61,7 +61,7 @@ public enum GameState {
         }
 
         @Override
-        public StateButton getStateButton() {
+        public GameStateButton getStateButton() {
             return new FinishedButton();
         }
     },
@@ -85,6 +85,8 @@ public enum GameState {
      * Get button of this type of state.
      * @return proper type of new StateButton
      */
-    public StateButton getStateButton() { return null;}
+    public GameStateButton getStateButton() {
+        return null;
+    }
 
 }

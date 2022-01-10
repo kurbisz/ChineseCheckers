@@ -1,13 +1,15 @@
 package client.graphics.components;
 
-import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.JLabel;
+import javax.swing.JFrame;
 import javax.swing.border.LineBorder;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
 
 public class InformationPanel extends Panel {
 
-    JLabel message;
+    private JLabel message;
 
     /**
      * Responsible for information rectangle and text
@@ -39,8 +41,10 @@ public class InformationPanel extends Panel {
         message.setBorder(border);
         this.add(message);
 
-        this.setBounds((int) (0.05*jFrame.getWidth()), (int) (0.8*jFrame.getHeight()),
-                (int) (0.15*jFrame.getWidth()), (int) (0.1*jFrame.getHeight()));
+        this.setBounds((int) (0.05 * jFrame.getWidth()),
+                (int) (0.8 * jFrame.getHeight()),
+                (int) (0.15 * jFrame.getWidth()),
+                (int) (0.1 * jFrame.getHeight()));
 
     }
 

@@ -4,8 +4,10 @@ import client.CheckersClient;
 import client.game.states.GameState;
 import connection.NoConnectionException;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,12 +31,15 @@ public class ButtonPanel extends Panel implements ActionListener {
     @Override
     public void initialize() {
 
-        this.setBounds((int) (0.35*jFrame.getWidth()), (int) (0.8*jFrame.getHeight()),
-                (int) (0.3*jFrame.getWidth()), (int) (0.1*jFrame.getHeight()));
+        this.setBounds((int) (0.35 * jFrame.getWidth()),
+                (int) (0.8 * jFrame.getHeight()),
+                (int) (0.3 * jFrame.getWidth()),
+                (int) (0.1 * jFrame.getHeight()));
 
         jButton = new JButton("Start game");
-        jButton.setPreferredSize(
-                new Dimension((int) (0.8 * getWidth()), (int) (0.8 * getHeight())));
+        jButton.setPreferredSize(new Dimension(
+                        (int) (0.8 * getWidth()),
+                        (int) (0.8 * getHeight())));
         jButton.setFont(new Font(Font.SERIF, Font.BOLD, 40));
         updateButton();
         jButton.addActionListener(this);

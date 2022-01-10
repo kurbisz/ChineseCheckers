@@ -2,7 +2,8 @@ package client.graphics;
 
 public class SingleField {
 
-    private int row, column;
+    private int row;
+    private int column;
 
     /**
      * Create and store row and column of a single field.
@@ -15,7 +16,7 @@ public class SingleField {
     }
 
     /**
-     * Get field's column
+     * Get field's column.
      * @return column of this field
      */
     public int getColumn() {
@@ -23,7 +24,7 @@ public class SingleField {
     }
 
     /**
-     * Get field's row
+     * Get field's row.
      * @return row of this field
      */
     public int getRow() {

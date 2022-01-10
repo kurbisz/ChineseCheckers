@@ -43,6 +43,7 @@ public interface GameStateBehaviour {
     /**
      * Closes application if it is
      * still visible.
+     * @param graphicsManager actual GraphicsManager
      */
     void closeClient(GraphicsManager graphicsManager) throws NoJFrameException;
 

@@ -3,10 +3,10 @@ package client.graphics.components.buttons;
 import connection.Messenger;
 import connection.NoConnectionException;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import java.awt.Color;
 
-public class WaitingForMoveButton extends StateButton {
+public class WaitingForMoveButton extends GameStateButton {
 
 
     @Override
