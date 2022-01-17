@@ -56,7 +56,7 @@ public class Server {
                     "IP: " + Inet4Address.getLocalHost().getHostAddress());
             System.out.println("PORT: " + PORT);
             Socket socket;
-
+            game = new Game(size);
             while (true) {
                 socket = listener.accept();
                 if (socket == null) {

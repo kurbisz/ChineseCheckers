@@ -48,13 +48,26 @@ public class ConnectionManager {
         socket = new Socket(serverAddress, serverPort);
         scanner = new Scanner(socket.getInputStream());
         writer = new PrintWriter(socket.getOutputStream(), true);
+        msg.join();
+        /*
+        or msg.wait()
+        TODO add popup where user makes a choice.
+        */
+        synchronized (this) {
+            try {
+                wait(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         msg.name(nickName);
         Receiver.getInstance().listen();
     }
 
     /**
      * Send message to server.
-     * @param msg
+     * @param msg message
      * @throws NoConnectionException
      */
     public void send(String msg) throws NoConnectionException {
