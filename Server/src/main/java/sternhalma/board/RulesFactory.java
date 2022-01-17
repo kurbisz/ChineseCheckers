@@ -1,6 +1,7 @@
 package sternhalma.board;
 
 import sternhalma.Game;
+import sternhalma.Watch;
 
 /**
  * Abstract factory for creating game's rules.
@@ -28,6 +29,14 @@ public abstract class RulesFactory {
      * @return starting rules
      */
     public abstract StartingInterface getStart(BoardInterface board, int size, Game game);
+    /**
+     * Get starting interface for watching game.
+     * @param board board on which it'll operate
+     * @param size size of the board
+     * @param watch watching the board
+     * @return starting rules
+     */
+    public abstract StartingInterface getWatch(BoardInterface board, int size, Watch watch);
 
     /**
      * Get finishing interface.

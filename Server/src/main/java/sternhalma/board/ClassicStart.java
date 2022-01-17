@@ -14,6 +14,14 @@ public class ClassicStart implements StartingInterface {
     private NotiferInterface notifer = Notifer.getInstance();
 
     /**
+     * Send message about field being set.
+     * @param message message to be sent
+     */
+    public void send(String message) {
+        notifer.notifyAll(message, game);
+    }
+
+    /**
      * Create the pieces.
      * @param board reference to the board
      * @param size board size
@@ -28,8 +36,7 @@ public class ClassicStart implements StartingInterface {
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < board.getRowSize(y); x++) {
                 board.getField(y, x).setOwner(id);
-                notifer.notifyAll(String.format(
-                        "SET %d %d %d", y, x, id), game);
+                send(String.format("SET %d %d %d", y, x, id));
             }
         }
     }
@@ -38,8 +45,7 @@ public class ClassicStart implements StartingInterface {
             for (int x = 0; x < y; x++) {
                 int xmax = board.getRowSize(y + 2 * size) - 1;
                 board.getField(y + 2 * size, xmax - x).setOwner(id);
-                notifer.notifyAll(String.format(
-                        "SET %d %d %d", y + 2 * size, xmax - x, id), game);
+                send(String.format("SET %d %d %d", y + 2 * size, xmax - x, id));
             }
         }
     }
@@ -47,8 +53,7 @@ public class ClassicStart implements StartingInterface {
         for (int y = 1; y <= size; y++) {
             for (int x = 0; x < y; x++) {
                 board.getField(y + 2 * size, x).setOwner(id);
-                notifer.notifyAll(String.format(
-                        "SET %d %d %d", y + 2 * size, x, id), game);
+                send(String.format("SET %d %d %d", y + 2 * size, x, id));
             }
         }
     }
@@ -56,8 +61,7 @@ public class ClassicStart implements StartingInterface {
         for (int y = 1; y <= size; y++) {
             for (int x = 0; x < y; x++) {
                 board.getField(4 * size + 1 - y, x).setOwner(id);
-                notifer.notifyAll(String.format(
-                        "SET %d %d %d", 4 * size + 1 - y, x, id), game);
+                send(String.format("SET %d %d %d", 4 * size + 1 - y, x, id));
             }
         }
     }
@@ -65,8 +69,7 @@ public class ClassicStart implements StartingInterface {
         for (int y = 1; y <= size; y++) {
             for (int x = 0; x < y; x++) {
                 board.getField(2 * size - y, x).setOwner(id);
-                notifer.notifyAll(String.format(
-                        "SET %d %d %d", 2 * size - y, x, id), game);
+                send(String.format("SET %d %d %d", 2 * size - y, x, id));
             }
         }
     }
@@ -75,8 +78,8 @@ public class ClassicStart implements StartingInterface {
             for (int x = 0; x < y; x++) {
                 int xmax = board.getRowSize(2 * size - y) - 1;
                 board.getField(2 * size - y, xmax - x).setOwner(id);
-                notifer.notifyAll(String.format(
-                        "SET %d %d %d", 2 * size - y, xmax - x, id), game);
+                send(String.format("SET %d %d %d", 2 * size - y, xmax - x, id));
+
             }
         }
     }

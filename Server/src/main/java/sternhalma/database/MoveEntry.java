@@ -1,9 +1,11 @@
 package sternhalma.database;
 
 import javax.persistence.*;
-
+/**
+ * Move representation in database.
+ */
 @Entity
-@Table(name="moves")
+@Table(name = "moves")
 public class MoveEntry {
     private int fromR, fromC, toR, toC;
     private int player;
@@ -26,5 +28,23 @@ public class MoveEntry {
         this.game = game;
         this.numSeq = seq;
     }
-    public MoveEntry() {}
+    public MoveEntry() {
+
+    }
+
+    public int getFromR() {
+        return this.fromR;
+    }
+
+    public int getFromC() {
+        return this.fromC;
+    }
+
+    public int getToR() {
+        return this.toR;
+    }
+
+    public int getToC() {
+        return this.toC;
+    }
 }

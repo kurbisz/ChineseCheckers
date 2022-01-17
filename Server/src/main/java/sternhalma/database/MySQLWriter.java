@@ -6,14 +6,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
-import sternhalma.Notifer;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class MySQLWriter implements Writer {
     private static MySQLWriter instance = null;
+    private SessionFactory sessionFactory;
     /**
      * Get the instance
      * @return instance of MySQLWriter
@@ -24,7 +23,11 @@ public class MySQLWriter implements Writer {
         }
         return instance;
     }
-    SessionFactory sessionFactory;
+
+    /**
+     * Save game representation together with moves
+     * @param entry game representation
+     */
     @Override
     public void addGame(GameEntry entry) {
         Session session = sessionFactory.openSession();
@@ -39,10 +42,6 @@ public class MySQLWriter implements Writer {
         }
     }
 
-    @Override
-    public void addMove(MoveEntry entry) {
-
-    }
     public MySQLWriter() {
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
@@ -51,10 +50,10 @@ public class MySQLWriter implements Writer {
         sessionFactory = configuration.buildSessionFactory(serviceRegistry);
     }
     public void test() {
-        GameEntry game = new GameEntry(1,2,"classic");
-        MoveEntry m1 = new MoveEntry(1,1,1,1,1, game,1);
-        MoveEntry m2 = new MoveEntry(2,2,2,2,2, game,2);
-        MoveEntry m3 = new MoveEntry(3,3,3,3,3, game,3);
+        GameEntry game = new GameEntry(1, 2, "classic");
+        MoveEntry m1 = new MoveEntry(1, 1, 1, 1, 1,  game, 1);
+        MoveEntry m2 = new MoveEntry(2, 2, 2, 2, 2,  game, 2);
+        MoveEntry m3 = new MoveEntry(3, 3, 3, 3, 3,  game, 3);
         Set<MoveEntry> st = new HashSet<>();
         st.add(m1);
         st.add(m2);

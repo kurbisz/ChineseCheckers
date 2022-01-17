@@ -1,6 +1,7 @@
 package sternhalma.board;
 
 import sternhalma.Game;
+import sternhalma.Watch;
 
 /**
  * Factory responsible for creating
@@ -19,6 +20,12 @@ public class ClassicRulesFactory extends RulesFactory {
             BoardInterface board, int size, Game game) {
         return new ClassicStart(board, size, game);
     }
+
+    @Override
+    public StartingInterface getWatch(BoardInterface board, int size, Watch watch) {
+        return new ClassicStartWatch(board, size, watch);
+    }
+
     @Override
     public FinishInterface getFinish(
             BoardInterface board, int size, Game game) {

@@ -66,15 +66,43 @@ public class Messenger {
         cmd.send("START");
     }
 
+    /**
+     * Saves the game.
+     * @throws NoConnectionException
+     */
     public void save() throws NoConnectionException {
         cmd.send("SAVE");
     }
 
+    /**
+     * Asks for next move.
+     * @throws NoConnectionException
+     */
     public void next() throws NoConnectionException {
         cmd.send("NEXT");
     }
 
+    /**
+     * Asks for previous move.
+     * @throws NoConnectionException
+     */
     public void previous() throws NoConnectionException {
         cmd.send("PREVIOUS");
+    }
+
+    /**
+     * Asks to join the game.
+     * @throws NoConnectionException
+     */
+    public void join() throws NoConnectionException {
+        cmd.send("JOIN");
+    }
+
+    /**
+     * Asks to watch a game.
+     * @throws NoConnectionException
+     */
+    public void watch() throws NoConnectionException {
+        cmd.send("WATCH");
     }
 }
