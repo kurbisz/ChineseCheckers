@@ -1,13 +1,16 @@
 package sternhalma;
 
 import sternhalma.board.*;
+import sternhalma.database.GameEntry;
+import sternhalma.database.MoveEntry;
+import sternhalma.database.MySQLWriter;
+import sternhalma.database.Writer;
 import sternhalma.exceptions.CannotStartGameException;
 import sternhalma.exceptions.InvalidMoveException;
 import sternhalma.exceptions.InvalidPlayerException;
 
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Class representing one game.
@@ -31,7 +34,13 @@ public class Game {
     private FinishInterface finishing;
     private boolean running = false;
     private boolean finished = false;
+    private boolean saved = false;
 
+    private GameEntry gameEntry;
+    private Set<MoveEntry> moves;
+    private int movesq = 0;
+
+    private String rulesString = "classic" ;
     /**
      * Create the game of specific board's size.
      * @param size size of the boards
@@ -40,7 +49,7 @@ public class Game {
         System.out.println("New game created.");
         this.size = size;
         FactoryProducer factory = FactoryProducer.getInstance();
-        RulesFactory rules = factory.getFactory("classic");
+        RulesFactory rules = factory.getFactory(rulesString);
         MovingInterface moving = rules.getMoving();
         this.board = rules.getBoard(size, moving);
         this.starting = rules.getStart(board, size, this);
@@ -88,6 +97,9 @@ public class Game {
         running = true;
         notifer.notifyAll("TURN " + currentPlayer.getId(), this);
         currentPlayer.notify("TURNSET");
+        this.gameEntry = new GameEntry();
+        this.moves = new HashSet<>();
+
     }
 
     /**
@@ -122,11 +134,26 @@ public class Game {
             throw new InvalidPlayerException();
         }
         board.move(p.getId(), fromR, fromC, toR, toC);
+        MoveEntry moveEntry = new MoveEntry(fromR, fromC, toR, toC, p.getId(), gameEntry, movesq);
+        moves.add(moveEntry);
+        movesq++;
         notifer.notifyAll(String.format(
                 "MOVE %d %d %d %d", fromR, fromC, toR, toC), this);
         checkFinished();
     }
 
+    /**
+     *
+     */
+    public synchronized void save() {
+        if(!finished || saved) {
+            return;
+        }
+        Writer writer = MySQLWriter.getInstance();
+        gameEntry.setMoves(moves);
+        writer.addGame(gameEntry);
+        saved = true;
+    }
     /**
      * End turn of player.
      * @param p player who wants to end his turn

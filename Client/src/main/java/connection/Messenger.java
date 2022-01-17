@@ -65,4 +65,16 @@ public class Messenger {
     public void start() throws NoConnectionException {
         cmd.send("START");
     }
+
+    public void save() throws NoConnectionException {
+        cmd.send("SAVE");
+    }
+
+    public void next() throws NoConnectionException {
+        cmd.send("NEXT");
+    }
+
+    public void previous() throws NoConnectionException {
+        cmd.send("PREVIOUS");
+    }
 }

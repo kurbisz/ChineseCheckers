@@ -1,5 +1,10 @@
 package sternhalma;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import sternhalma.database.MySQLWriter;
+
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.ServerSocket;
@@ -13,12 +18,13 @@ import java.util.concurrent.Executors;
  */
 public class Server {
     private static int PORT = 59898;
-
+    private static final Logger logger = LogManager.getLogger(Server.class);
     /**
      * Create and start game server.
      * @param args args[0] -> game size
      */
     public static void main(String[] args) {
+        BasicConfigurator.configure();
         int size = 4;
         System.out.println("CONFIG: " + Arrays.toString(args));
         if (args.length > 0) {
@@ -61,5 +67,6 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }

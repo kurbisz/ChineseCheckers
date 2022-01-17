@@ -1,0 +1,31 @@
+drop database if exists `sternhalma`;
+
+CREATE DATABASE `sternhalma`;
+
+use sternhalma;
+
+
+CREATE TABLE `sternhalma`.`games` (
+                                      `gameID` INT NOT NULL AUTO_INCREMENT,
+                                      `boardSize` INT NOT NULL,
+                                      `numPlayers` INT NOT NULL,
+                                      `config` VARCHAR(45) NOT NULL,
+                                      PRIMARY KEY (`gameID`));
+
+CREATE TABLE `sternhalma`.`moves` (
+                                      `moveId` INT NOT NULL AUTO_INCREMENT,
+                                      `gameId` INT NOT NULL,
+                                      `numSeq` INT NOT NULL,
+                                      `fromR` INT NOT NULL,
+                                      `fromC` INT NOT NULL,
+                                      `toR` INT NOT NULL,
+                                      `toC` INT NOT NULL,
+                                      `player` INT NOT NULL,
+                                      primary key(`moveId`),
+                                      INDEX `gameId_idx` (`gameId` ASC) VISIBLE,
+                                      INDEX `numSeq_idx` (`numSeq` ASC) VISIBLE,
+                                      CONSTRAINT `gameId`
+                                          FOREIGN KEY (`gameId`)
+                                              REFERENCES `sternhalma`.`games` (`gameID`)
+                                              ON DELETE NO ACTION
+                                              ON UPDATE NO ACTION);

@@ -125,6 +125,8 @@ public class Player implements Runnable {
                     game.switchPlayer(this);
                 } else if (command.startsWith("LEAVE")) {
                     game.leave(this);
+                } else if (command.startsWith("SAVE")) {
+                    game.save();
                 }
             } catch (CannotStartGameException e) {
                 notify("MESSAGE Game cannot be started");
