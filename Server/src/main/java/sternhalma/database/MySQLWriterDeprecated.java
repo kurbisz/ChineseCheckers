@@ -9,17 +9,17 @@ import org.hibernate.service.ServiceRegistry;
 
 import java.util.HashSet;
 import java.util.Set;
-
-public class MySQLWriter implements Writer {
-    private static MySQLWriter instance = null;
+@Deprecated
+public class MySQLWriterDeprecated {
+    private static MySQLWriterDeprecated instance = null;
     private SessionFactory sessionFactory;
     /**
      * Get the instance
      * @return instance of MySQLWriter
      */
-    public static MySQLWriter getInstance() {
+    public static MySQLWriterDeprecated getInstance() {
         if (instance == null) {
-            instance = new MySQLWriter();
+            instance = new MySQLWriterDeprecated();
         }
         return instance;
     }
@@ -28,7 +28,6 @@ public class MySQLWriter implements Writer {
      * Save game representation together with moves
      * @param entry game representation
      */
-    @Override
     public void addGame(GameEntry entry) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -42,23 +41,12 @@ public class MySQLWriter implements Writer {
         }
     }
 
-    public MySQLWriter() {
+    public MySQLWriterDeprecated() {
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
         serviceRegistryBuilder.applySettings(configuration.getProperties());
         ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
         sessionFactory = configuration.buildSessionFactory(serviceRegistry);
     }
-    public void test() {
-        GameEntry game = new GameEntry(1, 2, "classic");
-        MoveEntry m1 = new MoveEntry(1, 1, 1, 1, 1,  game, 1);
-        MoveEntry m2 = new MoveEntry(2, 2, 2, 2, 2,  game, 2);
-        MoveEntry m3 = new MoveEntry(3, 3, 3, 3, 3,  game, 3);
-        Set<MoveEntry> st = new HashSet<>();
-        st.add(m1);
-        st.add(m2);
-        st.add(m3);
-        game.setMoves(st);
-        addGame(game);
-    }
+
 }

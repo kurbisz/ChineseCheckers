@@ -47,4 +47,52 @@ public class MoveEntry {
     public int getToC() {
         return this.toC;
     }
+
+    public void setFromR(int fromR) {
+        this.fromR = fromR;
+    }
+
+    public void setFromC(int fromC) {
+        this.fromC = fromC;
+    }
+
+    public void setToR(int toR) {
+        this.toR = toR;
+    }
+
+    public void setToC(int toC) {
+        this.toC = toC;
+    }
+
+    public int getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(int player) {
+        this.player = player;
+    }
+
+    public int getMoveId() {
+        return moveId;
+    }
+
+    public void setMoveId(int moveId) {
+        this.moveId = moveId;
+    }
+
+    public GameEntry getGame() {
+        return game;
+    }
+
+    public void setGame(GameEntry game) {
+        this.game = game;
+    }
+
+    public int getNumSeq() {
+        return numSeq;
+    }
+
+    public void setNumSeq(int numSeq) {
+        this.numSeq = numSeq;
+    }
 }

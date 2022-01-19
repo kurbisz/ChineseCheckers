@@ -1,10 +1,12 @@
 package sternhalma;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sternhalma.board.*;
 import sternhalma.database.GameEntry;
 import sternhalma.database.MoveEntry;
-import sternhalma.database.MySQLWriter;
-import sternhalma.database.Writer;
+import sternhalma.database.MySQLDatabase;
+import sternhalma.database.Database;
 import sternhalma.exceptions.CannotStartGameException;
 import sternhalma.exceptions.InvalidMoveException;
 import sternhalma.exceptions.InvalidPlayerException;
@@ -149,9 +151,11 @@ public class Game {
         if(!finished || saved) {
             return;
         }
-        Writer writer = MySQLWriter.getInstance();
+        ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+        Database db =
+                (MySQLDatabase)context.getBean("db");
         gameEntry.setMoves(moves);
-        writer.addGame(gameEntry);
+        db.addGame(gameEntry);
         saved = true;
     }
     /**
@@ -197,9 +201,9 @@ public class Game {
      * Send players' names to all players.
      */
     public void sendNames() {
-        String msg = "";
+        StringBuilder msg = new StringBuilder();
         for (Player p: players) {
-            msg += p.getName() + "$";
+            msg.append(p.getName()).append("$");
         }
         notifer.notifyAll("PLAYERS#" + msg, this);
     }

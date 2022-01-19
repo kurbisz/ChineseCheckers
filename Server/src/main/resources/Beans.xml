@@ -1,0 +1,27 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+       xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <!--  To avoid an error: SET GLOBAL time_zone = '-6:00'; -->
+    <!-- Initialization for data source -->
+    <bean id="dataSource"
+          class = "org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name = "driverClassName" value = "com.mysql.cj.jdbc.Driver"/>
+        <property name = "url" value = "jdbc:mysql://localhost:3306/sternhalma?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;useSSL=false"/>
+        <property name = "username" value = ""/>
+        <property name = "password" value = ""/>
+    </bean>
+    <!-- Initialization for TransactionManager -->
+    <bean id = "transactionManager"
+          class = "org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name = "dataSource"  ref = "dataSource" />
+    </bean>
+
+    <!-- Definition for studentJDBCTemplate bean -->
+    <bean id = "db"
+          class = "sternhalma.database.MySQLDatabase">
+        <property name = "dataSource" ref = "dataSource" />
+        <property name = "transactionManager" ref = "transactionManager" />
+    </bean>
+</beans>

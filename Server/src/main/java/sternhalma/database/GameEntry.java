@@ -68,5 +68,29 @@ public class GameEntry {
     public int getNumPlayers() {
         return this.numPlayers;
     }
+
+    public int getGameID() {
+        return gameID;
+    }
+
+    public void setGameID(int gameID) {
+        this.gameID = gameID;
+    }
+
+    public void setBoardSize(int boardSize) {
+        this.boardSize = boardSize;
+    }
+
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+    }
+
+    public void setConfig(String config) {
+        this.config = config;
+    }
+
+    public Set<MoveEntry> getMoves() {
+        return moves;
+    }
     //DATE?
 }

@@ -5,15 +5,16 @@ import java.util.Set;
 /**
  * Reader from database.
  */
-public class MySQLReader implements Reader {
-    private static MySQLReader instance = null;
+@Deprecated
+public class MySQLReaderDeprecated {
+    private static MySQLReaderDeprecated instance = null;
     /**
      * Get the instance
      * @return instance of MySQLReader
      */
-    public static MySQLReader getInstance() {
+    public static MySQLReaderDeprecated getInstance() {
         if (instance == null) {
-            instance = new MySQLReader();
+            instance = new MySQLReaderDeprecated();
         }
         return instance;
     }
@@ -22,7 +23,6 @@ public class MySQLReader implements Reader {
      * Get list of games in database.
      * @return formatted string of games and times
      */
-    @Override
     public String getGames() {
         return null;
     }
@@ -32,7 +32,6 @@ public class MySQLReader implements Reader {
      * @param id id of game
      * @return set of moves
      */
-    @Override
     public Set<MoveEntry> getMoves(int id) {
         return null;
     }
@@ -42,7 +41,6 @@ public class MySQLReader implements Reader {
      * @param id id of game
      * @return game info
      */
-    @Override
     public GameEntry getGame(int id) {
         return null;
     }

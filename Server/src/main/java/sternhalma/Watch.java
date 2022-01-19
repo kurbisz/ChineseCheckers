@@ -1,10 +1,9 @@
 package sternhalma;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sternhalma.board.*;
-import sternhalma.database.GameEntry;
-import sternhalma.database.MoveEntry;
-import sternhalma.database.MySQLReader;
-import sternhalma.database.Reader;
+import sternhalma.database.*;
 import sternhalma.exceptions.CannotPlayMove;
 
 import java.io.IOException;
@@ -19,7 +18,7 @@ public class Watch implements Runnable {
     private Socket socket;
     private Scanner input;
     private PrintWriter output;
-    private Reader reader = MySQLReader.getInstance();
+    private Database database;
     private List<MoveEntry> moves;
     private BoardInterface board;
     private StartingInterface starting;
@@ -73,8 +72,8 @@ public class Watch implements Runnable {
         output.println(message);
     }
     private void select(int id) {
-        GameEntry gameEntry = reader.getGame(id);
-        moves = new ArrayList<>(reader.getMoves(id));
+        GameEntry gameEntry = database.getGame(id);
+        moves = new ArrayList<>(database.getMoves(id));
         FactoryProducer factory = FactoryProducer.getInstance();
         RulesFactory rules = factory.getFactory(gameEntry.getConfig());
         this.board = rules.getBoard(gameEntry.getBoardSize(), new BasicMove());
@@ -84,6 +83,9 @@ public class Watch implements Runnable {
     private void setup() throws IOException {
         input = new Scanner(socket.getInputStream());
         output = new PrintWriter(socket.getOutputStream(), true);
+        ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+        database = (MySQLDatabase) context.getBean("db");
+
     }
     private void processCommands() {
         while (input.hasNextLine()) {
@@ -122,6 +124,10 @@ public class Watch implements Runnable {
     }
 
     private void sendList() {
-        send(reader.getGames());
+        StringBuilder msg = new StringBuilder();
+        for (GameEntry entry : database.getGames()) {
+            msg.append(entry.getGameID()).append("$");
+        }
+        send("LIST#"+msg);
     }
 }

@@ -1,19 +1,25 @@
 package sternhalma.database;
 
-import java.util.Set;
 
-public interface Reader {
+import java.util.List;
+
+public interface Database {
+    /**
+     * Save game representation together with moves
+     * @param entry game representation
+     */
+    void addGame(GameEntry entry);
     /**
      * Get list of games in database.
      * @return formatted string of games and times
      */
-    String getGames();
+    List<GameEntry> getGames();
     /**
      * Get set of moves from game of given id
      * @param id id of game
      * @return set of moves
      */
-    Set<MoveEntry> getMoves(int id);
+    List<MoveEntry> getMoves(int id);
     /**
      * Get game information about game with given id
      * @param id id of game
