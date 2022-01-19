@@ -10,18 +10,18 @@ CREATE TABLE `sternhalma`.`games` (
                                       `boardSize` INT NOT NULL,
                                       `numPlayers` INT NOT NULL,
                                       `config` VARCHAR(45) NOT NULL,
+                                      `time` TIMESTAMP NOT NULL,
                                       PRIMARY KEY (`gameID`));
 
 CREATE TABLE `sternhalma`.`moves` (
-                                      `moveId` INT NOT NULL AUTO_INCREMENT,
                                       `gameId` INT NOT NULL,
-                                      `numSeq` INT NOT NULL,
+                                      `numSeq` INT NOT NULL AUTO_INCREMENT,
                                       `fromR` INT NOT NULL,
                                       `fromC` INT NOT NULL,
                                       `toR` INT NOT NULL,
                                       `toC` INT NOT NULL,
                                       `player` INT NOT NULL,
-                                      primary key(`moveId`),
+                                      primary key(`gameId`,`numSeq`),
                                       INDEX `gameId_idx` (`gameId` ASC) VISIBLE,
                                       INDEX `numSeq_idx` (`numSeq` ASC) VISIBLE,
                                       CONSTRAINT `gameId`

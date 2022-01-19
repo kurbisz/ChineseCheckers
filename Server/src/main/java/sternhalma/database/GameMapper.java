@@ -12,6 +12,7 @@ public class GameMapper implements RowMapper<GameEntry> {
         game.setBoardSize(rs.getInt("boardSize"));
         game.setConfig(rs.getString("config"));
         game.setNumPlayers(rs.getInt("numPlayers"));
+        game.setTime(rs.getTimestamp("time"));
         return game;
     }
 }

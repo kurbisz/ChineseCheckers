@@ -11,10 +11,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +32,7 @@ public class MySQLDatabase implements Database {
     }
     public void test() {
         GameEntry game = new GameEntry(1, 2, "classic");
+        game.setTime(new Timestamp(System.currentTimeMillis()));
         MoveEntry m1 = new MoveEntry(1, 1, 1, 1, 1,  game, 1);
         MoveEntry m2 = new MoveEntry(2, 2, 2, 2, 2,  game, 2);
         MoveEntry m3 = new MoveEntry(3, 3, 3, 3, 3,  game, 3);
@@ -44,7 +42,7 @@ public class MySQLDatabase implements Database {
         st.add(m3);
         game.setMoves(st);
         addGame(game);
-        System.out.println(getGames());
+        System.out.println(getGames().get(0).getFormattedTime());
     }
     @Override
     public void addGame(GameEntry entry) {
@@ -56,7 +54,7 @@ public class MySQLDatabase implements Database {
         try {
             KeyHolder key = new GeneratedKeyHolder();
             jdbcTemplateObject.update(new PreparedStatementCreator() {
-                String INSERTGAME = "INSERT INTO `games` (boardSize, numPlayers, config) VALUES (?,?,?)";
+                String INSERTGAME = "INSERT INTO `games` (boardSize, numPlayers, config, time) VALUES (?,?,?,?)";
 
                 @Override
                 public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -65,6 +63,7 @@ public class MySQLDatabase implements Database {
                     ps.setInt(1, entry.getBoardSize());
                     ps.setInt(2, entry.getNumPlayers());
                     ps.setString(3, entry.getConfig());
+                    ps.setTimestamp(4,entry.getTime());
                     return ps;
                 }
             }, key);
@@ -98,14 +97,13 @@ public class MySQLDatabase implements Database {
     @Override
     public List<MoveEntry> getMoves(int id) {
         String SQL = "SELECT * FROM `moves` WHERE gameId = ?";
-        List<MoveEntry> moves = jdbcTemplateObject.query(SQL, new Object[]{id},new MoveMapper());
+        List<MoveEntry> moves = jdbcTemplateObject.query(SQL,new MoveMapper(), id);
         return moves;
     }
     @Override
     public GameEntry getGame(int id) {
         String SQL = "SELECT * FROM `games` where gameId = ?";
-        GameEntry game = jdbcTemplateObject.queryForObject(SQL,
-                new Object[]{id}, new GameMapper());
+        GameEntry game = jdbcTemplateObject.queryForObject(SQL, new GameMapper(), id);
         return game;
     }
 }

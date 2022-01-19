@@ -126,8 +126,11 @@ public class Watch implements Runnable {
     private void sendList() {
         StringBuilder msg = new StringBuilder();
         for (GameEntry entry : database.getGames()) {
-            msg.append(entry.getGameID()).append("$");
+            msg.append(entry.getGameID());
+            msg.append(";");
+            msg.append(entry.getFormattedTime());
+            msg.append("$");
         }
-        send("LIST#"+msg);
+        send("LIST#" + msg);
     }
 }

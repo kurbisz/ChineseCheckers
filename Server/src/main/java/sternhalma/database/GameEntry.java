@@ -1,6 +1,8 @@
 package sternhalma.database;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.ALL;
@@ -20,6 +22,7 @@ public class GameEntry {
     private String config;
     @OneToMany(cascade = ALL, mappedBy = "game")
     private Set<MoveEntry> moves;
+    private Timestamp time;
 
     /**
      * Create game entry
@@ -92,5 +95,16 @@ public class GameEntry {
     public Set<MoveEntry> getMoves() {
         return moves;
     }
-    //DATE?
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
+
+    public String getFormattedTime() {
+        return time.toString().substring(0,19);
+    }
 }

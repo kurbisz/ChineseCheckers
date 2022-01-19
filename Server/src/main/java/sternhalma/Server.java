@@ -3,6 +3,9 @@ package sternhalma;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import sternhalma.database.MySQLDatabase;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -91,6 +94,9 @@ public class Server {
             }
         }
         Server server = new Server();
-        server.listen();
+        //server.listen();
+        ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+        MySQLDatabase database = (MySQLDatabase) context.getBean("db");
+        database.test();
     }
 }
