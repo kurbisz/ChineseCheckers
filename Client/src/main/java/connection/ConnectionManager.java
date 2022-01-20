@@ -1,5 +1,7 @@
 package connection;
 
+import client.ClientType;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -14,6 +16,7 @@ public class ConnectionManager {
     private String serverAddress;
     private int serverPort;
     private String nickName;
+    private ClientType clientType;
 
     private Socket socket;
     private Scanner scanner;
@@ -32,15 +35,17 @@ public class ConnectionManager {
      * @param address server address
      * @param port server port
      * @param nick your nickname
+     * @param type type of client: observer or player
      * @throws UnknownHostException
      * @throws IOException
      * @throws NoConnectionException
      */
-    public void createNewConnection(String address, int port, String nick)
+    public void createNewConnection(String address, int port, String nick, ClientType type)
             throws UnknownHostException, IOException, NoConnectionException {
         this.serverAddress = address;
         this.serverPort = port;
         this.nickName = nick;
+        this.clientType = type;
         connect();
     }
 
@@ -48,9 +53,13 @@ public class ConnectionManager {
         socket = new Socket(serverAddress, serverPort);
         scanner = new Scanner(socket.getInputStream());
         writer = new PrintWriter(socket.getOutputStream(), true);
-        msg.join();
+        if(clientType.equals(ClientType.OBSERVER)) {
+            msg.watch();
+        }
+        else {
+            msg.join();
+        }
         /*
-        or msg.wait()
         TODO add popup where user makes a choice.
         */
         synchronized (this) {

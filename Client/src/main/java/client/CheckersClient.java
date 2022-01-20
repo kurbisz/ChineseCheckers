@@ -17,6 +17,7 @@ public class CheckersClient {
     private GraphicsManager graphicsManager;
     private GameManager gameManager;
     private static Messenger messenger;
+    private ClientType clientType;
 
     /**
      * Main client class with all crucial
@@ -77,17 +78,20 @@ public class CheckersClient {
      * @param serverAddress server's address
      * @param serverPort server's port
      * @param nickName nickname of a player
+     * @param clientType type of client: observer or player
      * @throws IOException when occurred problem
      * when connecting to certain server
      * @throws NoConnectionException when occurred problem
      * when connecting to certain server
      */
     public void connectClientToServer(String serverAddress,
-                                      int serverPort, String nickName)
+                                      int serverPort,
+                                      String nickName,
+                                      ClientType clientType)
             throws IOException, NoConnectionException {
         graphicsManager.lockAppSize();
         connectionManager.createNewConnection(
-                serverAddress, serverPort, nickName);
+                serverAddress, serverPort, nickName, clientType);
     }
 
     /**
