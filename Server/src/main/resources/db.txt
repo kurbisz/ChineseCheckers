@@ -12,20 +12,19 @@ CREATE TABLE `sternhalma`.`games` (
                                       `config` VARCHAR(45) NOT NULL,
                                       `time` TIMESTAMP NOT NULL,
                                       PRIMARY KEY (`gameID`));
-
+DROP TABLE IF EXISTS `moves`;
 CREATE TABLE `sternhalma`.`moves` (
                                       `gameId` INT NOT NULL,
                                       `numSeq` INT NOT NULL AUTO_INCREMENT,
+                                      primary key(`gameId`,`numSeq`),
                                       `fromR` INT NOT NULL,
                                       `fromC` INT NOT NULL,
                                       `toR` INT NOT NULL,
                                       `toC` INT NOT NULL,
                                       `player` INT NOT NULL,
-                                      primary key(`gameId`,`numSeq`),
                                       INDEX `gameId_idx` (`gameId` ASC) VISIBLE,
-                                      INDEX `numSeq_idx` (`numSeq` ASC) VISIBLE,
                                       CONSTRAINT `gameId`
                                           FOREIGN KEY (`gameId`)
                                               REFERENCES `sternhalma`.`games` (`gameID`)
                                               ON DELETE NO ACTION
-                                              ON UPDATE NO ACTION);
+                                              ON UPDATE NO ACTION)ENGINE=MyISAM;

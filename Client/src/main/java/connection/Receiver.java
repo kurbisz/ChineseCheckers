@@ -87,6 +87,9 @@ public class Receiver {
                     String[] tab = response.split(" ");
                     int num = Integer.parseInt(tab[1]);
                     interpreter.setClientNumber(num);
+                } else if (response.startsWith("LIST")) {
+                    String[] tab = response.split("#");
+                    interpreter.listGames(tab[1]);
                 }
             }
 

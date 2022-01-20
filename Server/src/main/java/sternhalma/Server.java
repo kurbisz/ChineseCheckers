@@ -94,9 +94,6 @@ public class Server {
             }
         }
         Server server = new Server();
-        //server.listen();
-        ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-        MySQLDatabase database = (MySQLDatabase) context.getBean("db");
-        database.test();
+        server.listen();
     }
 }

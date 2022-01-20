@@ -105,4 +105,13 @@ public class Messenger {
     public void watch() throws NoConnectionException {
         cmd.send("WATCH");
     }
+
+    /**
+     * Selects game with given id
+     * @param id id of the game
+     * @throws NoConnectionException
+     */
+    public void select(int id) throws NoConnectionException {
+        cmd.send("SELECT "+id);
+    }
 }
