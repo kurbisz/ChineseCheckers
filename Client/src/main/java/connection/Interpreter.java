@@ -80,4 +80,10 @@ public interface Interpreter {
      * @param id your id
      */
     void setClientNumber(int id);
+
+    /**
+     * List of all games.
+     * @param s String containing all the games in given format: id;time$id;time$...
+     */
+    void listGames(String s);
 }
