@@ -74,6 +74,7 @@ public class Watch implements Runnable {
     private void select(int id) {
         GameEntry gameEntry = database.getGame(id);
         send("SIZE " + gameEntry.getBoardSize() + " " + gameEntry.getNumPlayers());
+        send("PLAYERS#"+gameEntry.getPlayersString());
         moves = new ArrayList<>(database.getMoves(id));
         FactoryProducer factory = FactoryProducer.getInstance();
         RulesFactory rules = factory.getFactory(gameEntry.getConfig());

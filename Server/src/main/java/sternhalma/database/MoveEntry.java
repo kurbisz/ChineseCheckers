@@ -1,21 +1,15 @@
 package sternhalma.database;
 
-import javax.persistence.*;
 /**
  * Move representation in database.
  */
-@Entity
-@Table(name = "moves")
+
 public class MoveEntry {
     private int fromR, fromC, toR, toC;
     private int player;
 
     //PRIMARY KEY
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int moveId;
-    @ManyToOne
-    @JoinColumn(name = "gameId")
     private GameEntry game; //FOREIGN KEY
     private int numSeq;
 

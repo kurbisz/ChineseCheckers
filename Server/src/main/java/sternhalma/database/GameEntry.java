@@ -1,28 +1,29 @@
 package sternhalma.database;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
-import java.time.OffsetDateTime;
 import java.util.Set;
 
-import static javax.persistence.CascadeType.ALL;
 
 /**
  * Game representation in database.
  */
-@Entity
-@Table(name = "games")
 public class GameEntry {
     //PRIMARY KEY
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int gameID;
     private int boardSize;
     private int numPlayers;
     private String config;
-    @OneToMany(cascade = ALL, mappedBy = "game")
     private Set<MoveEntry> moves;
     private Timestamp time;
+    private String playersString;
+
+    public String getPlayersString() {
+        return playersString;
+    }
+
+    public void setPlayersString(String playersString) {
+        this.playersString = playersString;
+    }
 
     /**
      * Create game entry

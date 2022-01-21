@@ -11,8 +11,8 @@ CREATE TABLE `sternhalma`.`games` (
                                       `numPlayers` INT NOT NULL,
                                       `config` VARCHAR(45) NOT NULL,
                                       `time` TIMESTAMP NOT NULL,
+                                      `players` VARCHAR(150) NULL,
                                       PRIMARY KEY (`gameID`));
-DROP TABLE IF EXISTS `moves`;
 CREATE TABLE `sternhalma`.`moves` (
                                       `gameId` INT NOT NULL,
                                       `numSeq` INT NOT NULL AUTO_INCREMENT,

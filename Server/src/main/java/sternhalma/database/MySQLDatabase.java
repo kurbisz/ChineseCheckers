@@ -54,7 +54,7 @@ public class MySQLDatabase implements Database {
         try {
             KeyHolder key = new GeneratedKeyHolder();
             jdbcTemplateObject.update(new PreparedStatementCreator() {
-                String INSERTGAME = "INSERT INTO `games` (boardSize, numPlayers, config, time) VALUES (?,?,?,?)";
+                String INSERTGAME = "INSERT INTO `games` (boardSize, numPlayers, config, time, players) VALUES (?,?,?,?,?)";
 
                 @Override
                 public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -64,6 +64,7 @@ public class MySQLDatabase implements Database {
                     ps.setInt(2, entry.getNumPlayers());
                     ps.setString(3, entry.getConfig());
                     ps.setTimestamp(4,entry.getTime());
+                    ps.setString(5, entry.getPlayersString());
                     return ps;
                 }
             }, key);

@@ -12,6 +12,7 @@ import sternhalma.exceptions.InvalidMoveException;
 import sternhalma.exceptions.InvalidPlayerException;
 
 import java.net.Socket;
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -155,6 +156,11 @@ public class Game {
         Database db =
                 (MySQLDatabase)context.getBean("db");
         gameEntry.setMoves(moves);
+        gameEntry.setPlayersString(getNames());
+        gameEntry.setNumPlayers(numPlayers());
+        gameEntry.setConfig(rulesString);
+        gameEntry.setBoardSize(size);
+        gameEntry.setTime(new Timestamp(System.currentTimeMillis()));
         db.addGame(gameEntry);
         saved = true;
     }
@@ -201,13 +207,21 @@ public class Game {
      * Send players' names to all players.
      */
     public void sendNames() {
+        notifer.notifyAll("PLAYERS#" + getNames(), this);
+    }
+    /**
+     *
+     * Get all players' names.
+     *
+     * @return String containing players' names seperated by '$'
+     */
+    private String getNames() {
         StringBuilder msg = new StringBuilder();
         for (Player p: players) {
             msg.append(p.getName()).append("$");
         }
-        notifer.notifyAll("PLAYERS#" + msg, this);
+        return msg.toString();
     }
-
     /**
      * Player left the game.
      * @param p player who left the game
