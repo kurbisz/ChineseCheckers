@@ -2,16 +2,16 @@ package client;
 
 public enum ClientType {
 
-    OBSERVER {
+    VIEWER {
         @Override
         public String getName() {
-            return "Obserwator";
+            return "Viewer";
         }
     },
     PLAYER {
         @Override
         public String getName() {
-            return "Uczestnik";
+            return "Player";
         }
     };
 
@@ -20,7 +20,7 @@ public enum ClientType {
     }
 
     public static ClientType getByString(String str) {
-        if(str.equals(OBSERVER.getName())) return OBSERVER;
+        if(str.equals(VIEWER.getName())) return VIEWER;
         return PLAYER;
     }
 

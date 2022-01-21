@@ -1,5 +1,7 @@
 package client.graphics.components.utils;
 
+import client.CheckersClient;
+import client.ClientType;
 import client.graphics.GraphicsManager;
 import client.graphics.listener.circle.CircleListener;
 import client.graphics.listener.circle.SingleCircleListener;
@@ -39,8 +41,10 @@ public class CirclePanel extends JPanel {
         this.jFrame = frame;
         this.rowNumber = row;
         this.columnNumber = column;
-        circleListener = new SingleCircleListener(rowNumber, columnNumber);
-        this.addMouseListener(circleListener);
+        if (CheckersClient.getInstance().getClientType().equals(ClientType.PLAYER)) {
+            circleListener = new SingleCircleListener(rowNumber, columnNumber);
+            this.addMouseListener(circleListener);
+        }
     }
 
     /**

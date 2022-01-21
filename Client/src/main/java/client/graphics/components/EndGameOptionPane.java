@@ -16,11 +16,14 @@ public final class EndGameOptionPane {
      * @param jFrame actual jFrame of application
      * @param message message which has to be shown in this menu
      */
-    public static void popup(final JFrame jFrame, final String message) {
+    public static void popup(final JFrame jFrame, final String message, boolean save) {
         JCheckBox saveGame = new JCheckBox("Zapisz gre");
         Object[] panels = {
-                message, saveGame
+                message
         };
+        if(save) {
+            panels = new Object[]{message, saveGame};
+        }
         if (CheckersClient.isHumanMode()) {
             JOptionPane.showMessageDialog(jFrame, panels);
         }

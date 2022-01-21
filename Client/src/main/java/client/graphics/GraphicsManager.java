@@ -1,6 +1,7 @@
 package client.graphics;
 
 import client.CheckersClient;
+import client.ClientType;
 import client.game.states.GameState;
 import client.graphics.components.*;
 import client.graphics.components.Panel;
@@ -262,7 +263,7 @@ public class GraphicsManager {
         if (jFrame == null) {
             throw new NoJFrameException("Invalid JFrame!");
         }
-        EndGameOptionPane.popup(jFrame, "You won the game!");
+        EndGameOptionPane.popup(jFrame, "You won the game!", true);
     }
 
     /**
@@ -274,7 +275,7 @@ public class GraphicsManager {
             throw new NoJFrameException("Invalid JFrame!");
         }
         EndGameOptionPane.popup(jFrame, "You lose the game. Player "
-                + string + " won!");
+                + string + " won!", true);
     }
 
     /**
@@ -284,7 +285,25 @@ public class GraphicsManager {
         if (jFrame == null) {
             throw new NoJFrameException("Invalid JFrame!");
         }
-        EndGameOptionPane.popup(jFrame, "One of the players left the game!");
+        EndGameOptionPane.popup(jFrame, "One of the players left the game!", true);
+    }
+
+    /**
+     * Show menu with choosing game to show (to viewer).
+     * @param index array of identities of games to show
+     * @param games array of names of games to show
+     */
+    public void chooseGame(int[] index, String[] games) {
+        ChooseGameOptionPane.popup(jFrame, index, games);
+    }
+
+    /**
+     * Close client with message in option pane.
+     * It doesn't save the game.
+     * @param msg message which have to be shown in option pane
+     */
+    public void finish(String msg) {
+        EndGameOptionPane.popup(jFrame, msg, false);
     }
 
     /**
@@ -321,9 +340,15 @@ public class GraphicsManager {
 
     private void initBoard() {
         this.boardPanels = new ConcurrentHashMap<>();
-        boardPanels.put("info", new InformationPanel(jFrame));
-        boardPanels.put("players", new PlayersPanel(jFrame));
-        boardPanels.put("button", new ButtonPanel(jFrame));
+        ClientType clientType = CheckersClient.getInstance().getClientType();
+        if (clientType.equals(ClientType.PLAYER)) {
+            boardPanels.put("info", new InformationPanel(jFrame));
+            boardPanels.put("players", new PlayersPanel(jFrame));
+            boardPanels.put("button", new ButtonPanel(jFrame));
+        }
+        else if(clientType.equals(ClientType.VIEWER)) {
+            boardPanels.put("viewerButton", new ViewerButtonsPanel(jFrame));
+        }
         boardPanels.put("board", new BoardPanel(jFrame, boardSize));
     }
 
@@ -342,5 +367,4 @@ public class GraphicsManager {
         }
         return (PlayersPanel) panel;
     }
-
 }

@@ -5,7 +5,6 @@ import client.ClientType;
 import connection.NoConnectionException;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -25,9 +24,9 @@ public final class ConnectOptionPane {
         JTextField nickField = new JTextField("lessnop", 20);
         JTextField addressField = new JTextField("localhost", 20);
         JTextField portField = new JTextField("59898", 20);
-        TypePanel typeField = new TypePanel("Typ:",
+        TypePanel typeField = new TypePanel("Type:",
                 new String[]{ClientType.PLAYER.getName(),
-                        ClientType.OBSERVER.getName()});
+                        ClientType.VIEWER.getName()});
 
         Object[] panels = {
                 "Nickname: ", nickField,

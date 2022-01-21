@@ -1,7 +1,10 @@
 package client.game;
 
+import client.CheckersClient;
 import client.graphics.InvalidPanelException;
 import client.graphics.NoJFrameException;
+import client.graphics.components.ChooseGameOptionPane;
+import client.graphics.components.EndGameOptionPane;
 import connection.Interpreter;
 
 public class GameInterpreter implements Interpreter {
@@ -125,6 +128,27 @@ public class GameInterpreter implements Interpreter {
         } catch (InvalidPanelException e) {
             System.out.println("Error while setting client number!");
         }
+    }
+
+    @Override
+    public void listGames(String s) {
+        if(s.equals("")) {
+            CheckersClient.getInstance().finish("Save games list is empty!");
+            return;
+        }
+        String[] fullGame = s.split("\\$");
+        int size = fullGame.length;
+
+        int[] index = new int[size];
+        String[] games = new String[size];
+
+        for(int i = 0; i < size; i++) {
+            String[] str = fullGame[i].split(";");
+            index[i] = Integer.parseInt(str[0]);
+            games[i] = str[1];
+        }
+
+        CheckersClient.getInstance().chooseGame(index, games);
     }
 
     @Override

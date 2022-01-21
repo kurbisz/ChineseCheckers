@@ -35,7 +35,7 @@ public class ConnectionManager {
      * @param address server address
      * @param port server port
      * @param nick your nickname
-     * @param type type of client: observer or player
+     * @param type type of client: viewer or player
      * @throws UnknownHostException
      * @throws IOException
      * @throws NoConnectionException
@@ -53,15 +53,12 @@ public class ConnectionManager {
         socket = new Socket(serverAddress, serverPort);
         scanner = new Scanner(socket.getInputStream());
         writer = new PrintWriter(socket.getOutputStream(), true);
-        if(clientType.equals(ClientType.OBSERVER)) {
+        if(clientType.equals(ClientType.VIEWER)) {
             msg.watch();
         }
         else {
             msg.join();
         }
-        /*
-        TODO add popup where user makes a choice.
-        */
         synchronized (this) {
             try {
                 wait(100);

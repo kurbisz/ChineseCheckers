@@ -78,7 +78,7 @@ public class CheckersClient {
      * @param serverAddress server's address
      * @param serverPort server's port
      * @param nickName nickname of a player
-     * @param clientType type of client: observer or player
+     * @param clientType type of client: viewer or player
      * @throws IOException when occurred problem
      * when connecting to certain server
      * @throws NoConnectionException when occurred problem
@@ -158,4 +158,29 @@ public class CheckersClient {
         return humanMode;
     }
 
+    /**
+     * Show menu with choosing game to show (to viewer).
+     * @param index array of identities of games to show
+     * @param games array of names of games to show
+     */
+    public void chooseGame(int[] index, String[] games) {
+        graphicsManager.chooseGame(index, games);
+    }
+
+    /**
+     * Close client with message in option pane.
+     * It doesn't save the game.
+     * @param msg message which have to be shown in option pane
+     */
+    public void finish(String msg) {
+        graphicsManager.finish(msg);
+    }
+
+    /**
+     * Getter of variable clientType
+     * @return actual type of client: viewer or player (enum)
+     */
+    public ClientType getClientType() {
+        return clientType;
+    }
 }
