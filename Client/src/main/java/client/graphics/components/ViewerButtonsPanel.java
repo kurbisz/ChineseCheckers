@@ -27,36 +27,40 @@ public class ViewerButtonsPanel extends Panel {
     @Override
     public void initialize() {
 
-        this.setBounds((int) (0.35 * jFrame.getWidth()),
+        this.setBounds((int) (0.33 * jFrame.getWidth()),
                 (int) (0.8 * jFrame.getHeight()),
-                (int) (0.5 * jFrame.getWidth()),
+                (int) (0.38 * jFrame.getWidth()),
                 (int) (0.1 * jFrame.getHeight()));
 
         this.setLayout(new GridLayout(1, 2));
 
-        previousButton = new JButton("Previous move");
-        previousButton.setPreferredSize(new Dimension(
-                (int) (0.4 * getWidth()),
-                (int) (0.8 * getHeight())));
+        JPanel prevPanel = new JPanel();
+        previousButton = new JButton("❮   Previous move");
+        previousButton.setBackground(new Color(8, 8, 180));
+        previousButton.setForeground(Color.WHITE);
+        previousButton.setFocusPainted(false);
         previousButton.setFont(new Font(Font.SERIF, Font.BOLD, 40));
         previousButton.addActionListener(e -> {
             try {
-                Messenger.getInstance().next();
+                Messenger.getInstance().previous();
             } catch (NoConnectionException ex) { }
         });
-        this.add(previousButton);
+        prevPanel.add(previousButton);
+        this.add(prevPanel);
 
-        nextButton = new JButton("Next move");
-        nextButton.setPreferredSize(new Dimension(
-                        (int) (0.8 * getWidth()),
-                        (int) (0.8 * getHeight())));
+        JPanel nextPanel = new JPanel();
+        nextButton = new JButton("❯   Next move");
+        nextButton.setBackground(new Color(8, 8, 180));
+        nextButton.setForeground(Color.WHITE);
+        nextButton.setFocusPainted(false);
         nextButton.setFont(new Font(Font.SERIF, Font.BOLD, 40));
         nextButton.addActionListener(e -> {
             try {
                 Messenger.getInstance().next();
             } catch (NoConnectionException ex) { }
         });
-        this.add(nextButton);
+        nextPanel.add(nextButton);
+        this.add(nextPanel);
 
     }
 

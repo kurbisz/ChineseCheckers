@@ -48,7 +48,7 @@ public final class ChooseGameOptionPane {
             super();
             String[] optionsStr = new String[options.length];
             for(int i = 0; i < options.length; i++) {
-                optionsStr[i] = id[i] + " - " + options[i];
+                optionsStr[i] = id[i] + ": " + options[i];
             }
 
             this.chooseId = id;

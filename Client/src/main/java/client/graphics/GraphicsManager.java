@@ -210,7 +210,9 @@ public class GraphicsManager {
         BoardPanel boardPanel = getBoard();
         fromField = null;
         toField = null;
-        setInfoMessage("");
+        if(CheckersClient.getInstance().getClientType().equals(ClientType.PLAYER)) {
+            setInfoMessage("");
+        }
         int player = boardPanel.setPlayerOnCircle(fromRow, fromColumn, -1);
         boardPanel.setPlayerOnCircle(toRow, toColumn, player);
     }
@@ -343,12 +345,12 @@ public class GraphicsManager {
         ClientType clientType = CheckersClient.getInstance().getClientType();
         if (clientType.equals(ClientType.PLAYER)) {
             boardPanels.put("info", new InformationPanel(jFrame));
-            boardPanels.put("players", new PlayersPanel(jFrame));
             boardPanels.put("button", new ButtonPanel(jFrame));
         }
         else if(clientType.equals(ClientType.VIEWER)) {
             boardPanels.put("viewerButton", new ViewerButtonsPanel(jFrame));
         }
+        boardPanels.put("players", new PlayersPanel(jFrame));
         boardPanels.put("board", new BoardPanel(jFrame, boardSize));
     }
 

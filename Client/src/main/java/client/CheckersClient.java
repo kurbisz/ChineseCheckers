@@ -183,4 +183,12 @@ public class CheckersClient {
     public ClientType getClientType() {
         return clientType;
     }
+
+    /**
+     * Setter of variable clientType
+     * @param clientType new type of this client: viewer or player (enum)
+     */
+    public void setClientType(ClientType clientType) {
+        this.clientType = clientType;
+    }
 }

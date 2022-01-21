@@ -52,6 +52,7 @@ public final class ConnectOptionPane {
             } else {
                 try {
                     serverPort = Integer.parseInt(port);
+                    CheckersClient.getInstance().setClientType(clientType);
                     CheckersClient.getInstance().connectClientToServer(
                             serverAddress, serverPort, nickName, clientType);
                 } catch (NumberFormatException e) {
