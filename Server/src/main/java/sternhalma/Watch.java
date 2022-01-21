@@ -55,8 +55,8 @@ public class Watch implements Runnable {
         if (seq == 0) {
             throw new CannotPlayMove();
         }
-        MoveEntry entry = moves.get(seq);
-        seq++;
+        MoveEntry entry = moves.get(seq-1);
+        seq--;
         int toR = entry.getFromR();
         int toC = entry.getFromC();
         int fromR = entry.getToR();
@@ -103,7 +103,8 @@ public class Watch implements Runnable {
                     select(id);
                 }
             } catch (CannotPlayMove cannotPlayMove) {
-                send("MESSAGE CANNOT PLAY MOVE");
+                // send("MESSAGE CANNOT PLAY MOVE");
+                // ignored by client
             }
 
         }

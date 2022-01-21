@@ -13,7 +13,7 @@ public class MoveEntry {
     private GameEntry game; //FOREIGN KEY
     private int numSeq;
 
-    public MoveEntry(int fR, int fC, int tC, int tR, int player, GameEntry game, int seq) {
+    public MoveEntry(int fR, int fC, int tR, int tC, int player, GameEntry game, int seq) {
         fromR = fR;
         fromC = fC;
         toR = tR;

@@ -13,6 +13,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 public class MySQLDatabase implements Database {
@@ -36,7 +37,7 @@ public class MySQLDatabase implements Database {
         MoveEntry m1 = new MoveEntry(1, 1, 1, 1, 1,  game, 1);
         MoveEntry m2 = new MoveEntry(2, 2, 2, 2, 2,  game, 2);
         MoveEntry m3 = new MoveEntry(3, 3, 3, 3, 3,  game, 3);
-        Set<MoveEntry> st = new HashSet<>();
+        List<MoveEntry> st = new LinkedList<>();
         st.add(m1);
         st.add(m2);
         st.add(m3);

@@ -1,7 +1,7 @@
 package sternhalma.database;
 
 import java.sql.Timestamp;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -13,7 +13,7 @@ public class GameEntry {
     private int boardSize;
     private int numPlayers;
     private String config;
-    private Set<MoveEntry> moves;
+    private List<MoveEntry> moves;
     private Timestamp time;
     private String playersString;
 
@@ -45,7 +45,7 @@ public class GameEntry {
      * Set moves for a game
      * @param moves set of move entries
      */
-    public void setMoves(Set<MoveEntry> moves) {
+    public void setMoves(List<MoveEntry> moves) {
         this.moves = moves;
     }
 
@@ -93,7 +93,7 @@ public class GameEntry {
         this.config = config;
     }
 
-    public Set<MoveEntry> getMoves() {
+    public List<MoveEntry> getMoves() {
         return moves;
     }
 

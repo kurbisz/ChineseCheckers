@@ -40,7 +40,7 @@ public class Game {
     private boolean saved = false;
 
     private GameEntry gameEntry;
-    private Set<MoveEntry> moves;
+    private List<MoveEntry> moves;
     private int movesq = 0;
 
     private String rulesString = "classic" ;
@@ -101,7 +101,7 @@ public class Game {
         notifer.notifyAll("TURN " + currentPlayer.getId(), this);
         currentPlayer.notify("TURNSET");
         this.gameEntry = new GameEntry();
-        this.moves = new HashSet<>();
+        this.moves = new LinkedList<>();
 
     }
 
@@ -233,6 +233,7 @@ public class Game {
             sendNames();
         }
         if (running) {
+            finished = true;
             notifer.notifyAll("LEFT", this);
         }
     }
