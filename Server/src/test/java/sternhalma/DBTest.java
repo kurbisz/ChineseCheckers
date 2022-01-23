@@ -38,7 +38,7 @@ class DBTest extends StandardTest{
         try {
             synchronized (this) {
                 wait(100);
-                database.test();
+                //database.test();
             }
         } catch (InterruptedException e) {
 
