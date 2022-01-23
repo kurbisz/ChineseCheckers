@@ -50,6 +50,8 @@ public class MySQLDatabase implements Database {
         game.setMoves(st);
         addGame(game);
         System.out.println(getGames().get(0).getFormattedTime());
+        System.out.println(getMoves(1));
+        System.out.println(getGame(1));
     }
     @Override
     public void addGame(GameEntry entry) {
