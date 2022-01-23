@@ -1,9 +1,5 @@
 package sternhalma;
 
-import sternhalma.exceptions.CannotStartGameException;
-import sternhalma.exceptions.InvalidMoveException;
-import sternhalma.exceptions.InvalidPlayerException;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;

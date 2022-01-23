@@ -12,10 +12,12 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
+
+/**
+ * MySQL database representation.
+ */
 public class MySQLDatabase implements Database {
     private static MySQLDatabase insance = new MySQLDatabase();
     public static MySQLDatabase getInstance() {
@@ -31,6 +33,10 @@ public class MySQLDatabase implements Database {
         this.dataSource = dataSource;
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
     }
+
+    /**
+     * Test class behaviour.
+     */
     public void test() {
         GameEntry game = new GameEntry(1, 2, "classic");
         game.setTime(new Timestamp(System.currentTimeMillis()));
