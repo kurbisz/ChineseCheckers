@@ -17,7 +17,7 @@ public final class EndGameOptionPane {
      * @param message message which has to be shown in this menu
      */
     public static void popup(final JFrame jFrame, final String message, boolean save) {
-        JCheckBox saveGame = new JCheckBox("Zapisz gre");
+        JCheckBox saveGame = new JCheckBox("Save the game");
         Object[] panels = {
                 message
         };

@@ -17,7 +17,7 @@ public class CheckersClient {
     private GraphicsManager graphicsManager;
     private GameManager gameManager;
     private static Messenger messenger;
-    private ClientType clientType;
+    private ClientType clientType = ClientType.PLAYER;
 
     /**
      * Main client class with all crucial

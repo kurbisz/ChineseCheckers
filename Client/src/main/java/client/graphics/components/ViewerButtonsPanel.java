@@ -27,7 +27,7 @@ public class ViewerButtonsPanel extends Panel {
     @Override
     public void initialize() {
 
-        this.setBounds((int) (0.33 * jFrame.getWidth()),
+        this.setBounds((int) (0.27 * jFrame.getWidth()),
                 (int) (0.8 * jFrame.getHeight()),
                 (int) (0.38 * jFrame.getWidth()),
                 (int) (0.1 * jFrame.getHeight()));
@@ -35,7 +35,7 @@ public class ViewerButtonsPanel extends Panel {
         this.setLayout(new GridLayout(1, 2));
 
         JPanel prevPanel = new JPanel();
-        previousButton = new JButton("❮   Previous move");
+        previousButton = new JButton(" ❮   Previous move ");
         previousButton.setBackground(new Color(8, 8, 180));
         previousButton.setForeground(Color.WHITE);
         previousButton.setFocusPainted(false);
@@ -48,8 +48,9 @@ public class ViewerButtonsPanel extends Panel {
         prevPanel.add(previousButton);
         this.add(prevPanel);
 
+
         JPanel nextPanel = new JPanel();
-        nextButton = new JButton("❯   Next move");
+        nextButton = new JButton("    Next move   ❯    ");
         nextButton.setBackground(new Color(8, 8, 180));
         nextButton.setForeground(Color.WHITE);
         nextButton.setFocusPainted(false);
