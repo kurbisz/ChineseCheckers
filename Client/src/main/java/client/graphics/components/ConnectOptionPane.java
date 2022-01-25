@@ -56,14 +56,9 @@ public final class ConnectOptionPane {
                     CheckersClient.getInstance().connectClientToServer(
                             serverAddress, serverPort, nickName, clientType);
                 } catch (NumberFormatException e) {
-                    exit(jFrame);
-                    System.out.println("Error! Given port was not a number!");
-                } catch (UnknownHostException e) {
-                    exit(jFrame);
-                    System.out.println("Error! There is no such server!");
+                    EndGameOptionPane.popup(jFrame, "Error! Given port is not a number!", false);
                 } catch (IOException | NoConnectionException e) {
-                    exit(jFrame);
-                    System.out.println("Error while connecting to server!");
+                    EndGameOptionPane.popup(jFrame, "Error while connecting to server!", false);
                 }
             }
         } else {
